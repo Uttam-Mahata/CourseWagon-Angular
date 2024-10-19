@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/coursewagon-angular/browser",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
