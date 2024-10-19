@@ -6,12 +6,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { CourseService } from './course.service';
-import { CourseDetailComponent } from './course-detail/course-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CourseDetailComponent
   ],
   imports: [
     BrowserModule,
