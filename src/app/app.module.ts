@@ -52,6 +52,7 @@ import { ContentComponent } from './content/content.component';
 
 import { AppRoutingModule } from './app-routing.module'; // Import AppRoutingModule
 import { CourseService } from './services/course.service';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,9 @@ import { CourseService } from './services/course.service';
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    AppRoutingModule // Add AppRoutingModule here
+    AppRoutingModule,
+    MarkdownModule.forRoot()
+     // Add AppRoutingModule here
   ],
   providers: [CourseService],
   bootstrap: [AppComponent]
