@@ -62,6 +62,7 @@ export class CourseService {
     return this.http.post(`${this.apiUrl}/${courseId}/subjects/${subjectId}/modules/${moduleId}/chapters/${chapterId}/topics/${topicId}/subtopics/${subtopicId}/generate_content`, {});
   }
 
+  
   getContent(courseId: number, subjectId: number, moduleId: number, chapterId: number, topicId: number, subtopicId: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${courseId}/subjects/${subjectId}/modules/${moduleId}/chapters/${chapterId}/topics/${topicId}/subtopics/${subtopicId}/content`);
   }

@@ -1,1 +1,17 @@
-<p>subtopics works!</p>
+<div class="container">
+  <h3>Subtopics</h3>
+  <div class="row">
+    <div class="col s12 m4" *ngFor="let subtopic of subtopics">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">{{ subtopic.name }}</span>
+          <p>{{ subtopic.description }}</p>
+        </div>
+        <div class="card-action">
+          <button class="btn" (click)="viewContent(subtopic.id)">View Content</button>
+          <button class="btn green" (click)="generateContent(subtopic.id)">Generate Content</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

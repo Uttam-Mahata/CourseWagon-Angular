@@ -1,19 +1,40 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-subjects',
-  templateUrl: './subjects.component.html',
-  styleUrl: './subjects.component.css'
+  templateUrl: './subjects.component.html'
 })
 export class SubjectsComponent implements OnInit {
-subjects: any[] = [];
+  subjects: any[] = [];
+  courseId: number;
 
-constructor(private courseService: CourseService, private router:Router) {}
+  constructor(
+    private courseService: CourseService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    // Extract courseId from route params
+    this.courseId = +this.route.snapshot.paramMap.get('course_id')!;
+  }
 
-ngOnInit() {
-  this.courseService.getSubjects(courseId:number).subscribe((subjects: any[]) => {
-    this.subjects = subjects;
-  });
-} 
+  ngOnInit() {
+    // Fetch subjects for the given course
+    this.courseService.getSubjects(this.courseId).subscribe((subjects: any[]) => {
+      this.subjects = subjects;
+    });
+  }
+
+  generateModules(subjectId: number) {
+    // Trigger module generation for a subject
+    this.courseService.generateModules(this.courseId, subjectId).subscribe(() => {
+      // Optionally, you can reload the subject modules or show a success message
+    });
+  }
+
+  viewModules(subjectId: number) {
+    // Navigate to modules page for the selected subject
+    this.router.navigate([`/courses/${this.courseId}/subjects/${subjectId}/modules`]);
+  }
+}

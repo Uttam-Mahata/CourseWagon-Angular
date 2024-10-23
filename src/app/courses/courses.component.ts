@@ -22,4 +22,7 @@ export class CoursesComponent implements OnInit {
       this.router.navigate([`/courses/${courseId}/subjects`]);  // Navigate to subjects
     });
   }
+  viewSubjects(courseId: number) {
+    this.router.navigate([`/courses/${courseId}/subjects`]);  // Navigate to subjects
+  }
 }
