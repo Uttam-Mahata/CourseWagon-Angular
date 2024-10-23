@@ -1,0 +1,51 @@
+/* Background Gradient for the Page */
+body {
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    color: white;
+  }
+  
+  /* Title Icon Styling */
+  h3 i {
+    margin-right: 10px;
+  }
+  
+  /* Input Field Icon Color */
+  .input-field .prefix {
+    color: #6a11cb;
+  }
+  
+  /* Gradient Button Styling */
+  .gradient-btn {
+    background: linear-gradient(135deg, #ff5f6d, #ffc371);
+    border-radius: 50px;
+    transition: all 0.4s ease;
+  }
+  
+  .gradient-btn:hover {
+    background: linear-gradient(135deg, #ffc371, #ff5f6d);
+    transform: scale(1.05);
+  }
+  
+  /* Gradient Cards for Course Modules */
+  .gradient-card {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    height: 250px; /* Equal Height for Cards */
+  }
+  
+  .gradient-card .card-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+  
+  /* Icon Effects */
+  i.fas {
+    color: white;
+  }
+  
+  /* Textbox Focus Effects */
+  .input-field input[type=text]:focus {
+    border-bottom: 2px solid #ff5f6d;
+    box-shadow: none;
+  }
+  

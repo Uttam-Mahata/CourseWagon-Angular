@@ -1,0 +1,86 @@
+<div class="logo-container center-align">
+  <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" class="logo-svg">
+      <!-- Train Body -->
+      <rect x="100" y="150" width="200" height="80" rx="10" fill="#4a90e2"/>
+      <rect x="90" y="140" width="220" height="20" rx="5" fill="#2c3e50"/>
+      <!-- Wheels -->
+      <circle cx="140" cy="240" r="25" fill="#34495e"/>
+      <circle cx="140" cy="240" r="15" fill="#95a5a6"/>
+      <circle cx="260" cy="240" r="25" fill="#34495e"/>
+      <circle cx="260" cy="240" r="15" fill="#95a5a6"/>
+      <!-- Windows -->
+      <rect x="120" y="160" width="30" height="40" rx="5" fill="#f1c40f"/>
+      <rect x="160" y="160" width="30" height="40" rx="5" fill="#f1c40f"/>
+      <rect x="200" y="160" width="30" height="40" rx="5" fill="#f1c40f"/>
+      <rect x="240" y="160" width="30" height="40" rx="5" fill="#f1c40f"/>
+      <!-- Books in Windows -->
+      <rect x="125" y="165" width="20" height="30" fill="#e74c3c"/>
+      <rect x="165" y="165" width="20" height="30" fill="#27ae60"/>
+      <rect x="205" y="165" width="20" height="30" fill="#8e44ad"/>
+      <rect x="245" y="165" width="20" height="30" fill="#d35400"/>
+      <!-- Train Front -->
+      <path d="M300 150 L320 150 L320 230 L300 230" fill="#4a90e2"/>
+      <rect x="310" y="160" width="20" height="20" rx="5" fill="#f1c40f"/>
+      <!-- Smoke Stack -->
+      <rect x="290" y="120" width="15" height="30" fill="#7f8c8d"/>
+      <!-- Smoke Clouds -->
+      <circle cx="297" cy="100" r="8" fill="#bdc3c7" opacity="0.8"/>
+      <circle cx="310" cy="85" r="10" fill="#bdc3c7" opacity="0.6"/>
+      <circle cx="325" cy="70" r="12" fill="#bdc3c7" opacity="0.4"/>
+      <!-- Train Track -->
+      <line x1="50" y1="265" x2="350" y2="265" stroke="#34495e" stroke-width="8"/>
+      <line x1="50" y1="275" x2="350" y2="275" stroke="#34495e" stroke-width="8"/>
+      <!-- Track Ties -->
+      <g fill="#7f8c8d">
+        <rect x="70" y="265" width="10" height="20"/>
+        <rect x="120" y="265" width="10" height="20"/>
+        <rect x="170" y="265" width="10" height="20"/>
+        <rect x="220" y="265" width="10" height="20"/>
+        <rect x="270" y="265" width="10" height="20"/>
+        <rect x="320" y="265" width="10" height="20"/>
+      </g>
+  </svg>
+</div>
+
+<div class="container">
+  <div class="section center-align">
+    <h1 class="header teal-text">Welcome to CourseWagon</h1>
+    <p class="flow-text">Your ultimate platform for generating and managing courses powered by GenAI.</p>
+    <a class="waves-effect waves-light btn-large teal lighten-2 rounded-btn" routerLink="/create-course">
+      <i class="fas fa-rocket left"></i> Get Started
+    </a>
+  </div>
+
+  <div class="section">
+    <div class="row">
+      <div class="col s12 m6">
+        <div class="card hoverable">
+          <div class="card-content">
+            <span class="card-title">
+              <i class="fas fa-graduation-cap teal-text"></i> Browse Courses
+            </span>
+            <p>Explore a variety of courses across multiple domains generated with the power of GenAI.</p>
+          </div>
+          <div class="card-action">
+            <a routerLink="/courses" class="btn btn-rounded teal">Explore</a>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col s12 m6">
+        <div class="card hoverable">
+          <div class="card-content">
+            <span class="card-title">
+              <i class="fas fa-plus-circle teal-text"></i> Create a Course
+            </span>
+            <p>Design new courses, subjects, and modules using cutting-edge AI technology.</p>
+          </div>
+          <div class="card-action">
+            <a routerLink="/create-course" class="btn btn-rounded teal">Create</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>

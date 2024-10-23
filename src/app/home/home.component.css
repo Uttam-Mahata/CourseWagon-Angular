@@ -1,0 +1,45 @@
+/* Ensure uniform card height */
+.card {
+    height: 300px; /* Adjust as per your preference */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    background-color: #fff;
+}
+
+/* Hover effect: glowing */
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2), 0 0 15px rgba(255, 255, 255, 0.6);
+}
+
+/* Style for the train logo */
+.logo-svg {
+    width: 150px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    transition: transform 0.3s, filter 0.3s;
+}
+
+/* Glow effect on hover for logo */
+.logo-svg:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.6));
+}
+
+/* Card container for responsive design */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    padding: 20px;
+}
+

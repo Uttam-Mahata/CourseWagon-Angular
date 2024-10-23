@@ -1,9 +1,108 @@
 <div class="container">
-    <h3>Enter Course Name</h3>
-    <div class="input-field">
-      <input id="courseName" type="text" [(ngModel)]="courseName" class="validate">
-      <label for="courseName">Course Name</label>
+  
+<br>
+  <!-- Centering the card -->
+  <div class="row">
+    <div class="col s12 m8 offset-m2 l6 offset-l3">
+      <div class="wagon-card z-depth-3">
+        <div class="card-content">
+          <!-- Page Title with CourseWagon Icon -->
+          <div class="center-align">
+            <h3><i class="fas fa-chalkboard-teacher"></i> CourseWagon</h3>
+          </div>
+
+          <!-- Input Field for Course Name -->
+          <div class="input-field">
+            <i class="fas fa-book prefix"></i>
+            <input id="courseName" type="text" [(ngModel)]="courseName" class="validate" />
+            <label for="courseName">Enter Course Name</label>
+          </div>
+
+          <!-- Gradient Button with Rounded Borders and Hover Effects -->
+          <div class="center-align">
+            <button class="btn waves-effect waves-light btn-large gradient-btn" (click)="generateCourse()">
+              <i class="fas fa-magic"></i> Generate Course
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-    <button class="btn" (click)="generateCourse()">Generate Course</button>
+  </div>
+
+  <!-- Information Section -->
+  <div class="row">
+    <div class="col s12 m4">
+      <div class="info-card center-align">
+        <i class="fas fa-graduation-cap fa-3x"></i>
+        <h5>AI-Powered Courses</h5>
+        <p>Create personalized courses in just a few clicks using advanced AI.</p>
+      </div>
+    </div>
+    <div class="col s12 m4">
+      <div class="info-card center-align">
+        <i class="fas fa-laptop-code fa-3x"></i>
+        <h5>Comprehensive Curriculum</h5>
+        <p>Generate well-structured courses with detailed content modules.</p>
+      </div>
+    </div>
+    <div class="col s12 m4">
+      <div class="info-card center-align">
+        <i class="fas fa-chart-line fa-3x"></i>
+        <h5>Effortless Learning</h5>
+        <p>Empower your learning with quizzes, practice sessions, and progress tracking.</p>
+      </div>
+    </div>
   </div>
   
+  <!-- Add Custom Styles for Equal Height Cards -->
+  <style>
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .wagon-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: #f5f5f5;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .info-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: #f5f5f5;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .info-card h5 {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .info-card p {
+      margin-top: 10px;
+      flex-grow: 1;
+    }
+  </style>
+  
+</div>
+
+<!-- Add Custom Styles for Hero Section and Info Cards -->
+<style>
+  
+  
+
+  .gradient-btn {
+    background: linear-gradient(45deg, #42a5f5, #478ed1);
+    border-radius: 30px;
+  }
+  .gradient-btn:hover {
+    background: linear-gradient(45deg, #478ed1, #42a5f5);
+  }
+
+</style>

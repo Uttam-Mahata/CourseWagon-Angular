@@ -53,6 +53,8 @@ import { ContentComponent } from './content/content.component';
 import { AppRoutingModule } from './app-routing.module'; // Import AppRoutingModule
 import { CourseService } from './services/course.service';
 import { MarkdownModule } from 'ngx-markdown';
+import { HomeComponent } from './home/home.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -66,6 +68,8 @@ import { MarkdownModule } from 'ngx-markdown';
     TopicsComponent,
     SubtopicsComponent,
     ContentComponent,
+    HomeComponent,
+    FooterComponent,
 
   ],
   imports: [

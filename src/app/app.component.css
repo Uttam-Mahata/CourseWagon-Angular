@@ -1,0 +1,79 @@
+/* General styles */
+.nav-wrapper {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+  }
+  
+  .brand-logo .logo-svg {
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+  }
+  
+  .brand-logo-text {
+    font-size: 1.8rem;
+    color: #ffffff;
+  }
+  
+  .nav-wrapper a {
+    color: #ffffff;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-wrapper a:hover {
+    color: #ffeb3b;
+  }
+  
+  .nav-wrapper .sidenav-trigger {
+    font-size: 1.5rem;
+    color: #ffffff;
+  }
+  
+  ul.right li a {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  ul.right li a i {
+    margin-right: 5px;
+  }
+  
+  /* Sidenav Styles for mobile */
+  .sidenav {
+    background-color: #004d40;
+  }
+  
+  .sidenav a {
+    color: #ffffff;
+  }
+  
+  .sidenav a i {
+    margin-right: 10px;
+  }
+  
+  .sidenav li {
+    padding: 15px 0;
+  }
+  
+  /* Hover Effects */
+  ul.right li a:hover,
+  .sidenav li a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 992px) {
+    .brand-logo-text {
+      font-size: 1.5rem;
+    }
+  }
+  

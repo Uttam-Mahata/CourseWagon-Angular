@@ -1,37 +1,14 @@
 
-<header>
-  <nav>
-    <div class="nav-wrapper">
-      <a href="/" class="brand-logo">Course Management</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a routerLink="/courses">Courses</a></li>
-      
-      </ul>
-    </div>
-  </nav>
-</header>
+<nav>
+  <div class="nav-wrapper teal">
+    <a href="#" class="brand-logo">Course Wagon</a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li><a routerLink="/create-course">Create Course</a></li>
+      <li><a routerLink="/courses">View Courses</a></li>
+    </ul>
+  </div>
+</nav>
 
-<!-- Main Content with Router Outlet -->
-<main>
-  <div class="container">
-    <app-course/>
-    <router-outlet></router-outlet>
-  </div>
-</main>
+<router-outlet></router-outlet> 
 
-<!-- Footer -->
-<footer class="page-footer">
-  <div class="container">
-    <div class="row">
-      <div class="col l6 s12">
-        <h5 class="white-text">Course Management System</h5>
-        <p class="grey-text text-lighten-4">A simple app for creating and managing educational courses, topics, and content.</p>
-      </div>
-    </div>
-  </div>
-  <div class="footer-copyright">
-    <div class="container">
-    © 2024 Course Management
-    </div>
-  </div>
-</footer>
+<app-footer></app-footer>

@@ -1,20 +1,21 @@
 <div class="container">
-    <h3>Courses</h3>
-    <div class="row">
-      <div class="col s12 m4" *ngFor="let course of courses">
-        <div class="card">
-          <div class="card-content">
-            <span class="card-title">{{ course.name }}</span>
-            <p>{{ course.description }}</p>
-          </div>
-          <div class="card-action">
-            <button class="btn" (click)="generateSubjects(course.id)">Generate Subjects</button>
-          </div>
-          <div class="card-action">
-            <button class="btn" (click)="viewSubjects(course.id)">View Subjects</button>
-          </div>
+  <h3>Courses</h3>
+  <div class="row">
+    <div class="col s12 m6" *ngFor="let course of courses">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">{{ course.name }}</span>
+          <p>{{ course.description }}</p>
+        </div>
+        <div class="card-action">
+          <button class="btn btn-crs right blue" (click)="generateSubjects(course.id)">
+            <i class="fas fa-sync-alt"></i> Generate Subjects
+          </button>
+          <button class="btn btn-crs" (click)="viewSubjects(course.id)">
+            <i class="fas fa-eye"></i> View Subjects
+          </button>
         </div>
       </div>
     </div>
   </div>
-  
+</div>
