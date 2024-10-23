@@ -5,16 +5,9 @@
       <div class="card">
         <div class="card-content">
           <!-- Display content in a structured format or raw JSON for now -->
-          <pre *ngIf="content">{{ content | json }}</pre> <!-- For raw JSON display -->
+          <markdown *ngIf="content">{{ content }}</markdown> <!-- For raw JSON display -->
 
-          <!-- You can format it accordingly if needed -->
-          <ng-container *ngIf="content && content.length">
-            <ul>
-              <li *ngFor="let item of content">
-                <p>{{ item.title }}: {{ item.body }}</p> <!-- Assuming content has 'title' and 'body' fields -->
-              </li>
-            </ul>
-          </ng-container>
+         
         </div>
       </div>
     </div>
