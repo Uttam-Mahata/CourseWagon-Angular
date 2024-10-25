@@ -1,6 +1,5 @@
-Here’s a README file tailored for your Angular application that utilizes the `CourseService` for interacting with the Flask backend. This README includes a project overview, installation instructions, and details on how to use the `CourseService`.
 
-# CourseWagon - Angular Application
+# Course Wagon - Angular Application
 
 CourseWagon is a web application designed to streamline course management and subject generation using Generative AI. This Angular application interacts with a Flask backend to manage courses, subjects, modules, chapters, topics, subtopics, and their respective content.
 
