@@ -57,14 +57,18 @@
             "styles": [
               "src/styles.css",
               "node_modules/katex/dist/katex.min.css",
-              "node_modules/materialize-css/dist/css/materialize.min.css"
+            
+              
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [
               "node_modules/mathjax/es5/tex-mml-chtml.js",
               "node_modules/katex/dist/katex.min.js",
               "node_modules/katex/dist/contrib/auto-render.min.js",
               "node_modules/mermaid/dist/mermaid.min.js",
-              "node_modules/materialize-css/dist/js/materialize.min.js"
+              
+            
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
 
 
             ]
@@ -125,7 +129,8 @@
             "styles": [
               "src/styles.css",
               "node_modules/katex/dist/katex.min.css",
-              "node_modules/materialize-css/dist/css/materialize.min.css"
+         
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
               
             ],
             "scripts": [
@@ -133,7 +138,8 @@
               "node_modules/katex/dist/katex.min.js",
               "node_modules/katex/dist/contrib/auto-render.min.js",
               "node_modules/mermaid/dist/mermaid.min.js",
-              "node_modules/materialize-css/dist/js/materialize.min.js"
+             
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
 
 
             ]

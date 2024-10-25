@@ -1,14 +1,98 @@
 
-<nav>
-  <div class="nav-wrapper teal">
-    <a href="#" class="brand-logo">Course Wagon</a>
-    <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a routerLink="/create-course">Create Course</a></li>
-      <li><a routerLink="/courses">View Courses</a></li>
-    </ul>
-  </div>
-</nav>
 
-<router-outlet></router-outlet> 
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <svg class="logo-svg mb-2" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Train Body -->
+                    <rect x="100" y="150" width="200" height="80" rx="10" fill="#4a90e2"/>
+                    <rect x="90" y="140" width="220" height="20" rx="5" fill="#2c3e50"/>
+                    
+                    <!-- Wheels -->
+                    <circle cx="140" cy="240" r="25" fill="#34495e"/>
+                    <circle cx="140" cy="240" r="15" fill="#95a5a6"/>
+                    <circle cx="260" cy="240" r="25" fill="#34495e"/>
+                    <circle cx="260" cy="240" r="15" fill="#95a5a6"/>
+                    
+                    <!-- Windows -->
+                    <rect x="120" y="160" width="30" height="40" rx="5" fill="#f1c40f"/>
+                    <rect x="160" y="160" width="30" height="40" rx="5" fill="#f1c40f"/>
+                    <rect x="200" y="160" width="30" height="40" rx="5" fill="#f1c40f"/>
+                    <rect x="240" y="160" width="30" height="40" rx="5" fill="#f1c40f"/>
+                    
+                    <!-- Books in Windows -->
+                    <rect x="125" y="165" width="20" height="30" fill="#e74c3c"/>
+                    <rect x="165" y="165" width="20" height="30" fill="#27ae60"/>
+                    <rect x="205" y="165" width="20" height="30" fill="#8e44ad"/>
+                    <rect x="245" y="165" width="20" height="30" fill="#d35400"/>
+                    
+                    <!-- Train Front -->
+                    <path d="M300 150 L320 150 L320 230 L300 230" fill="#4a90e2"/>
+                    <rect x="310" y="160" width="20" height="20" rx="5" fill="#f1c40f"/>
+                    
+                    <!-- Smoke Stack -->
+                    <rect x="290" y="120" width="15" height="30" fill="#7f8c8d"/>
+                    
+                    <!-- Smoke Clouds -->
+                    <circle cx="297" cy="100" r="8" fill="#bdc3c7" opacity="0.8"/>
+                    <circle cx="310" cy="85" r="10" fill="#bdc3c7" opacity="0.6"/>
+                    <circle cx="325" cy="70" r="12" fill="#bdc3c7" opacity="0.4"/>
+                    
+                    <!-- Train Track -->
+                    <line x1="50" y1="265" x2="350" y2="265" stroke="#34495e" stroke-width="8"/>
+                    <line x1="50" y1="275" x2="350" y2="275" stroke="#34495e" stroke-width="8"/>
+                    
+                    <!-- Track Ties -->
+                    <g fill="#7f8c8d">
+                        <rect x="70" y="265" width="10" height="20"/>
+                        <rect x="120" y="265" width="10" height="20"/>
+                        <rect x="170" y="265" width="10" height="20"/>
+                        <rect x="220" y="265" width="10" height="20"/>
+                        <rect x="270" y="265" width="10" height="20"/>
+                        <rect x="320" y="265" width="10" height="20"/>
+                    </g>
+                </svg>
+                <span class="brand-text">CourseWagon</span>
+            </a>
+            
+            <button class="navbar-toggler" (click)="toggleNavbar()">
+              <i [class]="isNavbarOpen ? 'fas fa-times' : 'fas fa-bars'"></i>
+            </button>
+        
+            <!-- Collapsible Navbar Items -->
+            <div class="navbar-collapse" [ngClass]="{ 'show': isNavbarOpen }">
+              <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="fas fa-book nav-icon"></i> Courses
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="fas fa-graduation-cap nav-icon"></i> My Learning
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="fas fa-heart nav-icon"></i> Wishlist
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="fas fa-shopping-cart nav-icon"></i> Cart
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="fas fa-user nav-icon"></i> Profile
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+    </nav>
 
-<app-footer></app-footer>
+  <router-outlet></router-outlet>
+
+  <app-footer></app-footer>
+    

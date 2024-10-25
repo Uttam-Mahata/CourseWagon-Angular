@@ -55,6 +55,7 @@ import { CourseService } from './services/course.service';
 import { MarkdownModule } from 'ngx-markdown';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import { FooterComponent } from './footer/footer.component';
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
+    FontAwesomeModule,
   
     MarkdownModule.forRoot()
     
