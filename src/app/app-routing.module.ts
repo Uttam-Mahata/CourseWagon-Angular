@@ -9,15 +9,17 @@ import { TopicsComponent } from './topics/topics.component';
 import { SubtopicsComponent } from './subtopics/subtopics.component';
 import { ContentComponent } from './content/content.component';
 import { HomeComponent } from './home/home.component';
+import { SubjectsModulesComponent } from './subjects-modules/subjects-modules.component';
+import { ChaptersSubtopicsComponent } from './chapters-subtopics/chapters-subtopics.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'create-course', component: CourseComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'courses', component: CoursesComponent },
-  { path: 'courses/:course_id/subjects', component: SubjectsComponent },
-  { path: 'courses/:course_id/subjects/:subject_id/modules', component: ModulesComponent },
-  { path: 'courses/:course_id/subjects/:subject_id/modules/:module_id/chapters', component: ChaptersComponent },
+  { path: 'courses/:course_id/subjects-modules', component: SubjectsModulesComponent },
+  // { path: 'courses/:course_id/subjects/:subject_id/modules', component: ModulesComponent },
+  { path: 'courses/:course_id/subjects/:subject_id/modules/:module_id/chapters-subtopics', component: ChaptersSubtopicsComponent },
   { path: 'courses/:course_id/subjects/:subject_id/modules/:module_id/chapters/:chapter_id/topics', component: TopicsComponent },
   { path: 'courses/:course_id/subjects/:subject_id/modules/:module_id/chapters/:chapter_id/topics/:topic_id/subtopics', component: SubtopicsComponent },
   { path: 'courses/:course_id/subjects/:subject_id/modules/:module_id/chapters/:chapter_id/topics/:topic_id/subtopics/:subtopic_id/content', component: ContentComponent }

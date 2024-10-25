@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-courses',
-  templateUrl: './courses.component.html'
+  templateUrl: './courses.component.html',
+  styleUrls: ['./courses.component.css']
 })
 export class CoursesComponent implements OnInit {
   courses: any[] = [];
@@ -23,6 +24,9 @@ export class CoursesComponent implements OnInit {
     });
   }
   viewSubjects(courseId: number) {
-    this.router.navigate([`/courses/${courseId}/subjects`]);  // Navigate to subjects
+    this.router.navigate([`/courses/${courseId}/subjects-modules`]);  // Navigate to subjects
+  }
+  navigateToCourseCreation() {
+    this.router.navigate(['/create-course']);
   }
 }

@@ -92,4 +92,115 @@
       flex: 1 1 100%;
     }
   }
+
+
+  /* Breadcrumb Styling */
+.breadcrumb a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+/* Card Hover Effect */
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  transform: scale(1.02);
+  transition: all 0.3s ease;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.card-footer .btn {
+  width: 45%;
+  font-weight: 500;
+}
+
+/* Button Outline Primary Hover */
+.btn-outline-primary:hover {
+  background-color: #007bff;
+  color: #ffffff;
+  transition: background-color 0.2s;
+}
+
   
+/* Floating Action Button (FAB) */
+.fab {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.fab-top:hover {
+  transform: scale(1.1);
+  background-color: #0056b3;
+}
+
+/* Tooltip Styling */
+.fab-top[data-bs-toggle="tooltip"]::after {
+  content: attr(title);
+  position: absolute;
+  left: -30px;
+  bottom: 100%;
+  padding: 6px 12px;
+  background: #333;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+  transform: translateY(10px);
+}
+
+.fab:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* Ensure all course cards are the same height */
+.course-card {
+  height: 100%;
+  border: 1px solid #e0e0e0;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Glow border effect on hover */
+.course-card:hover {
+  border-color: #007bff;
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.3);
+}
+
+/* Floating Action Button (FAB) near the top-right */
+.fab-top {
+  font-size: 20px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.fab-top:hover {
+  background-color: #0056b3;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}

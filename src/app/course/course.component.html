@@ -1,3 +1,4 @@
+<div class="course">
 
   <!-- Header Section -->
   <header class="bg-primary text-white text-center py-5">
@@ -7,55 +8,46 @@
       <p class="lead">Start your journey with AI-powered course creation!</p>
     </div>
   </div>
+  <div class="container mt-5">
     <div class="row">
       <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3 p-4">
         <div class="wagon-card shadow-lg rounded gradient-border">
+          <!-- Title and Description -->
           <div class="text-center mb-4">
             <h2 style="color: #2c3e50;">
               <i class="fa fa-chalkboard-teacher text-primary"></i> Course Wagon
             </h2>
             <p class="text-muted">Transform your idea into structured courses</p>
           </div>
-          <div class="input-field mb-3">
-           
-            <input id="courseName" type="text" class="form-control" placeholder="Enter Course Name">
+          
+          <!-- Course Name Input Field -->
+          <div class="mb-3">
+            <input 
+              id="courseName" 
+              type="text" 
+              class="form-control" 
+              placeholder="Enter Course Name" 
+              [(ngModel)]="courseName"
+            />
           </div>
+  
+          <!-- Generate Course Button -->
           <div class="text-center">
-            <button class="btn gradient-btn btn-large" onclick="generateCourse()">
+            <button class="btn gradient-btn btn-large" (click)="generateCourse()">
               <i class="fa fa-magic"></i> Generate Course
             </button>
           </div>
         </div>
       </div>
     </div>
+  </div>
+  
   </header>
   
   <div class="container">
  
     <!-- Info Cards -->
-    <div class="row mt-5">
-      <div class="col-md-4 mb-4">
-        <div class="info-card text-center shadow gradient-border">
-          <i class="fa fa-graduation-cap fa-3x mb-3" style="color: #007bff;"></i>
-          <h5>AI-Powered Courses</h5>
-          <p>Create personalized courses in just a few clicks using advanced AI.</p>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="info-card text-center shadow gradient-border">
-          <i class="fa fa-laptop-code fa-3x mb-3" style="color: #007bff;"></i>
-          <h5>Comprehensive Curriculum</h5>
-          <p>Generate well-structured courses with detailed content modules.</p>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="info-card text-center shadow gradient-border">
-          <i class="fa fa-chart-line fa-3x mb-3" style="color: #007bff;"></i>
-          <h5>Effortless Learning</h5>
-          <p>Empower your learning with quizzes, practice sessions, and progress tracking.</p>
-        </div>
-      </div>
-    </div>
+   
     
 
     <!-- How It Works Section -->
@@ -96,9 +88,9 @@
     <!-- Features Section -->
     <div class="features-section">
       <h3 class="text-center mb-4">Key Features</h3>
-      <div class="row d-flex">
-        <div class="col-md-6">
-          <div class="feature-item gradient-border d-flex">
+      <div class="row">
+        <div class="col-md-6 d-flex mb-4">
+          <div class="feature-item gradient-border d-flex flex-grow-1">
             <div class="feature-icon">
               <i class="fa fa-brain"></i>
             </div>
@@ -108,8 +100,8 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 mb-4">
-          <div class="feature-item gradient-border">
+        <div class="col-md-6 d-flex mb-4">
+          <div class="feature-item gradient-border d-flex flex-grow-1">
             <div class="feature-icon">
               <i class="fa fa-tasks"></i>
             </div>
@@ -119,8 +111,8 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 mb-4">
-          <div class="feature-item gradient-border">
+        <div class="col-md-6 d-flex mb-4">
+          <div class="feature-item gradient-border d-flex flex-grow-1">
             <div class="feature-icon">
               <i class="fa fa-mobile-alt"></i>
             </div>
@@ -130,8 +122,8 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 mb-4">
-          <div class="feature-item gradient-border">
+        <div class="col-md-6 d-flex mb-4">
+          <div class="feature-item gradient-border d-flex flex-grow-1">
             <div class="feature-icon">
               <i class="fa fa-clock"></i>
             </div>
@@ -146,6 +138,9 @@
     
     
     
+    
   </div>
 
 
+
+</div>

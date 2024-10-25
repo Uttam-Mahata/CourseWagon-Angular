@@ -6,6 +6,9 @@ header.bg-primary {
     font-family: 'Poppins', sans-serif; 
     
   }
+  .course {
+    font-family: 'Poppins', sans-serif;
+  }
   
   header h1 {
     font-size: 3rem;
@@ -145,79 +148,76 @@ header.bg-primary {
     align-items: center;
   }
 
-  
   .features-section {
-    padding: 40px 0;
+    padding: 60px 0;
   }
   
   .features-section h3 {
     font-size: 2rem;
     color: #2c3e50;
     font-weight: 700;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
   }
   
   .feature-item {
-    background: linear-gradient(135deg, #f0f2f5, #ffffff);
+    background: linear-gradient(135deg, #efdab9, #7fabeb);
     border-radius: 15px;
-    padding: 20px 25px;
+    padding: 30px;
     border: 2px solid transparent;
-    transition: all 0.4s ease;
+    transition: all 0.3s ease-in-out;
     display: flex;
     align-items: center;
     gap: 20px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    height: 100%;
   }
   
   .feature-item:hover {
-    transform: translateY(-10px);
-    border: 2px solid #6c63ff;
-    background: linear-gradient(135deg, #6c63ff, #007bff);
-    box-shadow: 0 12px 25px rgba(108, 99, 255, 0.2);
+    transform: translateY(-5px);
+    border-color: #ebebf1;
+    background: linear-gradient(135deg, #6c63ff, #bbc1cd);
+    color: #fff;
   }
   
-  .feature-item:hover .feature-icon {
-    background: #fff;
-    color: #6c63ff;
-    transition: background 0.4s ease, color 0.4s ease;
+  .feature-item:hover h5,
+  .feature-item:hover p {
+    color: #fff;
   }
   
   .feature-item .feature-icon {
-    background: linear-gradient(135deg, #6c63ff, #007bff);
-    color: #ffffff;
-    border-radius: 50%;
+    background: #007bff;
+    color: #fff;
+    padding: 10px;
+    border-radius: 20%;
     width: 60px;
     height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.8rem;
-    transition: background 0.4s ease, color 0.4s ease;
-    box-shadow: 0 4px 10px rgba(108, 99, 255, 0.3);
+    transition: background 0.3s ease-in-out;
+    box-shadow: 0 3px 10px rgba(0, 123, 255, 0.3);
+  }
+  
+  .feature-item:hover .feature-icon {
+    background: #fff;
+    color: #1479ec;
   }
   
   .feature-item h5 {
-    margin-bottom: 8px;
-    font-size: 1.2rem;
+    margin-bottom: 10px;
+    font-size: 1.25rem;
     font-weight: 600;
     color: #2c3e50;
-    transition: color 0.4s ease;
-  }
-  
-  .feature-item:hover h5 {
-    color: #ffffff;
+    transition: color 0.3s ease-in-out;
   }
   
   .feature-item p {
-    font-size: 0.95rem;
+    font-size: 1rem;
     margin: 0;
     color: #6c757d;
     line-height: 1.5;
-    transition: color 0.4s ease;
-  }
-  
-  .feature-item:hover p {
-    color: #e0e0e0;
+    transition: color 0.3s ease-in-out;
   }
   
   @media (max-width: 992px) {
@@ -227,10 +227,6 @@ header.bg-primary {
       gap: 15px;
     }
   
-    .feature-item .feature-icon {
-      margin-bottom: 10px;
-    }
-  
     .features-section h3 {
       font-size: 1.75rem;
     }
@@ -238,7 +234,7 @@ header.bg-primary {
   
   @media (max-width: 576px) {
     .feature-item {
-      padding: 15px;
+      padding: 20px;
     }
   
     .feature-item h5 {
@@ -246,7 +242,7 @@ header.bg-primary {
     }
   
     .feature-item p {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
     }
   
     .features-section h3 {
@@ -254,7 +250,3 @@ header.bg-primary {
     }
   }
   
-  
-  
-
-

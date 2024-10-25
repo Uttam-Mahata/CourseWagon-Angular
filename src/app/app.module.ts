@@ -56,7 +56,8 @@ import { MarkdownModule } from 'ngx-markdown';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { SubjectsModulesComponent } from './subjects-modules/subjects-modules.component';
+import { ChaptersSubtopicsComponent } from './chapters-subtopics/chapters-subtopics.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ContentComponent,
     HomeComponent,
     FooterComponent,
+    SubjectsModulesComponent,
+    ChaptersSubtopicsComponent
 
   ],
   imports: [
