@@ -52,7 +52,7 @@
                         <rect x="320" y="265" width="10" height="20"/>
                     </g>
                 </svg>
-                <span class="brand-text">CourseWagon</span>
+                <span class="brand-text">Course Wagon</span>
             </a>
             
             <button class="navbar-toggler" (click)="toggleNavbar()">
@@ -60,26 +60,22 @@
             </button>
         
             <!-- Collapsible Navbar Items -->
-            <div class="navbar-collapse" [ngClass]="{ 'show': isNavbarOpen }">
+            <div class="navbar-collapse p-4 text-light" [ngClass]="{ 'show': isNavbarOpen }">
               <ul class="navbar-nav ms-auto">
+               
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    <i class="fas fa-book nav-icon"></i> Courses
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    <i class="fas fa-graduation-cap nav-icon"></i> My Learning
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    <i class="fas fa-heart nav-icon"></i> Wishlist
+                  <a class="nav-link" routerLink="/courses">
+                    <i class="fas fa-graduation-cap nav-icon"></i> My Courses
                   </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">
                     <i class="fas fa-shopping-cart nav-icon"></i> Cart
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="fas fa-book nav-icon"></i> Manage Courses
                   </a>
                 </li>
                 <li class="nav-item">

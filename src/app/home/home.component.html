@@ -3,7 +3,7 @@
   <header class="header text-white text-center py-5">
     <div class="container">
       <a class="navbar-brand" href="#">
-        <div class="logo-container bg-white p-2 d-inline-block rounded-circle mb-3">
+        <div class="logo-container bg-white p-1 d-inline-block rounded-circle mb-3">
           <svg class="logo-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
             <!-- Train Body -->
             <rect x="100" y="150" width="200" height="80" rx="10" fill="#4a90e2"/>
@@ -58,82 +58,137 @@
       </a>
       <h1 class="display-4">Welcome to Course Wagon</h1>
       <p class="lead">Your destination for AI-powered learning experiences.</p>
-      <a href="#" class="btn btn-light btn-lg mt-3 rounded-pill btn-hover">
-        <i class="fas fa-play"></i> Get Started
+      <a routerLink="/create-course" class="btn btn-light btn-lg mt-3 rounded-pill btn-hover">
+         <!-- Add Magic icon -->
+        <i class="fa fa-magic"></i>
+       Get Started
       </a>
     </div>
-  </header>
-
-  <!-- Features Section -->
-  <section class="features py-5">
-    <div class="container">
-      <h2 class="text-center mb-4">Why Choose Course Wagon?</h2>
-      <div class="row">
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card h-100">
-            <div class="card-body text-center">
-              <i class="fas fa-brain fa-3x mb-3"></i>
-              <h5 class="card-title">AI-Powered Courses</h5>
-              <p class="card-text">Leverage Generative AI to create tailored learning paths that suit your needs.</p>
+    <div class="features py-5">
+      <div class="container">
+        <h2 class="text-center mb-4">Why Choose Course Wagon?</h2>
+        <div class="row">
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <i class="fa fa-brain fa-3x mb-3"></i>
+                <h5 class="card-title">AI-Powered Courses</h5>
+                <p class="card-text">Leverage Generative AI to create tailored learning paths that suit your needs.</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card h-100">
-            <div class="card-body text-center">
-              <i class="fas fa-laptop-code fa-3x mb-3"></i>
-              <h5 class="card-title">Interactive Learning</h5>
-              <p class="card-text">Engage with interactive content, quizzes, and assessments to reinforce your understanding.</p>
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <i class="fa fa-laptop-code fa-3x mb-3"></i>
+                <h5 class="card-title">Interactive Learning</h5>
+                <p class="card-text">Engage with interactive content, quizzes, and assessments to reinforce your understanding.</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card h-100">
-            <div class="card-body text-center">
-              <i class="fas fa-chart-line fa-3x mb-3"></i>
-              <h5 class="card-title">Track Your Progress</h5>
-              <p class="card-text">Monitor your learning journey with detailed analytics and progress tracking tools.</p>
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <i class="fa fa-chart-line fa-3x mb-3"></i>
+                <h5 class="card-title">Track Your Progress</h5>
+                <p class="card-text">Monitor your learning journey with detailed analytics and progress tracking tools.</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </header>
+  <br>
+
+  <section class="how-it-works py-5 mt-4">
+    <div class="container">
+      <h2 class="text-center mb-5">How Course Wagon Works</h2>
+      <div class="row text-center">
+        <!-- Step 1: Generate Course Name -->
+        <div class="col-md-3 mb-4 d-flex">
+          <div class="work-step p-4 rounded shadow">
+            <i class="fa fa-book-open fa-3x mb-3 text-icon-gradient"></i>
+            <h5>1. Generate Course Name</h5>
+            <p>Enter your course idea, and Course Wagon will generate a unique course name for you.</p>
+          </div>
+        </div>
+        <!-- Step 2: Add to Cart & Purchase -->
+        <div class="col-md-3 mb-4 d-flex">
+          <div class="work-step p-4 rounded shadow">
+            <i class="fa fa-shopping-cart fa-3x mb-3 text-icon-gradient"></i>
+            <h5>2. Add to Cart & Purchase</h5>
+            <p>Add your course to the cart, complete the purchase, and unlock the content generation flow.</p>
+          </div>
+        </div>
+        <!-- Step 3: Generate Subjects & Modules -->
+        <div class="col-md-3 mb-4 d-flex">
+          <div class="work-step p-4 rounded shadow">
+            <i class="fa fa-layer-group fa-3x mb-3 text-icon-gradient"></i>
+            <h5>3. Generate Subjects & Modules</h5>
+            <p>Leverage AI to automatically create course subjects and modules customized to your course.</p>
+          </div>
+        </div>
+        <!-- Step 4: Dive into Topics & Content -->
+        <div class="col-md-3 mb-4 d-flex">
+          <div class="work-step p-4 rounded shadow">
+            <i class="fa fa-sitemap fa-3x mb-3 text-icon-gradient"></i>
+            <h5>4. Dive into Topics & Content</h5>
+            <p>Expand modules into chapters, topics, subtopics, and comprehensive content.</p>
+          </div>
+        </div>
+      </div>
+     
+    </div>
   </section>
+  
 
   <!-- Testimonials Section -->
   <section class="testimonials bg-light py-5">
     <div class="container">
       <h2 class="text-center mb-4">What Our Users Say</h2>
       <div class="row">
-        <div class="col-md-4">
-          <div class="testimonial text-center">
+        <div class="col-md-4 d-flex p-2">
+          <div class="testimonial text-center p-4">
+            <div class="testimonial-icon">
+              <i class="fa fa-user"></i>
+            </div>
             <p>"Course Wagon transformed my learning experience! The AI-generated content is incredibly helpful."</p>
             <h6>- Alex J.</h6>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="testimonial text-center">
+        <div class="col-md-4 d-flex p-2">
+          <div class="testimonial text-center p-4">
+            <div class="testimonial-icon">
+              <i class="fa fa-user"></i>
+            </div>
             <p>"I love the interactive features and how easy it is to track my progress!"</p>
             <h6>- Sarah L.</h6>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="testimonial text-center">
+        <div class="col-md-4 d-flex p-2">
+          <div class="testimonial text-center p-4">
+            <div class="testimonial-icon">
+              <i class="fa fa-user"></i>
+            </div>
             <p>"The personalized learning paths have made a huge difference in my studies."</p>
             <h6>- John D.</h6>
           </div>
         </div>
       </div>
     </div>
-  </section>
+</section>
+
+
 
   <!-- Call to Action Section -->
-  <section class="cta text-center py-5">
+  <section class="cta text-center py-5 mt-4">
     <div class="container">
-      <h2 class="mb-4">Ready to Begin Your Journey?</h2>
+      <h2 class="mb-4 display-4 font-weight-bold text-light">Ready to Begin Your Journey?</h2>
       <a href="#" class="btn btn-primary btn-lg rounded-pill btn-hover">
-        <i class="fas fa-user-plus"></i> Join Course Wagon Today!
+        <i class="fa fa-user-plus"></i> Join Course Wagon Today!
       </a>
     </div>
-  </section>
+</section>
+
 </div>

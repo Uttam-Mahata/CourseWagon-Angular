@@ -1,51 +1,260 @@
-/* Background Gradient for the Page */
-body {
-    background: linear-gradient(45deg, #6a11cb, #2575fc);
-    color: white;
+header.bg-primary {
+    background: linear-gradient(45deg, #007bff, #e0aa74);
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+
+    font-family: 'Poppins', sans-serif; 
+    
   }
   
-  /* Title Icon Styling */
-  h3 i {
-    margin-right: 10px;
-  }
-  
-  /* Input Field Icon Color */
-  .input-field .prefix {
-    color: #6a11cb;
-  }
-  
-  /* Gradient Button Styling */
-  .gradient-btn {
-    background: linear-gradient(135deg, #ff5f6d, #ffc371);
-    border-radius: 50px;
-    transition: all 0.4s ease;
-  }
-  
-  .gradient-btn:hover {
-    background: linear-gradient(135deg, #ffc371, #ff5f6d);
-    transform: scale(1.05);
-  }
-  
-  /* Gradient Cards for Course Modules */
-  .gradient-card {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    height: 250px; /* Equal Height for Cards */
-  }
-  
-  .gradient-card .card-title {
-    font-size: 1.5rem;
+  header h1 {
+    font-size: 3rem;
+    font-weight: 700;
     margin-bottom: 15px;
   }
   
-  /* Icon Effects */
-  i.fas {
-    color: white;
+  header p {
+    font-size: 1.25rem;
+    font-weight: 300;
   }
   
-  /* Textbox Focus Effects */
-  .input-field input[type=text]:focus {
-    border-bottom: 2px solid #ff5f6d;
-    box-shadow: none;
+
+  
+  header .container h1, header .container p {
+    animation: fadeInDown 1s ease-out;
   }
   
+  @keyframes fadeInDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+/* General Styles */
+
+.gradient-border {
+  border: 2px solid transparent;
+  background: linear-gradient(45deg, #007bff, #6c63ff);
+  background-clip: padding-box;
+  border-radius: 15px;
+}
+.wagon-card {
+  background: linear-gradient(145deg, #f5f7fa, #e1e8ed);
+  border-radius: 20px;
+  padding: 20px;
+}
+.gradient-btn {
+  background: linear-gradient(45deg, #007bff, #6c63ff);
+  border: none;
+  color: #fff;
+  border-radius: 50px;
+  padding: 10px 20px;
+}
+.gradient-btn:hover {
+  background: linear-gradient(45deg, #6c63ff, #eabb9c);
+}
+.input-field input {
+  border-radius: 50px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+.input-field input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.info-card {
+    background: linear-gradient(145deg, #f5f7fa, #e1e8ed);
+    padding: 20px;
+    border-radius: 15px;
+    transition: all 0.3s ease-in-out;
+    border: 2px solid transparent;
+  }
+  
+  .info-card:hover {
+    background: linear-gradient(145deg, #d2d8e0, #f3a85e);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 2px solid #6c63ff;
+  }
+  
+  .info-card i {
+    transition: transform 0.3s ease;
+
+  }
+  
+  .info-card:hover i {
+    transform: scale(1.2);
+  }
+
+  .step-card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 20px;
+    border: 2px solid #e0e7ff;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .step-card:hover {
+    background: linear-gradient(135deg, #6c63ff, #a29bfe);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .step-card .feature-icon {
+    background-color: #6c63ff;
+    color: #fff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin-right: 15px;
+    transition: background-color 0.4s ease, transform 0.4s ease;
+  }
+  
+  .step-card:hover .feature-icon {
+    background-color: #fff;
+    color: #6c63ff;
+    transform: scale(1.1);
+  }
+  
+  .step-card h5 {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  .step-card p {
+    font-size: 0.95rem;
+    margin-top: 10px;
+    line-height: 1.6;
+  }
+  
+  .d-flex {
+    display: flex;
+    align-items: center;
+  }
+
+  
+  .features-section {
+    padding: 40px 0;
+  }
+  
+  .features-section h3 {
+    font-size: 2rem;
+    color: #2c3e50;
+    font-weight: 700;
+    margin-bottom: 30px;
+  }
+  
+  .feature-item {
+    background: linear-gradient(135deg, #f0f2f5, #ffffff);
+    border-radius: 15px;
+    padding: 20px 25px;
+    border: 2px solid transparent;
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+  }
+  
+  .feature-item:hover {
+    transform: translateY(-10px);
+    border: 2px solid #6c63ff;
+    background: linear-gradient(135deg, #6c63ff, #007bff);
+    box-shadow: 0 12px 25px rgba(108, 99, 255, 0.2);
+  }
+  
+  .feature-item:hover .feature-icon {
+    background: #fff;
+    color: #6c63ff;
+    transition: background 0.4s ease, color 0.4s ease;
+  }
+  
+  .feature-item .feature-icon {
+    background: linear-gradient(135deg, #6c63ff, #007bff);
+    color: #ffffff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    transition: background 0.4s ease, color 0.4s ease;
+    box-shadow: 0 4px 10px rgba(108, 99, 255, 0.3);
+  }
+  
+  .feature-item h5 {
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2c3e50;
+    transition: color 0.4s ease;
+  }
+  
+  .feature-item:hover h5 {
+    color: #ffffff;
+  }
+  
+  .feature-item p {
+    font-size: 0.95rem;
+    margin: 0;
+    color: #6c757d;
+    line-height: 1.5;
+    transition: color 0.4s ease;
+  }
+  
+  .feature-item:hover p {
+    color: #e0e0e0;
+  }
+  
+  @media (max-width: 992px) {
+    .feature-item {
+      flex-direction: column;
+      text-align: center;
+      gap: 15px;
+    }
+  
+    .feature-item .feature-icon {
+      margin-bottom: 10px;
+    }
+  
+    .features-section h3 {
+      font-size: 1.75rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .feature-item {
+      padding: 15px;
+    }
+  
+    .feature-item h5 {
+      font-size: 1.1rem;
+    }
+  
+    .feature-item p {
+      font-size: 0.9rem;
+    }
+  
+    .features-section h3 {
+      font-size: 1.5rem;
+    }
+  }
+  
+  
+  
+
+

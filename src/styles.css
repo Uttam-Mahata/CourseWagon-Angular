@@ -1,1 +1,12 @@
 
+/* html scroll behaviour */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* body */
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
