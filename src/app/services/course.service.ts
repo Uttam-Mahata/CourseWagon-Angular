@@ -27,9 +27,15 @@ export class CourseService {
     return this.http.get(`${this.apiUrl}/${courseId}/subjects/${subjectId}/modules/${moduleId}`);
   }
 
+  getTopicDetails(courseId: number, subjectId: number, moduleId: number, chapterId: number, topicId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${courseId}/subjects/${subjectId}/modules/${moduleId}/chapters/${chapterId}/topics/${topicId}`);
+  }
+
   generateSubjects(courseId: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/${courseId}/generate_subjects`, {});
   }
+
+  
 
   getSubjects(courseId: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${courseId}/subjects`);

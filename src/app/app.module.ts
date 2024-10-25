@@ -57,7 +57,8 @@ import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SubjectsModulesComponent } from './subjects-modules/subjects-modules.component';
-import { ChaptersSubtopicsComponent } from './chapters-subtopics/chapters-subtopics.component';
+import { ChaptersTopicsComponent } from './chapters-topics/chapters-topics.component';
+import { SubtopicsContentComponent } from './subtopics-content/subtopics-content.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { ChaptersSubtopicsComponent } from './chapters-subtopics/chapters-subtop
     HomeComponent,
     FooterComponent,
     SubjectsModulesComponent,
-    ChaptersSubtopicsComponent
+    ChaptersTopicsComponent,
+    SubtopicsContentComponent
 
   ],
   imports: [
@@ -82,9 +84,9 @@ import { ChaptersSubtopicsComponent } from './chapters-subtopics/chapters-subtop
     FormsModule,
     AppRoutingModule,
     FontAwesomeModule,
-  
+
     MarkdownModule.forRoot()
-    
+
      // Add AppRoutingModule here
   ],
   providers: [CourseService],

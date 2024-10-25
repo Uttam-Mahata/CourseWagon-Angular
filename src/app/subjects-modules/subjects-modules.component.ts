@@ -60,7 +60,7 @@ export class SubjectsModulesComponent implements OnInit {
   }
 
   viewChapters(moduleId: number) {
-    this.router.navigate([`/courses/${this.courseId}/subjects/${this.selectedSubjectId}/modules/${moduleId}/chapters-subtopics`]);
+    this.router.navigate([`/courses/${this.courseId}/subjects/${this.selectedSubjectId}/modules/${moduleId}/chapters-topics`]);
   }
 
   generateChapters(moduleId: number) {

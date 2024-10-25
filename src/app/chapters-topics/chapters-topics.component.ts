@@ -3,11 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
 
 @Component({
-  selector: 'app-chapters-subtopics',
-  templateUrl: './chapters-subtopics.component.html',
-  styleUrls: ['./chapters-subtopics.component.css']
+  selector: 'app-chapters-topics',
+  templateUrl: './chapters-topics.component.html',
+  styleUrls: ['./chapters-topics.component.css']
 })
-export class ChaptersSubtopicsComponent implements OnInit {
+export class ChaptersTopicsComponent implements OnInit {
   chapters: any[] = [];
   topics: any[] = [];
   courseId: number;
@@ -68,6 +68,6 @@ export class ChaptersSubtopicsComponent implements OnInit {
 
   viewSubtopics(topicId: number) {
     // Navigate to subtopics page for the selected topic
-    this.router.navigate([`/courses/${this.courseId}/subjects/${this.subjectId}/modules/${this.moduleId}/chapters/${this.selectedChapterId}/topics/${topicId}/subtopics`]);
+    this.router.navigate([`/courses/${this.courseId}/subjects/${this.subjectId}/modules/${this.moduleId}/chapters/${this.selectedChapterId}/topics/${topicId}/subtopics-content`]);
   }
 }
