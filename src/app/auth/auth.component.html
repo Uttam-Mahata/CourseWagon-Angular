@@ -1,0 +1,135 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="text-center">
+       <!-- SVG Logo with Train Animation -->
+    <div class="logo-container text-center">
+       <div class="text-center">
+        <svg class="logo-svg mb-2" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" height="150" width="150">
+            <!-- Train Body -->
+            <rect x="100" y="150" width="200" height="80" rx="10" fill="#4a90e2"/>
+            <rect x="90" y="140" width="220" height="20" rx="5" fill="#2c3e50"/>
+            
+            <!-- Wheels -->
+            <circle cx="140" cy="240" r="25" fill="#34495e" class="wheel"/>
+            <circle cx="140" cy="240" r="15" fill="#95a5a6" class="wheel"/>
+            <circle cx="260" cy="240" r="25" fill="#34495e" class="wheel"/>
+            <circle cx="260" cy="240" r="15" fill="#95a5a6" class="wheel"/>
+            
+            <!-- Windows -->
+            <rect x="120" y="160" width="30" height="40" rx="5" fill="#f1c40f"/>
+            <rect x="160" y="160" width="30" height="40" rx="5" fill="#f1c40f"/>
+            <rect x="200" y="160" width="30" height="40" rx="5" fill="#f1c40f"/>
+            <rect x="240" y="160" width="30" height="40" rx="5" fill="#f1c40f"/>
+            
+            <!-- Books in Windows -->
+            <rect x="125" y="165" width="20" height="30" fill="#e74c3c"/>
+            <rect x="165" y="165" width="20" height="30" fill="#27ae60"/>
+            <rect x="205" y="165" width="20" height="30" fill="#8e44ad"/>
+            <rect x="245" y="165" width="20" height="30" fill="#d35400"/>
+            
+            <!-- Train Front -->
+            <path d="M300 150 L320 150 L320 230 L300 230" fill="#4a90e2"/>
+            <rect x="310" y="160" width="20" height="20" rx="5" fill="#f1c40f"/>
+            
+            <!-- Smoke Stack -->
+            <rect x="290" y="120" width="15" height="30" fill="#7f8c8d"/>
+            
+            <!-- Smoke Clouds -->
+            <circle cx="297" cy="100" r="8" fill="#bdc3c7" opacity="0.8" class="smoke"/>
+            <circle cx="310" cy="85" r="10" fill="#bdc3c7" opacity="0.6" class="smoke"/>
+            <circle cx="325" cy="70" r="12" fill="#bdc3c7" opacity="0.4" class="smoke"/>
+            
+            <!-- Train Track -->
+            <line x1="50" y1="265" x2="350" y2="265" stroke="#34495e" stroke-width="8"/>
+            <line x1="50" y1="275" x2="350" y2="275" stroke="#34495e" stroke-width="8"/>
+            
+            <!-- Track Ties -->
+            <g fill="#7f8c8d">
+              <rect x="70" y="265" width="10" height="20"/>
+              <rect x="120" y="265" width="10" height="20"/>
+              <rect x="170" y="265" width="10" height="20"/>
+              <rect x="220" y="265" width="10" height="20"/>
+              <rect x="270" y="265" width="10" height="20"/>
+              <rect x="320" y="265" width="10" height="20"/>
+            </g>
+          </svg>
+       </div>
+        </div>
+    </div>
+    <!-- Welcome Message -->
+    <div class="welcome-header text-center">
+      <h1>Welcome to Course Wagon</h1>
+      <p>Your journey to learning starts here. Sign up or log in to continue!</p>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="d-flex justify-content-center">
+      <button class="tab-link" [class.active]="currentTab === 'login'" (click)="switchTab('login')">Login</button>
+      <button class="tab-link" [class.active]="currentTab === 'signup'" (click)="switchTab('signup')">Sign Up</button>
+    </div>
+
+    <!-- Login Form -->
+    <div *ngIf="currentTab === 'login'" class="tab-content">
+      <div class="auth-header">Welcome Back!</div>
+      <form (ngSubmit)="onLogin()">
+        <div class="form-group mt-4 mb-2">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+            </div>
+            <input type="email" class="form-control" placeholder="Email Address" [(ngModel)]="loginData.email" name="email" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fa fa-lock"></i></span>
+            </div>
+            <input type="password" class="form-control" placeholder="Password" [(ngModel)]="loginData.password" name="password" required>
+          </div>
+        </div>
+        <div class="text-center p-2"><button type="submit" class="btn btn-grad btn-block">Login</button></div>
+        <p class="text-center mt-3"><a href="#" style="color: #478ed1;">Forgot Password?</a></p>
+      </form>
+    </div>
+
+    <!-- Sign Up Form -->
+    <div *ngIf="currentTab === 'signup'" class="tab-content">
+      <div class="auth-header">Join CourseWagon</div>
+      <form (ngSubmit)="onSignup()">
+        <div class="form-group mt-4 mb-2">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fa fa-user"></i></span>
+            </div>
+            <input type="text" class="form-control" placeholder="Full Name" [(ngModel)]="signupData.fullName" name="fullName" required>
+          </div>
+        </div>
+        <div class="form-group mb-2">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+            </div>
+            <input type="email" class="form-control" placeholder="Email Address" [(ngModel)]="signupData.email" name="email" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fa fa-lock"></i></span>
+            </div>
+            <input type="password" class="form-control" placeholder="Password" [(ngModel)]="signupData.password" name="password" required>
+          </div>
+        </div>
+<div class="text-center p-4">
+    <button type="submit" class="btn btn-grad btn-block">Sign Up</button>
+
+</div>      </form>
+    </div>
+  </div>
+
+  <!-- Footer Information -->
+  <div class="footer-info text-center">
+    <p>By joining CourseWagon, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>
+  </div>
+</div>

@@ -61,6 +61,7 @@ import { ChaptersTopicsComponent } from './chapters-topics/chapters-topics.compo
 import { SubtopicsContentComponent } from './subtopics-content/subtopics-content.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { RegisterComponent } from './register/register.component';
     ChaptersTopicsComponent,
     SubtopicsContentComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    AuthComponent
 
   ],
   imports: [

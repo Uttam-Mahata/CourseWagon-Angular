@@ -83,6 +83,35 @@
                     <i class="fas fa-user nav-icon"></i> Profile
                   </a>
                 </li>
+
+                <!-- Login/Sign Up -->
+
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="/auth">
+                    <i class="fa fa-sign-in-alt nav-icon"></i> Login
+                  </a>
+                </li>
+
+                <!-- Logout -->
+                <li class="nav-item">
+                  <a class="nav-link">
+                    <i class="fa fa-power-off nav-icon"></i> Logout
+                  </a>
+                </li>
+
+                <!-- Login -->
+                <!-- <li class="nav-item" *ngIf="!authService.isLoggedIn">
+                  <a class="nav-link" routerLink="/auth">
+                    <i class="fas fa-sign-in-alt nav-icon"></i> Login
+                  </a>
+                </li> -->
+
+                <!-- Logout -->
+                <!-- <li class="nav-item" *ngIf="authService.isLoggedIn">
+                  <a class="nav-link" (click)="onLogout()">
+                    <i class="fas fa-sign-out-alt nav-icon"></i> Logout
+                  </a>
+                </li> -->
               </ul>
             </div>
           </div>
