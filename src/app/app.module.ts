@@ -59,6 +59,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SubjectsModulesComponent } from './subjects-modules/subjects-modules.component';
 import { ChaptersTopicsComponent } from './chapters-topics/chapters-topics.component';
 import { SubtopicsContentComponent } from './subtopics-content/subtopics-content.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +77,9 @@ import { SubtopicsContentComponent } from './subtopics-content/subtopics-content
     FooterComponent,
     SubjectsModulesComponent,
     ChaptersTopicsComponent,
-    SubtopicsContentComponent
+    SubtopicsContentComponent,
+    LoginComponent,
+    RegisterComponent
 
   ],
   imports: [

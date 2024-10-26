@@ -12,9 +12,14 @@ import { HomeComponent } from './home/home.component';
 import { SubjectsModulesComponent } from './subjects-modules/subjects-modules.component';
 import { ChaptersTopicsComponent } from './chapters-topics/chapters-topics.component';
 import { SubtopicsContentComponent } from './subtopics-content/subtopics-content.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent
 
+ } from './register/register.component';
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent},
   {path: 'create-course', component: CourseComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'courses', component: CoursesComponent },
