@@ -66,6 +66,8 @@ export class SubjectsModulesComponent implements OnInit {
   generateChapters(moduleId: number) {
     this.courseService.generateChapters(this.courseId, this.selectedSubjectId!, moduleId).subscribe(() => {
       // Optionally refresh or show success message
+      // Show a success message alert
+      alert('Chapters generated successfully!');
     });
   }
   

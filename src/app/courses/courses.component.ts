@@ -20,7 +20,7 @@ export class CoursesComponent implements OnInit {
 
   generateSubjects(courseId: number) {
     this.courseService.generateSubjects(courseId).subscribe(() => {
-      this.router.navigate([`/courses/${courseId}/subjects`]);  // Navigate to subjects
+      this.router.navigate([`/courses/${courseId}/subjects-modules`]);  // Navigate to subjects
     });
   }
   viewSubjects(courseId: number) {

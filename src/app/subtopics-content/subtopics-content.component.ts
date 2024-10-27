@@ -1,3 +1,4 @@
+// Import necessary modules and libraries
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
@@ -54,8 +55,11 @@ export class SubtopicsContentComponent implements OnInit {
   }
 
   viewContent(subtopicId: number) {
+    // Clear existing content and reset selected subtopic before fetching new content
+    this.content = null;
     this.selectedSubtopicId = subtopicId;
     this.selectedSubtopicName = this.subtopics.find(subtopic => subtopic.id === subtopicId)?.name || null;
+
     // Fetch content for the selected subtopic
     this.courseService.getContent(this.courseId, this.subjectId, this.moduleId, this.chapterId, this.topicId, subtopicId).subscribe((content: any) => {
       this.content = content;
@@ -63,7 +67,7 @@ export class SubtopicsContentComponent implements OnInit {
   }
 
   generateContent(subtopicId: number) {
-    // Trigger content generation for a subtopic
+    // Trigger content generation for a subtopic and fetch content
     this.courseService.generateContent(this.courseId, this.subjectId, this.moduleId, this.chapterId, this.topicId, subtopicId).subscribe(() => {
       this.viewContent(subtopicId);  // Reload content after generation
     });

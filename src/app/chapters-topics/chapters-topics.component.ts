@@ -63,6 +63,11 @@ export class ChaptersTopicsComponent implements OnInit {
     // Trigger subtopic generation for a topic
     this.courseService.generateSubtopics(this.courseId, this.subjectId, this.moduleId, this.selectedChapterId!, topicId).subscribe(() => {
       // Optionally, refresh topics or show a message
+      // Show a message
+      alert('Subtopics generated successfully!');
+
+      // Reload topics after generation
+      this.viewTopics(this.selectedChapterId!);
     });
   }
 
