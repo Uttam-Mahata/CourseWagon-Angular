@@ -58,7 +58,8 @@
               "src/custom-theme.scss",
               "src/styles.css",
               "node_modules/katex/dist/katex.min.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/prismjs/themes/prism-okaidia.css"
             ],
             "scripts": [
               "node_modules/mathjax/es5/tex-mml-chtml.js",
@@ -67,7 +68,18 @@
               "node_modules/mermaid/dist/mermaid.min.js",
               
             
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/components/prism-csharp.min.js",
+              "node_modules/prismjs/components/prism-css.min.js",
+              "node_modules/prismjs/components/prism-java.min.js",
+              "node_modules/prismjs/components/prism-javascript.min.js",
+              "node_modules/prismjs/components/prism-json.min.js",
+              "node_modules/prismjs/components/prism-markup.min.js",
+              "node_modules/prismjs/components/prism-python.min.js",
+              "node_modules/prismjs/components/prism-sql.min.js",
+              "node_modules/prismjs/components/prism-typescript.min.js",
+              "node_modules/prismjs/components/prism-yaml.min.js"
 
 
             ]
@@ -129,7 +141,8 @@
               "src/styles.css",
               "node_modules/katex/dist/katex.min.css",
          
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/prismjs/themes/prism-okaidia.css"
               
             ],
             "scripts": [
@@ -138,7 +151,21 @@
               "node_modules/katex/dist/contrib/auto-render.min.js",
               "node_modules/mermaid/dist/mermaid.min.js",
              
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/prismjs/prism.js",
+"node_modules/prismjs/components/prism-csharp.min.js", 
+ "node_modules/prismjs/components/prism-css.min.js",
+  "node_modules/prismjs/components/prism-java.min.js",
+              
+              "node_modules/prismjs/components/prism-javascript.min.js",
+              "node_modules/prismjs/components/prism-json.min.js",
+              "node_modules/prismjs/components/prism-markup.min.js",
+              "node_modules/prismjs/components/prism-python.min.js",
+              "node_modules/prismjs/components/prism-sql.min.js",
+              "node_modules/prismjs/components/prism-typescript.min.js",
+              "node_modules/prismjs/components/prism-yaml.min.js"
+
+
 
 
             ]

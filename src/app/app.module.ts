@@ -63,9 +63,9 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthComponent } from './auth/auth.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MermaidAPI } from 'ngx-markdown';
+import { MermaidViewComponent } from './mermaid-view/mermaid-view.component';
 
-import {MatProgressSpinner} from "@angular/material/progress-spinner";
-import {MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -86,6 +86,7 @@ import {MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
     LoginComponent,
     RegisterComponent,
     AuthComponent,
+    MermaidViewComponent,
     
 
   ],
@@ -97,9 +98,7 @@ import {MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
     FontAwesomeModule,
 
     MarkdownModule.forRoot(),
-    MatProgressSpinner,
-    MatDialogContent,
-    MatDialogTitle,
+
 
     // Add AppRoutingModule here
   ],

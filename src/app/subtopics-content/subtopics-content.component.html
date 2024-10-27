@@ -40,7 +40,7 @@
         <div *ngIf="content" class="card shadow-sm content-card">
           <div class="card-body">
             <h6 class="card-title text-primary">{{ selectedSubtopicName }}</h6>
-            <markdown mermaid katex *ngIf="content">{{ content }}</markdown> <!-- Render content as markdown -->
+            <div markdown mermaid katex *ngIf="content">{{ content }}</div> <!-- Render content as markdown -->
           </div>
         </div>
   

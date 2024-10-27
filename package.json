@@ -23,10 +23,12 @@
     "@fortawesome/angular-fontawesome": "^0.15.0",
     "bootstrap": "^5.3.3",
     "katex": "^0.16.11",
+    "marked": "^14.1.3",
     "materialize-css": "^1.0.0",
     "mathjax": "^3.2.2",
     "mermaid": "^11.3.0",
     "ngx-markdown": "^18.1.0",
+    "prismjs": "^1.29.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"
