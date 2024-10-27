@@ -62,6 +62,10 @@ import { SubtopicsContentComponent } from './subtopics-content/subtopics-content
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthComponent } from './auth/auth.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { SubjectGenerationDialogComponent } from './subject-generation-dialog/subject-generation-dialog.component';
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import {MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -81,7 +85,8 @@ import { AuthComponent } from './auth/auth.component';
     SubtopicsContentComponent,
     LoginComponent,
     RegisterComponent,
-    AuthComponent
+    AuthComponent,
+    SubjectGenerationDialogComponent
 
   ],
   imports: [
@@ -91,11 +96,14 @@ import { AuthComponent } from './auth/auth.component';
     AppRoutingModule,
     FontAwesomeModule,
 
-    MarkdownModule.forRoot()
+    MarkdownModule.forRoot(),
+    MatProgressSpinner,
+    MatDialogContent,
+    MatDialogTitle,
 
-     // Add AppRoutingModule here
+    // Add AppRoutingModule here
   ],
-  providers: [CourseService],
+  providers: [CourseService, provideAnimationsAsync()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
