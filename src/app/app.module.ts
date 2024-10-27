@@ -63,7 +63,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthComponent } from './auth/auth.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { SubjectGenerationDialogComponent } from './subject-generation-dialog/subject-generation-dialog.component';
+
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
 
@@ -86,7 +86,7 @@ import {MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
     LoginComponent,
     RegisterComponent,
     AuthComponent,
-    SubjectGenerationDialogComponent
+    
 
   ],
   imports: [
