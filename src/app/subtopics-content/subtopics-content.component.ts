@@ -15,6 +15,7 @@ export class SubtopicsContentComponent implements OnInit {
   moduleId: number;
   chapterId: number;
   topicId: number;
+  showSubtopics: boolean = true; 
   courseName: string = '';
   moduleName: string = '';
   topicName: string = '';
@@ -72,4 +73,17 @@ export class SubtopicsContentComponent implements OnInit {
       this.viewContent(subtopicId);  // Reload content after generation
     });
   }
+
+  hideSubtopics() {
+    this.showSubtopics = !this.showSubtopics;
+  }
+
+
+  
+  
+
+  
+  
+
+
 }
