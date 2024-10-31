@@ -242,3 +242,11 @@
   -webkit-text-fill-color: transparent;
 }
 
+/* Hide CTA keyframe in mobile */
+
+@media (max-width: 768px) {
+  .cta::before, .cta::after {
+    display: none;
+  }
+}
+
