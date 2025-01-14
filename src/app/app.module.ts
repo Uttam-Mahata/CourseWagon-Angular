@@ -1,43 +1,6 @@
-// import { NgModule } from '@angular/core';
-// import { BrowserModule } from '@angular/platform-browser';
-
-// import { AppRoutingModule } from './app-routing.module';
-// import { AppComponent } from './app.component';
-// import { CourseComponent } from './course/course.component';
-// import { CoursesComponent } from './courses/courses.component';
-// import { SubjectsComponent } from './subjects/subjects.component';
-// import { ModulesComponent } from './modules/modules.component';
-// import { ChaptersComponent } from './chapters/chapters.component';
-// import { TopicsComponent } from './topics/topics.component';
-// import { SubtopicsComponent } from './subtopics/subtopics.component';
-// import { ContentComponent } from './content/content.component';
-// import {FormsModule} from "@angular/forms";
-
-// @NgModule({
-//   declarations: [
-//     AppComponent,
-//     CourseComponent,
-//     CoursesComponent,
-//     SubjectsComponent,
-//     ModulesComponent,
-//     ChaptersComponent,
-//     TopicsComponent,
-//     SubtopicsComponent,
-//     ContentComponent
-//   ],
-//     imports: [
-//         BrowserModule,
-//         AppRoutingModule,
-//         FormsModule
-//     ],
-//   providers: [],
-//   bootstrap: [AppComponent]
-// })
-// export class AppModule { }
-
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -65,6 +28,8 @@ import { AuthComponent } from './auth/auth.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MermaidAPI } from 'ngx-markdown';
 import { MermaidViewComponent } from './mermaid-view/mermaid-view.component';
+import { AuthInterceptor } from './auth.interceptor';
+import { AuthGuard } from './auth.guard';
 
 
 @NgModule({
@@ -102,7 +67,16 @@ import { MermaidViewComponent } from './mermaid-view/mermaid-view.component';
 
     // Add AppRoutingModule here
   ],
-  providers: [CourseService, provideAnimationsAsync()],
+  providers: [
+    CourseService,
+    provideAnimationsAsync(),
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
