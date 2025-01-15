@@ -8,11 +8,20 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent {
+  isLoginMode = true;
   errorMessage = '';
   successMessage = '';
+  
   loginData = {
     email: '',
     password: ''
+  };
+
+  registerData = {
+    email: '',
+    password: '',
+    first_name: '',
+    last_name: ''
   };
 
   constructor(
@@ -20,21 +29,49 @@ export class AuthComponent {
     private router: Router
   ) {}
 
-  onLogin(): void {
-    this.errorMessage = '';
-    this.successMessage = '';
+  toggleMode(): void {
+    this.isLoginMode = !this.isLoginMode;
+    this.clearMessages();
+  }
+
+  onSubmit(): void {
+    this.clearMessages();
     
+    if (this.isLoginMode) {
+      this.onLogin();
+    } else {
+      this.onRegister();
+    }
+  }
+
+  onLogin(): void {
     this.authService.login(this.loginData.email, this.loginData.password)
       .subscribe({
         next: () => {
           this.router.navigate(['/courses']);
         },
         error: (error) => {
-          if (error.status === 401) {
-            this.errorMessage = 'Invalid email or password';
-          } else {
-            this.errorMessage = 'An unexpected error occurred. Please try again later.';
-          }
+          this.errorMessage = error.error.error || 'An unexpected error occurred';
+        }
+      });
+  }
+
+  onRegister(): void {
+    this.authService.register(this.registerData)
+      .subscribe({
+        next: () => {
+          this.successMessage = 'Registration successful! Please login.';
+          this.isLoginMode = true;
+          this.loginData.email = this.registerData.email;
+          this.registerData = {
+            email: '',
+            password: '',
+            first_name: '',
+            last_name: ''
+          };
+        },
+        error: (error) => {
+          this.errorMessage = error.error.error || 'An unexpected error occurred';
         }
       });
   }
