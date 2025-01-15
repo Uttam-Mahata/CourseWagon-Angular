@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://coursewagon-backend.onrender.com/auth';
+  private apiUrl = environment.authApiUrl;
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   
   constructor(

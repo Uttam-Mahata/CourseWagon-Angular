@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
-  private apiUrl = 'https://coursewagon-backend.onrender.com/courses'; // Base URL for the Flask app
+  private apiUrl = environment.courseApiUrl;
 
   constructor(private http: HttpClient) {}
 
