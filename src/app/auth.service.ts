@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://127.0.0.1:5000/auth';
+  private apiUrl = 'https://coursewagon-backend.onrender.com/auth';
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   
   constructor(

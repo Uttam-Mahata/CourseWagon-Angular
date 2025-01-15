@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CourseService {
-  private apiUrl = 'http://127.0.0.1:5000/courses'; // Base URL for the Flask app
+  private apiUrl = 'https://coursewagon-backend.onrender.com/courses'; // Base URL for the Flask app
 
   constructor(private http: HttpClient) {}
 
