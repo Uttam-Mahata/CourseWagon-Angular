@@ -4,43 +4,66 @@ import { CourseService } from '../services/course.service';
 
 @Component({
   selector: 'app-topics',
-  templateUrl: './topics.component.html'
+  templateUrl: './topics.component.html',
+  styleUrls: ['./topics.component.css']
 })
 export class TopicsComponent implements OnInit {
   topics: any[] = [];
   courseId: number;
   subjectId: number;
-  moduleId: number;
   chapterId: number;
+    loading: boolean = true;
+    error: string = '';
+
 
   constructor(
     private courseService: CourseService,
     private route: ActivatedRoute,
     private router: Router
   ) {
-    // Extract courseId, subjectId, moduleId, and chapterId from route params
     this.courseId = +this.route.snapshot.paramMap.get('course_id')!;
-    this.subjectId = +this.route.snapshot.paramMap.get('subject_id')!;
-    this.moduleId = +this.route.snapshot.paramMap.get('module_id')!;
-    this.chapterId = +this.route.snapshot.paramMap.get('chapter_id')!;
+      this.subjectId = +this.route.snapshot.paramMap.get('subject_id')!;
+      this.chapterId = +this.route.snapshot.paramMap.get('chapter_id')!;
   }
 
   ngOnInit() {
-    // Fetch topics for the given chapter
-    this.courseService.getTopics(this.courseId, this.subjectId, this.moduleId, this.chapterId).subscribe((topics: any[]) => {
-      this.topics = topics;
-    });
+      this.loadTopics();
   }
 
-  generateSubtopics(topicId: number) {
-    // Trigger subtopic generation for a topic
-    this.courseService.generateSubtopics(this.courseId, this.subjectId, this.moduleId, this.chapterId, topicId).subscribe(() => {
-      // Optionally, you can reload the topics or show a success message
-    });
-  }
+    loadTopics() {
+        this.loading = true;
+      this.courseService.getTopics(this.courseId, this.subjectId, this.chapterId).subscribe({
+          next: (topics: any[]) => {
+                this.topics = topics;
+                this.loading = false;
+                this.error = '';
+            },
+           error: (error) => {
+                console.error('Error fetching topics:', error);
+                this.error = 'Failed to load topics. Please try again later.';
+                this.loading = false;
+           }
+      });
+    }
 
-  viewSubtopics(topicId: number) {
-    // Navigate to subtopics page for the selected topic
-    this.router.navigate([`/courses/${this.courseId}/subjects/${this.subjectId}/modules/${this.moduleId}/chapters/${this.chapterId}/topics/${topicId}/subtopics`]);
-  }
+
+  viewContent(topicId: number) {
+        this.router.navigate([`/courses/${this.courseId}/subjects/${this.subjectId}/chapters/${this.chapterId}/topics/${topicId}/content`]);
+    }
+
+    generateContent(topicId: number) {
+        this.loading = true;
+         this.courseService.generateContent(this.courseId, this.subjectId, this.chapterId, topicId).subscribe({
+             next: () => {
+                 this.router.navigate([`/courses/${this.courseId}/subjects/${this.subjectId}/chapters/${this.chapterId}/topics/${topicId}/content`]);
+                this.loading = false;
+                 this.error = '';
+            },
+              error: (error) => {
+                console.error('Error generating content:', error);
+                this.error = 'Failed to generate content. Please try again.';
+                   this.loading = false;
+              }
+         });
+    }
 }

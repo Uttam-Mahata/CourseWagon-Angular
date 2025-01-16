@@ -1,21 +1,50 @@
-<div class="container">
-  <h3>Chapters</h3>
-  <div class="row">
-    <div class="col s12 m6" *ngFor="let chapter of chapters">
-      <div class="card">
-        <div class="card-content">
-          <span class="card-title">{{ chapter.name }}</span>
-          <p>{{ chapter.description }}</p>
-        </div>
-        <div class="card-action">
-          <button class="btn" (click)="viewTopics(chapter.id)">
-            <i class="fas fa-list"></i> View Topics
-          </button>
-          <button class="btn green right" (click)="generateTopics(chapter.id)">
-            <i class="fas fa-plus-circle"></i> Generate Topics
-          </button>
-        </div>
-      </div>
+<div class="container mt-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light p-2 rounded">
+            <li class="breadcrumb-item">
+                <a [routerLink]="['/home']"><i class="fa fa-home"></i> Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a [routerLink]="['/courses']"><i class="fa fa-book"></i> Courses</a>
+            </li>
+            <li class="breadcrumb-item">
+              <a [routerLink]="['/courses', courseId, 'subjects']"><i class="fa fa-list"></i> Subjects</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              <i class="fa fa-list-ol"></i> Chapters
+            </li>
+        </ol>
+    </nav>
+
+  <h3 class="text-primary mb-4">Chapters</h3>
+
+    <!-- Loading and Error Messages -->
+    <div *ngIf="loading" class="text-center">
+        <i class="fa fa-spinner fa-spin fa-3x text-primary"></i>
+        <p>Loading chapters...</p>
     </div>
-  </div>
+    <div *ngIf="error" class="alert alert-danger text-center">
+        {{ error }}
+    </div>
+    <div class="row" *ngIf="!loading && !error">
+        <div class="col-md-6 mb-4" *ngFor="let chapter of chapters">
+            <div class="card course-card shadow-sm h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title text-primary">{{ chapter.name }}</h5>
+                </div>
+                <div class="card-footer bg-white border-top-0 d-flex justify-content-between">
+                    <button class="btn btn-outline-primary" (click)="generateTopics(chapter.id)" [disabled]="loading">
+                        <i class="fa fa-magic"></i> Generate Topics
+                    </button>
+                    <button class="btn btn-primary" (click)="viewTopics(chapter.id)">
+                        <i class="fa fa-eye"></i> View Topics
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!chapters || chapters.length === 0 && !loading && !error" class="text-center mt-5">
+        <p>No chapters available. Please generate one.</p>
+    </div>
 </div>

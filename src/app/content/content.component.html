@@ -1,13 +1,53 @@
-<div class="container">
-  <h3>Content</h3>
-  <div class="row">
-      <div class="card">
-        <div class="card-content">
-          <!-- Display content in a structured format or raw JSON for now -->
-          <markdown mermaid katex *ngIf="content">{{content}}</markdown> <!-- For raw JSON display -->
+<div class="container mt-5">
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bg-light p-2 rounded">
+          <li class="breadcrumb-item">
+              <a [routerLink]="['/home']"><i class="fa fa-home"></i> Home</a>
+          </li>
+          <li class="breadcrumb-item">
+              <a [routerLink]="['/courses']"><i class="fa fa-book"></i> Courses</a>
+          </li>
+            <li class="breadcrumb-item">
+              <a [routerLink]="['/courses', courseId, 'subjects']"><i class="fa fa-list"></i> Subjects</a>
+          </li>
+           <li class="breadcrumb-item">
+              <a [routerLink]="['/courses', courseId, 'subjects', subjectId, 'chapters']"><i class="fa fa-list-ol"></i> Chapters</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a [routerLink]="['/courses', courseId, 'subjects', subjectId, 'chapters', chapterId, 'topics']"><i class="fa fa-list-ul"></i> Topics</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+              <i class="fa fa-file-alt"></i> Content
+          </li>
+      </ol>
+  </nav>
+   <div class="d-flex justify-content-between align-items-center">
+  <h3 class="text-primary mb-4">Content</h3>
+      <button class="btn btn-secondary" (click)="goBack()">
+          <i class="fa fa-arrow-left"></i> Back
+      </button>
+   </div>
 
-         
-        </div>
-      </div>
-    </div>
+  <!-- Loading and Error Messages -->
+  <div *ngIf="loading" class="text-center">
+      <i class="fa fa-spinner fa-spin fa-3x text-primary"></i>
+      <p>Loading content...</p>
   </div>
+  <div *ngIf="error" class="alert alert-danger text-center">
+      {{ error }}
+  </div>
+  <!-- Content Display -->
+  <div class="row" *ngIf="!loading && !error">
+      <div class="col-md-12">
+          <div class="card content-card shadow-sm">
+              <div class="card-body">
+                <markdown mermaid katex *ngIf="content">{{content}}</markdown>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div *ngIf="!content && !loading && !error" class="text-center mt-5">
+      <p>No content available for this topic.</p>
+  </div>
+</div>

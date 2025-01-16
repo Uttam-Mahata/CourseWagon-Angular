@@ -8,25 +8,53 @@ import { Router } from '@angular/router';
   styleUrls: ['./courses.component.css']
 })
 export class CoursesComponent implements OnInit {
-  courses: any[] = [];
+    courses: any[] = [];
+    loading: boolean = true; // To track loading state
+    error: string = ''; // To store error messages
 
-  constructor(private courseService: CourseService, private router: Router) {}
+    constructor(private courseService: CourseService, private router: Router) { }
 
-  ngOnInit() {
-    this.courseService.getCourses().subscribe((courses: any[]) => {
-      this.courses = courses;
-    });
-  }
+    ngOnInit() {
+        this.loadCourses();
+    }
 
-  generateSubjects(courseId: number) {
-    this.courseService.generateSubjects(courseId).subscribe(() => {
-      this.router.navigate([`/courses/${courseId}/subjects-modules`]);  // Navigate to subjects
-    });
-  }
-  viewSubjects(courseId: number) {
-    this.router.navigate([`/courses/${courseId}/subjects-modules`]);  // Navigate to subjects
-  }
-  navigateToCourseCreation() {
-    this.router.navigate(['/create-course']);
-  }
+    loadCourses() {
+        this.loading = true;
+        this.courseService.getCourses().subscribe({
+            next: (courses: any[]) => {
+                this.courses = courses;
+                this.loading = false;
+                this.error = '';
+            },
+            error: (error) => {
+                console.error('Error fetching courses:', error);
+                this.error = 'Failed to load courses. Please try again later.';
+                this.loading = false;
+            }
+        });
+    }
+
+    generateSubjects(courseId: number) {
+        this.loading = true;
+        this.courseService.generateSubjects(courseId).subscribe({
+            next: () => {
+                this.router.navigate([`/courses/${courseId}/subjects`]);  // Navigate to subjects
+                this.loading = false;
+                this.error = '';
+            },
+             error: (error) => {
+                console.error('Error generating subjects:', error);
+                this.error = 'Failed to generate subjects. Please try again.';
+                this.loading = false;
+            }
+        });
+    }
+
+    viewSubjects(courseId: number) {
+        this.router.navigate([`/courses/${courseId}/subjects`]);  // Navigate to subjects
+    }
+
+    navigateToCourseCreation() {
+        this.router.navigate(['/create-course']);
+    }
 }
