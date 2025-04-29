@@ -26,8 +26,39 @@
     </button>
   </div>
 
+  <!-- API Key Missing Alert -->
+  <div *ngIf="!userHasApiKey" class="alert alert-warning">
+    <i class="fa fa-exclamation-triangle"></i>
+    <strong>Google API Key Required:</strong> You need to add your Google API key to generate course content.
+    <button class="btn btn-sm btn-warning ms-2" (click)="navigateToProfile()">Set API Key</button>
+  </div>
+
+  <!-- Error Message Alert -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    <i class="fa fa-exclamation-circle"></i> {{ errorMessage }}
+  </div>
+
+  <!-- Loading Indicator -->
+  <div *ngIf="isLoading" class="d-flex justify-content-center my-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- No Courses Message -->
+  <div *ngIf="!isLoading && courses.length === 0" class="text-center my-5">
+    <div class="empty-state">
+      <i class="fa fa-book fa-3x text-muted mb-3"></i>
+      <h4>No courses yet</h4>
+      <p class="text-muted">Create your first course to get started</p>
+      <button class="btn btn-primary mt-2" (click)="navigateToCourseCreation()">
+        <i class="fa fa-plus"></i> Create Course
+      </button>
+    </div>
+  </div>
+
   <!-- Courses Cards -->
-  <div class="row">
+  <div class="row" *ngIf="!isLoading && courses.length > 0">
     <div class="col-md-6 mb-4" *ngFor="let course of courses">
       <div class="card course-card shadow-sm h-100">
         <div class="card-body d-flex flex-column">
@@ -35,7 +66,7 @@
           <p class="card-text text-muted flex-grow-1">{{ course.description }}</p>
         </div>
         <div class="card-footer bg-white border-top-0 d-flex justify-content-between">
-          <button class="btn btn-outline-primary" (click)="generateSubjects(course.id)">
+          <button class="btn btn-outline-primary" [disabled]="!userHasApiKey" (click)="generateSubjects(course.id)">
             <i class="fa fa-magic"></i> Generate Subjects
           </button>
           <button class="btn btn-primary" (click)="viewSubjects(course.id)">

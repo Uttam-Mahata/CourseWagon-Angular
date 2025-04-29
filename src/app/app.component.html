@@ -57,7 +57,7 @@
       <i [class]="isNavbarOpen ? 'fas fa-times' : 'fas fa-bars'"></i>
     </button>
 
-    <div class="navbar-collapse p-4 text-light" [ngClass]="{ 'show': isNavbarOpen }">
+    <div class="collapse navbar-collapse p-4 text-light" [ngClass]="{ 'show': isNavbarOpen }">
       <ul class="navbar-nav ms-auto">
         <!-- Show these items only when authenticated -->
         <ng-container *ngIf="isAuthenticated">

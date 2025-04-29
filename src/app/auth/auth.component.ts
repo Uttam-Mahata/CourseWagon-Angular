@@ -21,7 +21,8 @@ export class AuthComponent {
     email: '',
     password: '',
     first_name: '',
-    last_name: ''
+    last_name: '',
+    api_key: ''
   };
 
   constructor(
@@ -45,13 +46,24 @@ export class AuthComponent {
   }
 
   onLogin(): void {
+    if (!this.loginData.email || !this.loginData.password) {
+      this.errorMessage = 'Please enter both email and password';
+      return;
+    }
+    
+    console.log('Attempting login with email:', this.loginData.email);
+    
     this.authService.login(this.loginData.email, this.loginData.password)
       .subscribe({
-        next: () => {
-          this.router.navigate(['/courses']);
+        next: (response) => {
+          console.log('Login successful, response:', response);
+          setTimeout(() => {
+            this.router.navigate(['/courses']);
+          }, 100);
         },
         error: (error) => {
-          this.errorMessage = error.error.error || 'An unexpected error occurred';
+          console.error('Login error:', error);
+          this.errorMessage = error.error?.error || 'An unexpected error occurred';
         }
       });
   }
@@ -67,7 +79,8 @@ export class AuthComponent {
             email: '',
             password: '',
             first_name: '',
-            last_name: ''
+            last_name: '',
+            api_key: ''
           };
         },
         error: (error) => {

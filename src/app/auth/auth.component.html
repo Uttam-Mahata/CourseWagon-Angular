@@ -80,16 +80,28 @@
                 name="password" 
                 required>
             </div>
-            <button type="submit" class="btn btn-primary w-100 disabled">Sign Up</button>
+            <div class="mb-3">
+              <label for="apiKey" class="form-label">Google AI API Key (Optional)</label>
+              <input 
+                type="password" 
+                class="form-control" 
+                id="apiKey" 
+                [(ngModel)]="registerData.api_key" 
+                name="apiKey">
+              <small class="form-text text-muted">
+                You'll need this to generate course content. You can add it later in your profile.
+              </small>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Sign Up</button>
           </form>
 
           <div class="mt-3 text-center">
-            <!-- <button 
+            <button 
               type="button" 
               class="btn btn-link" 
               (click)="toggleMode()">
               {{ isLoginMode ? 'Need an account? Sign up' : 'Already have an account? Login' }}
-            </button> -->
+            </button>
           </div>
         </div>
       </div>

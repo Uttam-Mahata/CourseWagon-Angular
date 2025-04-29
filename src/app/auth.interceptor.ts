@@ -1,23 +1,59 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor,
+  HttpErrorResponse
+} from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  constructor(private authService: AuthService, private router: Router) {}
+
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const token = this.authService.getToken();
     
+    // Only add the Authorization header if token exists
     if (token) {
-      request = request.clone({
+      // Clone the request and add the Authorization header
+      const clonedRequest = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
         }
       });
+      
+      console.log(`Adding token to ${request.url}`);
+      return next.handle(clonedRequest).pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.error('HTTP Error:', error);
+          if (error.status === 401) {
+            console.log('Authentication error detected, logging out...');
+            this.authService.logout();
+            this.router.navigate(['/auth']);
+          }
+          return throwError(() => error);
+        })
+      );
     }
     
-    return next.handle(request);
+    // For debugging: log requests without tokens
+    console.log(`No token for request to ${request.url}`);
+    
+    // Pass through the original request if no token
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('HTTP Error:', error);
+        if (error.status === 401) {
+          this.router.navigate(['/auth']);
+        }
+        return throwError(() => error);
+      })
+    );
   }
 }

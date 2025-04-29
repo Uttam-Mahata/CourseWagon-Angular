@@ -1,0 +1,75 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-10 mx-auto">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h3 class="mb-0">My Profile</h3>
+        </div>
+        <div class="card-body">
+          <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show">
+            {{ successMessage }}
+            <button type="button" class="btn-close" (click)="clearMessages()"></button>
+          </div>
+
+          <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show">
+            {{ errorMessage }}
+            <button type="button" class="btn-close" (click)="clearMessages()"></button>
+          </div>
+
+          <div class="row" *ngIf="user">
+            <div class="col-md-4">
+              <div class="text-center mb-4">
+                <div class="avatar-circle mx-auto">
+                  <span class="avatar-text">{{ user?.first_name?.charAt(0) || '' }}{{ user?.last_name?.charAt(0) || '' }}</span>
+                </div>
+                <h4 class="mt-3">{{ user?.first_name }} {{ user?.last_name }}</h4>
+                <p class="text-muted">{{ user?.email }}</p>
+              </div>
+            </div>
+
+            <div class="col-md-8">
+              <div class="card mb-4">
+                <div class="card-header">
+                  <h5 class="mb-0">Google AI API Key</h5>
+                </div>
+                <div class="card-body">
+                  <p class="mb-3" [ngClass]="{'text-success': user?.has_api_key, 'text-danger': !user?.has_api_key}">
+                    <i class="fa" [ngClass]="{'fa-check-circle': user?.has_api_key, 'fa-times-circle': !user?.has_api_key}"></i>
+                    {{ user?.has_api_key ? 'API key is set' : 'API key not set - Add one to generate course content' }}
+                  </p>
+
+                  <form (ngSubmit)="updateApiKey()">
+                    <div class="mb-3">
+                      <label for="apiKey" class="form-label">Update API Key</label>
+                      <div class="input-group">
+                        <input 
+                          type="password" 
+                          class="form-control" 
+                          id="apiKey" 
+                          placeholder="Enter your Google AI API key" 
+                          [(ngModel)]="apiKey" 
+                          name="apiKey"
+                          required>
+                        <button 
+                          type="submit" 
+                          class="btn btn-primary" 
+                          [disabled]="isLoading">
+                          <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                          Update
+                        </button>
+                      </div>
+                      <small class="form-text text-muted">
+                        You need a Google AI API key to generate course content with Gemini. 
+                        <a href="https://ai.google.dev/tutorials/setup" target="_blank">Learn how to get an API key</a>
+                      </small>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

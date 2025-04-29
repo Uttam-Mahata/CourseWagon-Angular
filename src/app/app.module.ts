@@ -30,6 +30,8 @@ import { MermaidAPI } from 'ngx-markdown';
 import { MermaidViewComponent } from './mermaid-view/mermaid-view.component';
 import { AuthInterceptor } from './auth.interceptor';
 import { AuthGuard } from './auth.guard';
+import { ProfileComponent } from './profile/profile.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -52,8 +54,8 @@ import { AuthGuard } from './auth.guard';
     RegisterComponent,
     AuthComponent,
     MermaidViewComponent,
-    
-
+    ProfileComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -61,11 +63,7 @@ import { AuthGuard } from './auth.guard';
     FormsModule,
     AppRoutingModule,
     FontAwesomeModule,
-
-    MarkdownModule.forRoot(),
-
-
-    // Add AppRoutingModule here
+    MarkdownModule.forRoot()
   ],
   providers: [
     CourseService,
