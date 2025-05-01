@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { 
+  faEnvelope, faKey, faCheckCircle, faTimesCircle, 
+  faExclamationCircle, faTimes, faExternalLinkAlt 
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-profile',
@@ -9,6 +13,15 @@ import { Router } from '@angular/router';
     standalone: false
 })
 export class ProfileComponent implements OnInit {
+  // FontAwesome icons
+  faEnvelope = faEnvelope;
+  faKey = faKey;
+  faCheckCircle = faCheckCircle;
+  faTimesCircle = faTimesCircle;
+  faExclamationCircle = faExclamationCircle;
+  faTimes = faTimes;
+  faExternalLinkAlt = faExternalLinkAlt;
+
   user: any = null;
   apiKey: string = '';
   successMessage: string = '';

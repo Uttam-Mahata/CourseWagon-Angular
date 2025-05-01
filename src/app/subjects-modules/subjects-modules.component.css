@@ -91,3 +91,25 @@ a {
     font-size: 1rem;
   }
 }
+
+/* Add subtle pulse animation for generate buttons on hover */
+button.bg-emerald-600:hover:not(:disabled) {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(5, 150, 105, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(5, 150, 105, 0);
+  }
+}
+
+/* Add smooth scroll behavior for the entire component */
+:host {
+  scroll-behavior: smooth;
+}

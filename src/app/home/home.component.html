@@ -1,194 +1,162 @@
 <div class="landing-page">
-  <!-- Header Section -->
-  <header class="header text-white text-center py-5">
-    <div class="container">
-      <a class="navbar-brand" href="#">
-        <div class="logo-container bg-white p-1 d-inline-block rounded-circle mb-3">
-          <svg class="logo-svg mb-2" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-            <!-- Train Body -->
-            <rect x="100" y="150" width="200" height="80" rx="10" fill="#4a90e2"/>
-            <rect x="90" y="140" width="220" height="20" rx="5" fill="#2c3e50"/>
-            
-            <!-- Wheels -->
-            <circle cx="140" cy="240" r="25" fill="#34495e"/>
-            <circle cx="140" cy="240" r="15" fill="#95a5a6"/>
-            <circle cx="260" cy="240" r="25" fill="#34495e"/>
-            <circle cx="260" cy="240" r="15" fill="#95a5a6"/>
-            
-            <!-- Windows -->
-            <rect x="120" y="160" width="30" height="40" rx="5" fill="#f1c40f"/>
-            <rect x="160" y="160" width="30" height="40" rx="5" fill="#f1c40f"/>
-            <rect x="200" y="160" width="30" height="40" rx="5" fill="#f1c40f"/>
-            <rect x="240" y="160" width="30" height="40" rx="5" fill="#f1c40f"/>
-            
-            <!-- Icons in Windows, Centered -->
-            <text x="135" y="187" font-family="FontAwesome" font-size="20" text-anchor="middle" fill="#e74c3c">&#xf1ec;</text> <!-- Science (Flask icon) -->
-            <text x="175" y="187" font-family="FontAwesome" font-size="20" text-anchor="middle" fill="#27ae60">&#xf121;</text> <!-- Technology (Code icon) -->
-            <text x="215" y="187" font-family="FontAwesome" font-size="20" text-anchor="middle" fill="#8e44ad">&#xf5d2;</text> <!-- Engineering (Code icon) -->
-            <text x="255" y="187" font-family="FontAwesome" font-size="20" text-anchor="middle" fill="#d35400">&#xf1fe;</text> <!-- Math (Calculator icon) -->
-            
-            <!-- Train Front -->
-            <path d="M300 150 L320 150 L320 230 L300 230" fill="#4a90e2"/>
-            <rect x="310" y="160" width="20" height="20" rx="5" fill="#f1c40f"/>
-            
-            <!-- Smoke Stack -->
-            <rect x="290" y="120" width="15" height="30" fill="#7f8c8d"/>
-            
-            <!-- Smoke Clouds -->
-            <circle cx="297" cy="100" r="8" fill="#bdc3c7" opacity="0.8"/>
-            <circle cx="310" cy="85" r="10" fill="#bdc3c7" opacity="0.6"/>
-            <circle cx="325" cy="70" r="12" fill="#bdc3c7" opacity="0.4"/>
-            
-            <!-- Train Track -->
-            <line x1="50" y1="265" x2="350" y2="265" stroke="#34495e" stroke-width="8"/>
-            <line x1="50" y1="275" x2="350" y2="275" stroke="#34495e" stroke-width="8"/>
-            
-            <!-- Track Ties -->
-            <g fill="#7f8c8d">
-                <rect x="70" y="265" width="10" height="20"/>
-                <rect x="120" y="265" width="10" height="20"/>
-                <rect x="170" y="265" width="10" height="20"/>
-                <rect x="220" y="265" width="10" height="20"/>
-                <rect x="270" y="265" width="10" height="20"/>
-                <rect x="320" y="265" width="10" height="20"/>
-            </g>
-        </svg>
-        </div>
-        <span class="brand-text d-block">Course Wagon</span>
-      </a>
-      <h1 class="display-4">Welcome to Course Wagon</h1>
-      <p class="lead">Your destination for AI-powered learning experiences.</p>
-      <a routerLink="/create-course" class="btn btn-light btn-lg mt-3 rounded-pill btn-hover">
-         <!-- Add Magic icon -->
-        <i class="fa fa-magic"></i>
-       Get Started
-      </a>
-    </div>
-    <div class="features py-5">
-      <div class="container">
-        <h2 class="text-center mb-4">Why Choose Course Wagon?</h2>
-        <div class="row">
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <div class="card-body text-center">
-                <i class="fa fa-brain fa-3x mb-3"></i>
-                <h5 class="card-title">AI-Powered Courses</h5>
-                <p class="card-text">Leverage Generative AI to create tailored learning paths that suit your needs.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <div class="card-body text-center">
-                <i class="fa fa-laptop-code fa-3x mb-3"></i>
-                <h5 class="card-title">Interactive Learning</h5>
-                <p class="card-text">Engage with interactive content, quizzes, and assessments to reinforce your understanding.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <div class="card-body text-center">
-                <i class="fa fa-chart-line fa-3x mb-3"></i>
-                <h5 class="card-title">Track Your Progress</h5>
-                <p class="card-text">Monitor your learning journey with detailed analytics and progress tracking tools.</p>
-              </div>
-            </div>
+  <header class="animated-gradient text-white py-16 md:py-24 relative overflow-hidden">
+    <div class="absolute inset-0 bg-black opacity-20 z-0"></div>
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="text-center mb-12">
+        <div class="flex justify-center mb-4">
+          <div class="bg-white p-3 rounded-full shadow-lg inline-block">
+            <img src="/coursewagon.png" alt="Course Wagon Logo" class="h-16 w-auto">
           </div>
         </div>
+        <span class="text-2xl font-bold block mt-3">Course Wagon</span>
+        <h1 class="text-4xl md:text-6xl font-extrabold mt-4 mb-5 tracking-tight">Welcome to Course Wagon</h1>
+        <p class="text-lg md:text-xl mb-10 opacity-80 max-w-2xl mx-auto">Your destination for modern, AI-powered learning experiences tailored just for you.</p>
+        <a routerLink="/create-course" class="bg-white text-indigo-600 hover:bg-indigo-50 font-bold py-4 px-10 rounded-full shadow-xl transition duration-300 inline-flex items-center transform hover:scale-105 hover:shadow-2xl">
+          <fa-icon [icon]="faMagic" class="mr-2"></fa-icon>
+          Get Started
+        </a>
       </div>
     </div>
   </header>
-  <br>
 
-  <section class="how-it-works py-5 mt-4">
-    <div class="container">
-      <h2 class="text-center mb-5">How Course Wagon Works</h2>
-      <div class="row text-center">
-        <!-- Step 1: Generate Course Name -->
-        <div class="col-md-3 mb-4 d-flex">
-          <div class="work-step p-4 rounded shadow">
-            <i class="fa fa-book-open fa-3x mb-3 text-icon-gradient"></i>
-            <h5>1. Generate Course Name</h5>
-            <p>Enter your course idea, and Course Wagon will generate a unique course name for you.</p>
+  <!-- Why Choose Section -->
+  <section class="py-16 md:py-20 bg-gradient-to-b from-indigo-50 via-white to-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-center text-3xl font-bold mb-10">Why Choose Course Wagon?</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white bg-opacity-90 rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+          <div class="p-6 text-center">
+            <div class="mb-4 text-blue-600">
+              <fa-icon [icon]="faBrain" class="text-4xl"></fa-icon>
+            </div>
+            <h5 class="text-xl font-semibold mb-2 text-gray-800">AI-Powered Courses</h5>
+            <p class="text-gray-600">Leverage Generative AI to create tailored learning paths that suit your needs.</p>
           </div>
         </div>
-        <!-- Step 2: Add to Cart & Purchase -->
-        <div class="col-md-3 mb-4 d-flex">
-          <div class="work-step p-4 rounded shadow">
-            <i class="fa fa-shopping-cart fa-3x mb-3 text-icon-gradient"></i>
-            <h5>2. Add to Cart & Purchase</h5>
-            <p>Add your course to the cart, complete the purchase, and unlock the content generation flow.</p>
+        <div class="bg-white bg-opacity-90 rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+          <div class="p-6 text-center">
+            <div class="mb-4 text-blue-600">
+              <fa-icon [icon]="faLaptopCode" class="text-4xl"></fa-icon>
+            </div>
+            <h5 class="text-xl font-semibold mb-2 text-gray-800">Interactive Learning</h5>
+            <p class="text-gray-600">Engage with interactive content, quizzes, and assessments to reinforce your understanding.</p>
           </div>
         </div>
-        <!-- Step 3: Generate Subjects & Modules -->
-        <div class="col-md-3 mb-4 d-flex">
-          <div class="work-step p-4 rounded shadow">
-            <i class="fa fa-layer-group fa-3x mb-3 text-icon-gradient"></i>
-            <h5>3. Generate Subjects & Modules</h5>
-            <p>Leverage AI to automatically create course subjects and modules customized to your course.</p>
-          </div>
-        </div>
-        <!-- Step 4: Dive into Topics & Content -->
-        <div class="col-md-3 mb-4 d-flex">
-          <div class="work-step p-4 rounded shadow">
-            <i class="fa fa-sitemap fa-3x mb-3 text-icon-gradient"></i>
-            <h5>4. Dive into Topics & Content</h5>
-            <p>Expand modules into chapters, topics, subtopics, and comprehensive content.</p>
+        <div class="bg-white bg-opacity-90 rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+          <div class="p-6 text-center">
+            <div class="mb-4 text-blue-600">
+              <fa-icon [icon]="faChartLine" class="text-4xl"></fa-icon>
+            </div>
+            <h5 class="text-xl font-semibold mb-2 text-gray-800">Track Your Progress</h5>
+            <p class="text-gray-600">Monitor your learning journey with detailed analytics and progress tracking tools.</p>
           </div>
         </div>
       </div>
-     
     </div>
   </section>
-  
 
-  <!-- Testimonials Section -->
-  <section class="testimonials bg-light py-5">
-    <div class="container">
-      <h2 class="text-center mb-4">What Our Users Say</h2>
-      <div class="row">
-        <div class="col-md-4 d-flex p-2">
-          <div class="testimonial text-center p-4">
-            <div class="testimonial-icon">
-              <i class="fa fa-user"></i>
+  <!-- How it Works Section -->
+  <section class="py-16 md:py-20 bg-white relative">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800">
+        How Course Wagon Works
+        <span class="block text-lg font-normal text-indigo-600 mt-2">Simple steps to your personalized course</span>
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Step 1 -->
+        <div class="flex">
+          <div class="bg-white p-6 rounded-xl shadow-md w-full transition-all duration-300 hover:shadow-xl relative glass-card">
+            <div class="absolute -top-4 -left-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold">1</div>
+            <div class="text-blue-500 mb-4 text-center">
+              <fa-icon [icon]="faBookOpen" class="text-4xl"></fa-icon>
             </div>
-            <p>"Course Wagon transformed my learning experience! The AI-generated content is incredibly helpful."</p>
-            <h6>- Alex J.</h6>
+            <h5 class="text-xl font-semibold mb-3 text-center">Generate Course Name</h5>
+            <p class="text-gray-600">Enter your course idea, and Course Wagon will generate a unique course name for you.</p>
           </div>
         </div>
-        <div class="col-md-4 d-flex p-2">
-          <div class="testimonial text-center p-4">
-            <div class="testimonial-icon">
-              <i class="fa fa-user"></i>
+        <!-- Step 2 -->
+        <div class="flex">
+          <div class="bg-white p-6 rounded-xl shadow-md w-full transition-all duration-300 hover:shadow-xl relative glass-card">
+            <div class="absolute -top-4 -left-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold">2</div>
+            <div class="text-blue-500 mb-4 text-center">
+              <fa-icon [icon]="faShoppingCart" class="text-4xl"></fa-icon>
             </div>
-            <p>"I love the interactive features and how easy it is to track my progress!"</p>
-            <h6>- Sarah L.</h6>
+            <h5 class="text-xl font-semibold mb-3 text-center">Add to Cart & Purchase</h5>
+            <p class="text-gray-600">Add your course to the cart, complete the purchase, and unlock the content generation flow.</p>
           </div>
         </div>
-        <div class="col-md-4 d-flex p-2">
-          <div class="testimonial text-center p-4">
-            <div class="testimonial-icon">
-              <i class="fa fa-user"></i>
+        <!-- Step 3 -->
+        <div class="flex">
+          <div class="bg-white p-6 rounded-xl shadow-md w-full transition-all duration-300 hover:shadow-xl relative glass-card">
+            <div class="absolute -top-4 -left-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold">3</div>
+            <div class="text-blue-500 mb-4 text-center">
+              <fa-icon [icon]="faLayerGroup" class="text-4xl"></fa-icon>
             </div>
-            <p>"The personalized learning paths have made a huge difference in my studies."</p>
-            <h6>- John D.</h6>
+            <h5 class="text-xl font-semibold mb-3 text-center">Generate Subjects & Modules</h5>
+            <p class="text-gray-600">Leverage AI to automatically create course subjects and modules customized to your course.</p>
+          </div>
+        </div>
+        <!-- Step 4 -->
+        <div class="flex">
+          <div class="bg-white p-6 rounded-xl shadow-md w-full transition-all duration-300 hover:shadow-xl relative glass-card">
+            <div class="absolute -top-4 -left-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold">4</div>
+            <div class="text-blue-500 mb-4 text-center">
+              <fa-icon [icon]="faSitemap" class="text-4xl"></fa-icon>
+            </div>
+            <h5 class="text-xl font-semibold mb-3 text-center">Dive into Topics & Content</h5>
+            <p class="text-gray-600">Expand modules into chapters, topics, subtopics, and comprehensive content.</p>
           </div>
         </div>
       </div>
     </div>
-</section>
+  </section>
 
-
+  <!-- Testimonials Section -->
+  <section class="py-16 md:py-20 bg-gradient-to-b from-white via-indigo-50 to-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">What Our Users Say</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-gray-50 rounded-xl shadow-md p-8 transition-all duration-300 hover:shadow-xl testimonial-card">
+          <div class="flex justify-center mb-4">
+            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-blue-500">
+              <fa-icon [icon]="faUser" class="text-2xl"></fa-icon>
+            </div>
+          </div>
+          <p class="text-gray-700 text-center italic mb-4">"Course Wagon transformed my learning experience! The AI-generated content is incredibly helpful."</p>
+          <h6 class="text-center font-semibold text-blue-600">- Alex J.</h6>
+        </div>
+        <div class="bg-gray-50 rounded-xl shadow-md p-8 transition-all duration-300 hover:shadow-xl testimonial-card">
+          <div class="flex justify-center mb-4">
+            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-blue-500">
+              <fa-icon [icon]="faUser" class="text-2xl"></fa-icon>
+            </div>
+          </div>
+          <p class="text-gray-700 text-center italic mb-4">"I love the interactive features and how easy it is to track my progress!"</p>
+          <h6 class="text-center font-semibold text-blue-600">- Sarah L.</h6>
+        </div>
+        <div class="bg-gray-50 rounded-xl shadow-md p-8 transition-all duration-300 hover:shadow-xl testimonial-card">
+          <div class="flex justify-center mb-4">
+            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-blue-500">
+              <fa-icon [icon]="faUser" class="text-2xl"></fa-icon>
+            </div>
+          </div>
+          <p class="text-gray-700 text-center italic mb-4">"The personalized learning paths have made a huge difference in my studies."</p>
+          <h6 class="text-center font-semibold text-blue-600">- John D.</h6>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Call to Action Section -->
-  <section class="cta text-center py-5 mt-4">
-    <div class="container">
-      <h2 class="mb-4 display-4 font-weight-bold text-light">Ready to Begin Your Journey?</h2>
-      <a href="#" class="btn btn-primary btn-lg rounded-pill btn-hover">
-        <i class="fa fa-user-plus"></i> Join Course Wagon Today!
+  <section class="py-16 md:py-24 animated-gradient text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-black opacity-30 z-0"></div>
+    <div class="container mx-auto px-6 text-center relative z-10">
+      <h2 class="text-3xl md:text-4xl font-bold mb-8 tracking-tight">Ready to Begin Your AI Learning Journey?</h2>
+      <p class="text-lg md:text-xl mb-10 opacity-80 max-w-xl mx-auto">Join thousands of learners embracing the future of education.</p>
+      <a href="#" class="cta-button bg-white text-indigo-600 hover:bg-indigo-50 font-bold py-4 px-10 rounded-full shadow-xl transition duration-300 inline-flex items-center transform hover:scale-105 hover:shadow-2xl">
+        <fa-icon [icon]="faUserPlus" class="mr-2"></fa-icon>
+        Join Course Wagon Today!
       </a>
     </div>
-</section>
-
+  </section>
 </div>

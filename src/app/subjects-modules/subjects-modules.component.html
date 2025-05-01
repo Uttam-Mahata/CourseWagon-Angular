@@ -1,59 +1,102 @@
-<div class="container mt-5">
+<div class="container mx-auto px-4 py-8 max-w-7xl">
   <!-- Breadcrumb -->
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb bg-light p-2 rounded">
-      <li class="breadcrumb-item"><a routerLink="/home"><i class="fa fa-home"></i> Home</a></li>
-      <li class="breadcrumb-item"><a routerLink="/courses"><i class="fa fa-book"></i> Courses</a></li>
-      <li class="breadcrumb-item active" aria-current="page">
-        <i class="fa fa-layer-group"></i> {{ courseName }}
+  <nav class="mb-6">
+    <ol class="flex items-center space-x-2 text-sm">
+      <li class="flex items-center">
+        <a routerLink="/home" class="text-blue-600 hover:text-blue-800 flex items-center transition duration-200">
+          <fa-icon [icon]="faHome" class="mr-1"></fa-icon> Home
+        </a>
+      </li>
+      <li class="flex items-center">
+        <span class="mx-2 text-gray-500">/</span>
+        <a routerLink="/courses" class="text-blue-600 hover:text-blue-800 flex items-center transition duration-200">
+          <fa-icon [icon]="faBook" class="mr-1"></fa-icon> Courses
+        </a>
+      </li>
+      <li class="flex items-center">
+        <span class="mx-2 text-gray-500">/</span>
+        <span class="text-gray-700 flex items-center">
+          <fa-icon [icon]="faLayerGroup" class="mr-1"></fa-icon> {{ courseName }}
+        </span>
       </li>
     </ol>
   </nav>
 
   <!-- Page Title -->
-  <h3 class="text-primary mb-4">{{courseName}}</h3>
+  <h1 class="text-2xl font-bold text-gray-800 mb-8">{{ courseName }}</h1>
 
-  <div class="row">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
     <!-- Subjects Column -->
-    <div class="col-lg-4">
-      <h5 class="text-secondary">Subjects</h5>
-      <div *ngFor="let subject of subjects" class="card mb-3 shadow-sm subject-card">
-        <div class="card-body">
-          <h6 class="card-title text-primary">{{ subject.name }}</h6>
-          <p class="card-text text-muted">{{ subject.description }}</p>
-          <button class="btn btn-sm btn-outline-primary" (click)="viewModules(subject.id)">
-            <i class="fa fa-eye"></i> View Modules
-          </button>
-          <button class="btn btn-sm btn-outline-success float-end" (click)="generateModules(subject.id)">
-            <i class="fa fa-magic"></i> Generate Modules
-          </button>
+    <div class="lg:col-span-4">
+      <div class="bg-white rounded-xl shadow-md p-4 mb-6">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+          <div class="h-6 w-1 bg-blue-600 rounded mr-2"></div>
+          Subjects
+        </h2>
+
+        <div *ngFor="let subject of subjects" class="mb-4">
+          <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition duration-200">
+            <h3 class="text-lg font-medium text-gray-800 mb-2">{{ subject.name }}</h3>
+            <p class="text-gray-600 text-sm mb-4">{{ subject.description }}</p>
+            <div class="flex justify-between">
+              <button 
+                class="flex items-center bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 px-3 py-1.5 rounded-md text-sm transition duration-200"
+                (click)="viewModules(subject.id)">
+                <fa-icon [icon]="faEye" class="mr-1.5"></fa-icon> 
+                View Modules
+              </button>
+              <button 
+                class="flex items-center bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-md text-sm transition duration-200"
+                [disabled]="isGenerating && generatingSubjectId === subject.id"
+                [ngClass]="{'opacity-70 cursor-not-allowed': isGenerating && generatingSubjectId === subject.id}"
+                (click)="generateModules(subject.id)">
+                <div *ngIf="isGenerating && generatingSubjectId === subject.id" class="animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white mr-1.5"></div>
+                <fa-icon *ngIf="!(isGenerating && generatingSubjectId === subject.id)" [icon]="faMagic" class="mr-1.5"></fa-icon>
+                {{ (isGenerating && generatingSubjectId === subject.id) ? 'Generating...' : 'Generate' }}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Modules Column -->
-    <div class="col-lg-8" id="modulesSection">
-      <h5 class="text-secondary">{{ selectedSubjectName ? selectedSubjectName + ' Modules' : 'Modules' }}</h5>
-      
-      <div *ngIf="modules.length === 0 && !selectedSubjectId" class="alert alert-info">
-        <i class="fa fa-info-circle"></i> Please select a subject to view its modules.
-      </div>
+    <div class="lg:col-span-8" id="modulesSection">
+      <div class="bg-white rounded-xl shadow-md p-4">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+          <div class="h-6 w-1 bg-blue-600 rounded mr-2"></div>
+          {{ selectedSubjectName ? selectedSubjectName + ' Modules' : 'Modules' }}
+        </h2>
+        
+        <!-- No selection info -->
+        <div *ngIf="modules.length === 0 && !selectedSubjectId" class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-md flex items-center">
+          <fa-icon [icon]="faInfoCircle" class="text-blue-600 mr-3 text-lg"></fa-icon>
+          <p class="text-blue-700">Please select a subject to view its modules.</p>
+        </div>
 
-      <!-- Grid Display for Modules on Desktop -->
-      <div *ngIf="modules.length > 0" class="row">
-        <div *ngFor="let module of modules" class="col-md-6 mb-4">
-          <div class="card shadow-sm h-100 border-primary module-card">
-            <div class="card-body">
-              <h6 class="card-title text-light">{{ module.name }}</h6>
-              <p class="card-text text-muted">{{ module.description }}</p>
-            </div>
-            <div class="card-footer bg-white border-top-0 d-flex justify-content-between">
-              <button class="btn btn-outline-primary" (click)="viewChapters(module.id)">
-                <i class="fa fa-book-open"></i> View Chapters
-              </button>
-              <button class="btn btn-outline-success" (click)="generateChapters(module.id)">
-                <i class="fa fa-magic"></i> Generate Chapters
-              </button>
+        <!-- Modules Grid -->
+        <div *ngIf="modules.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div *ngFor="let module of modules" class="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 rounded-lg overflow-hidden hover:shadow-md transition duration-200">
+            <div class="p-5">
+              <h3 class="text-lg font-medium text-gray-800 mb-2">{{ module.name }}</h3>
+              <p class="text-gray-600 text-sm mb-4">{{ module.description }}</p>
+              <div class="flex justify-between">
+                <button 
+                  class="flex items-center bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 px-3 py-1.5 rounded-md text-sm transition duration-200"
+                  (click)="viewChapters(module.id)">
+                  <fa-icon [icon]="faBookOpen" class="mr-1.5"></fa-icon> 
+                  Chapters
+                </button>
+                <button 
+                  class="flex items-center bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-md text-sm transition duration-200"
+                  [disabled]="isGenerating && generatingModuleId === module.id"
+                  [ngClass]="{'opacity-70 cursor-not-allowed': isGenerating && generatingModuleId === module.id}"
+                  (click)="generateChapters(module.id)">
+                  <div *ngIf="isGenerating && generatingModuleId === module.id" class="animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white mr-1.5"></div>
+                  <fa-icon *ngIf="!(isGenerating && generatingModuleId === module.id)" [icon]="faMagic" class="mr-1.5"></fa-icon> 
+                  {{ (isGenerating && generatingModuleId === module.id) ? 'Generating...' : 'Generate' }}
+                </button>
+              </div>
             </div>
           </div>
         </div>

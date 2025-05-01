@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
+import { 
+  faHome, faBook, faLayerGroup, faList, faPlusCircle, 
+  faEye, faMagic, faInfoCircle, faChevronRight 
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-chapters-topics',
@@ -9,6 +13,17 @@ import { CourseService } from '../services/course.service';
     standalone: false
 })
 export class ChaptersTopicsComponent implements OnInit {
+  // FontAwesome icons
+  faHome = faHome;
+  faBook = faBook;
+  faLayerGroup = faLayerGroup;
+  faList = faList;
+  faPlusCircle = faPlusCircle;
+  faEye = faEye;
+  faMagic = faMagic;
+  faInfoCircle = faInfoCircle;
+  faChevronRight = faChevronRight;
+  
   chapters: any[] = [];
   topics: any[] = [];
   courseId: number;
@@ -18,6 +33,10 @@ export class ChaptersTopicsComponent implements OnInit {
   moduleName: string = '';
   selectedChapterId: number | null = null;
   selectedChapterName: string | null = null;
+  isGeneratingTopics: boolean = false;
+  generatingChapterId: number | null = null;
+  isGeneratingSubtopics: boolean = false;
+  generatingTopicId: number | null = null;
 
   constructor(
     private courseService: CourseService,
@@ -54,21 +73,45 @@ export class ChaptersTopicsComponent implements OnInit {
   }
 
   generateTopics(chapterId: number) {
+    // Show loading state
+    this.isGeneratingTopics = true;
+    this.generatingChapterId = chapterId;
+    
     // Trigger topic generation for a chapter
-    this.courseService.generateTopics(this.courseId, this.subjectId, this.moduleId, chapterId).subscribe(() => {
-      this.viewTopics(chapterId);  // Reload topics after generation
+    this.courseService.generateTopics(this.courseId, this.subjectId, this.moduleId, chapterId).subscribe({
+      next: () => {
+        this.viewTopics(chapterId);  // Reload topics after generation
+        this.isGeneratingTopics = false;
+        this.generatingChapterId = null;
+      },
+      error: (error) => {
+        console.error('Error generating topics:', error);
+        this.isGeneratingTopics = false;
+        this.generatingChapterId = null;
+      }
     });
   }
 
   generateSubtopics(topicId: number) {
+    // Show loading state
+    this.isGeneratingSubtopics = true;
+    this.generatingTopicId = topicId;
+    
     // Trigger subtopic generation for a topic
-    this.courseService.generateSubtopics(this.courseId, this.subjectId, this.moduleId, this.selectedChapterId!, topicId).subscribe(() => {
-      // Optionally, refresh topics or show a message
-      // Show a message
-      alert('Subtopics generated successfully!');
-
-      // Reload topics after generation
-      this.viewTopics(this.selectedChapterId!);
+    this.courseService.generateSubtopics(this.courseId, this.subjectId, this.moduleId, this.selectedChapterId!, topicId).subscribe({
+      next: () => {
+        // Reset loading state
+        this.isGeneratingSubtopics = false;
+        this.generatingTopicId = null;
+        
+        // Reload topics after generation
+        this.viewTopics(this.selectedChapterId!);
+      },
+      error: (error) => {
+        console.error('Error generating subtopics:', error);
+        this.isGeneratingSubtopics = false;
+        this.generatingTopicId = null;
+      }
     });
   }
 

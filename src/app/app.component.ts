@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
+import { faBars, faTimes, faGraduationCap, faShoppingCart, faBook, faUser, faPowerOff, faSignInAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons'; // Import icons
 
 @Component({
     selector: 'app-root',
@@ -11,6 +12,17 @@ export class AppComponent implements OnInit {
   title = 'CourseWagon';
   isAuthenticated = false;
   isNavbarOpen = false;
+
+  // Assign icons to properties
+  faBars = faBars;
+  faTimes = faTimes;
+  faGraduationCap = faGraduationCap;
+  faShoppingCart = faShoppingCart;
+  faBook = faBook;
+  faUser = faUser;
+  faPowerOff = faPowerOff;
+  faSignInAlt = faSignInAlt;
+  faUserPlus = faUserPlus;
 
   constructor(private authService: AuthService) {}
 

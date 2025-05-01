@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faEnvelope, faLock, faUser, faUserPlus, faSignInAlt, faKey, faExclamationTriangle, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-auth',
     templateUrl: './auth.component.html',
-    styleUrls: ['./auth.component.scss'],
     standalone: false
 })
 export class AuthComponent {
@@ -28,8 +29,13 @@ export class AuthComponent {
 
   constructor(
     private authService: AuthService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private faLibrary: FaIconLibrary
+  ) {
+    faLibrary.addIcons(
+      faEnvelope, faLock, faUser, faUserPlus, faSignInAlt, faKey, faExclamationTriangle, faCheckCircle
+    );
+  }
 
   toggleMode(): void {
     this.isLoginMode = !this.isLoginMode;

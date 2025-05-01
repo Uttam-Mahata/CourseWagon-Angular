@@ -1,162 +1,162 @@
-<div class="course">
-
+<div class="min-h-screen bg-gradient-to-b from-white to-blue-50">
   <!-- Header Section -->
-  <header class="bg-primary text-white text-center py-5">
-    <div class="create-course">
-    <div class="container">
-      <h1 class="display-4">Create Your Course</h1>
-      <p class="lead">Start your journey with AI-powered course creation!</p>
+  <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute top-0 left-0 w-full h-full bg-pattern"></div>
     </div>
-  </div>
-  <div class="container mt-5">
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="text-center max-w-3xl mx-auto">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Create Your Course</h1>
+        <p class="text-xl opacity-90">Start your journey with AI-powered course creation!</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="container mx-auto px-4 py-12 max-w-6xl">
     <!-- API Key Missing Alert -->
-    <div *ngIf="!userHasApiKey" class="alert alert-warning text-center mb-4">
-      <i class="fa fa-exclamation-triangle"></i>
-      <strong>Google API Key Required:</strong> You need to add your Google API key to generate course content.
-      <button class="btn btn-sm btn-warning ms-2" (click)="navigateToProfile()">Set API Key</button>
+    <div *ngIf="!userHasApiKey" class="bg-amber-50 border-l-4 border-amber-500 p-4 mb-8 rounded-md flex items-center">
+      <fa-icon [icon]="faExclamationTriangle" class="text-amber-500 mr-3 text-lg"></fa-icon>
+      <div class="flex-1">
+        <p class="font-medium">Google API Key Required:</p>
+        <p class="text-sm text-gray-600">You need to add your Google API key to generate course content.</p>
+      </div>
+      <button 
+        class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-2 rounded-md text-sm transition duration-200 flex items-center" 
+        (click)="navigateToProfile()">
+        <fa-icon [icon]="faKey" class="mr-2"></fa-icon>
+        Set API Key
+      </button>
     </div>
 
     <!-- Error Message -->
-    <div *ngIf="errorMessage" class="alert alert-danger text-center mb-4">
-      <i class="fa fa-exclamation-circle"></i> {{ errorMessage }}
+    <div *ngIf="errorMessage" class="bg-red-50 border-l-4 border-red-500 p-4 mb-8 rounded-md flex items-center">
+      <fa-icon [icon]="faExclamationCircle" class="text-red-500 mr-3 text-lg"></fa-icon>
+      <p class="text-red-700">{{ errorMessage }}</p>
     </div>
 
-    <div class="row">
-      <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3 p-4">
-        <div class="wagon-card shadow-lg rounded gradient-border">
+    <!-- Create Course Card -->
+    <div class="max-w-xl mx-auto">
+      <div class="bg-white rounded-2xl shadow-xl border border-blue-100 overflow-hidden mb-12 transform transition-all hover:shadow-2xl">
+        <div class="p-8">
           <!-- Title and Description -->
-          <div class="text-center mb-4">
-            <h2 style="color: #2c3e50;">
-              <i class="fa fa-chalkboard-teacher text-primary"></i> Course Wagon
-            </h2>
-            <p class="text-muted">Transform your idea into structured courses</p>
+          <div class="text-center mb-8">
+            <div class="h-16 w-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <fa-icon [icon]="faChalkboardTeacher" class="text-white text-2xl"></fa-icon>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Course Wagon</h2>
+            <p class="text-gray-500">Transform your idea into structured courses</p>
           </div>
           
           <!-- Course Name Input Field -->
-          <div class="mb-3">
-            <input 
-              id="courseName" 
-              type="text" 
-              class="form-control" 
-              placeholder="Enter Course Name" 
-              [(ngModel)]="courseName"
-            />
+          <div class="mb-6">
+            <label for="courseName" class="block text-sm font-medium text-gray-700 mb-1">Course Name</label>
+            <div class="relative">
+              <fa-icon [icon]="faBook" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></fa-icon>
+              <input 
+                id="courseName" 
+                type="text" 
+                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                placeholder="Enter your course topic..." 
+                [(ngModel)]="courseName"
+              />
+            </div>
           </div>
   
           <!-- Generate Course Button -->
           <div class="text-center">
-            <button class="btn gradient-btn btn-large" 
-                    (click)="generateCourse()" 
-                    [disabled]="isLoading || !userHasApiKey">
-              <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-              <i *ngIf="!isLoading" class="fa fa-magic"></i> 
-              {{ isLoading ? 'Generating...' : 'Generate Course' }}
+            <button 
+              [disabled]="isLoading || !userHasApiKey" 
+              (click)="generateCourse()"
+              class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 px-6 rounded-lg font-medium transition duration-300 transform hover:-translate-y-0.5 shadow-md focus:ring-4 focus:ring-blue-300 focus:outline-none"
+              [ngClass]="{'opacity-75 cursor-not-allowed': isLoading || !userHasApiKey}">
+              <div *ngIf="isLoading" class="inline-flex items-center">
+                <div class="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-2"></div>
+                <span>Generating...</span>
+              </div>
+              <div *ngIf="!isLoading" class="flex items-center justify-center">
+                <fa-icon [icon]="faMagic" class="mr-2"></fa-icon>
+                <span>Generate Course</span>
+              </div>
             </button>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  
-  </header>
-  
-  <div class="container">
- 
-    <!-- Info Cards -->
-   
-    
 
     <!-- How It Works Section -->
-    <div class="steps-section mt-5">
-      <h3 class="text-center mb-4">How It Works</h3>
-      <div class="row">
-        <div class="col-md-4 mb-4">
-          <div class="step-card gradient-border">
-            <div class="d-flex align-items-center mb-3">
-              <div class="feature-icon">1</div>
-              <h5 class="mb-0">Enter Course Name</h5>
-            </div>
-            <p>Simply input your desired course topic and let our AI understand your requirements.</p>
+    <div class="mb-16">
+      <h3 class="text-2xl font-bold text-gray-800 text-center mb-10">How It Works</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition-all">
+          <div class="flex items-center mb-4">
+            <div class="h-10 w-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold mr-3">1</div>
+            <h5 class="text-lg font-medium text-gray-800">Enter Course Name</h5>
           </div>
+          <p class="text-gray-600">Simply input your desired course topic and let our AI understand your requirements.</p>
         </div>
-        <div class="col-md-4 mb-4">
-          <div class="step-card gradient-border">
-            <div class="d-flex align-items-center mb-3">
-              <div class="feature-icon">2</div>
-              <h5 class="mb-0">AI Generation</h5>
-            </div>
-            <p>AI analyzes and creates a structured curriculum with detailed modules.</p>
+        
+        <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition-all">
+          <div class="flex items-center mb-4">
+            <div class="h-10 w-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold mr-3">2</div>
+            <h5 class="text-lg font-medium text-gray-800">AI Generation</h5>
           </div>
+          <p class="text-gray-600">AI analyzes and creates a structured curriculum with detailed modules.</p>
         </div>
-        <div class="col-md-4 mb-4">
-          <div class="step-card gradient-border">
-            <div class="d-flex align-items-center mb-3">
-              <div class="feature-icon">3</div>
-              <h5 class="mb-0">Manually Add Subjects</h5>
-            </div>
-            <p>Add subjects to your course manually then generate content on those by AI.</p>
+        
+        <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition-all">
+          <div class="flex items-center mb-4">
+            <div class="h-10 w-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold mr-3">3</div>
+            <h5 class="text-lg font-medium text-gray-800">Manually Add Subjects</h5>
           </div>
+          <p class="text-gray-600">Add subjects to your course manually then generate content on those by AI.</p>
         </div>
       </div>
     </div>
-    
 
     <!-- Features Section -->
-    <div class="features-section">
-      <h3 class="text-center mb-4">Key Features</h3>
-      <div class="row">
-        <div class="col-md-6 d-flex mb-4">
-          <div class="feature-item gradient-border d-flex flex-grow-1">
-            <div class="feature-icon">
-              <i class="fa fa-brain"></i>
-            </div>
-            <div>
-              <h5>AI-Powered Content Generation</h5>
-              <p>Automatically generate comprehensive course content with our advanced AI technology.</p>
-            </div>
+    <div class="mb-12">
+      <h3 class="text-2xl font-bold text-gray-800 text-center mb-10">Key Features</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition-all flex">
+          <div class="h-12 w-12 rounded-full bg-blue-600 flex items-center justify-center text-white mr-4">
+            <fa-icon [icon]="faBrain"></fa-icon>
+          </div>
+          <div>
+            <h5 class="text-lg font-medium text-gray-800 mb-2">AI-Powered Content Generation</h5>
+            <p class="text-gray-600">Automatically generate comprehensive course content with our advanced AI technology.</p>
           </div>
         </div>
-        <div class="col-md-6 d-flex mb-4">
-          <div class="feature-item gradient-border d-flex flex-grow-1">
-            <div class="feature-icon">
-              <i class="fa fa-tasks"></i>
-            </div>
-            <div>
-              <h5>Interactive Assessments</h5>
-              <p>Create engaging quizzes and assignments to test knowledge retention.</p>
-            </div>
+        
+        <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition-all flex">
+          <div class="h-12 w-12 rounded-full bg-blue-600 flex items-center justify-center text-white mr-4">
+            <fa-icon [icon]="faTasks"></fa-icon>
+          </div>
+          <div>
+            <h5 class="text-lg font-medium text-gray-800 mb-2">Interactive Assessments</h5>
+            <p class="text-gray-600">Create engaging quizzes and assignments to test knowledge retention.</p>
           </div>
         </div>
-        <div class="col-md-6 d-flex mb-4">
-          <div class="feature-item gradient-border d-flex flex-grow-1">
-            <div class="feature-icon">
-              <i class="fa fa-mobile-alt"></i>
-            </div>
-            <div>
-              <h5>Mobile Responsive</h5>
-              <p>Access and manage your courses on any device, anywhere.</p>
-            </div>
+        
+        <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition-all flex">
+          <div class="h-12 w-12 rounded-full bg-blue-600 flex items-center justify-center text-white mr-4">
+            <fa-icon [icon]="faMobileAlt"></fa-icon>
+          </div>
+          <div>
+            <h5 class="text-lg font-medium text-gray-800 mb-2">Mobile Responsive</h5>
+            <p class="text-gray-600">Access and manage your courses on any device, anywhere.</p>
           </div>
         </div>
-        <div class="col-md-6 d-flex mb-4">
-          <div class="feature-item gradient-border d-flex flex-grow-1">
-            <div class="feature-icon">
-              <i class="fa fa-clock"></i>
-            </div>
-            <div>
-              <h5>Time-Saving</h5>
-              <p>Reduce course creation time from weeks to minutes with automated generation.</p>
-            </div>
+        
+        <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition-all flex">
+          <div class="h-12 w-12 rounded-full bg-blue-600 flex items-center justify-center text-white mr-4">
+            <fa-icon [icon]="faClock"></fa-icon>
+          </div>
+          <div>
+            <h5 class="text-lg font-medium text-gray-800 mb-2">Time-Saving</h5>
+            <p class="text-gray-600">Reduce course creation time from weeks to minutes with automated generation.</p>
           </div>
         </div>
       </div>
     </div>
-    
-    
-    
-    
   </div>
-
-
-
 </div>

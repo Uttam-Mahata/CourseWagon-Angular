@@ -1,68 +1,118 @@
-<footer class="footer bg-dark text-light pt-5 pb-4">
-  <div class="container">
-    <div class="row">
+<footer class="bg-gray-900 text-gray-300 pt-12 pb-8">
+  <div class="container mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
       <!-- About Course Wagon Section -->
-      <div class="col-lg-3 col-md-6 mb-4">
-        <h5 class="footer-heading">About CourseWagon</h5>
-        <p>
+      <div class="lg:col-span-2">
+        <div class="flex items-center mb-4">
+          <img src="/coursewagon.png" alt="Course Wagon Logo" class="h-8 w-auto mr-3">
+          <h3 class="text-xl font-bold text-white">Course Wagon</h3>
+        </div>
+        <p class="text-gray-400 leading-relaxed mb-4">
           Course Wagon automates course creation with Generative AI, delivering dynamic, interactive learning experiences. Whether you're a student or a professional, our platform caters to your personalized learning journey.
         </p>
+        <div class="flex space-x-4 mt-6">
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+            <fa-icon [icon]="faFacebook" class="text-xl"></fa-icon>
+            <span class="sr-only">Facebook</span>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+            <fa-icon [icon]="faTwitter" class="text-xl"></fa-icon>
+            <span class="sr-only">Twitter</span>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+            <fa-icon [icon]="faLinkedin" class="text-xl"></fa-icon>
+            <span class="sr-only">LinkedIn</span>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+            <fa-icon [icon]="faInstagram" class="text-xl"></fa-icon>
+            <span class="sr-only">Instagram</span>
+          </a>
+        </div>
       </div>
 
       <!-- Explore Section -->
-      <div class="col-lg-2 col-md-6 mb-4">
-        <h5 class="footer-heading">Explore</h5>
-        <ul class="list-unstyled">
-          <li><a href="#" class="footer-link">Courses</a></li>
-          <li><a href="#" class="footer-link">How It Works</a></li>
-          <li><a href="#" class="footer-link">Pricing</a></li>
-          <li><a href="#" class="footer-link">Blog</a></li>
+      <div>
+        <h5 class="text-white font-semibold text-lg mb-4">Explore</h5>
+        <ul class="space-y-3">
+          <li>
+            <a href="#" class="text-gray-400 hover:text-indigo-400 transition-colors duration-300 flex items-center">
+              <fa-icon [icon]="faChevronRight" class="text-xs mr-2 text-indigo-500"></fa-icon> Courses
+            </a>
+          </li>
+          <li>
+            <a href="#" class="text-gray-400 hover:text-indigo-400 transition-colors duration-300 flex items-center">
+              <fa-icon [icon]="faChevronRight" class="text-xs mr-2 text-indigo-500"></fa-icon> How It Works
+            </a>
+          </li>
+          <li>
+            <a href="#" class="text-gray-400 hover:text-indigo-400 transition-colors duration-300 flex items-center">
+              <fa-icon [icon]="faChevronRight" class="text-xs mr-2 text-indigo-500"></fa-icon> Pricing
+            </a>
+          </li>
+          <li>
+            <a href="#" class="text-gray-400 hover:text-indigo-400 transition-colors duration-300 flex items-center">
+              <fa-icon [icon]="faChevronRight" class="text-xs mr-2 text-indigo-500"></fa-icon> Blog
+            </a>
+          </li>
         </ul>
       </div>
 
       <!-- Resources Section -->
-      <div class="col-lg-2 col-md-6 mb-4">
-        <h5 class="footer-heading">Resources</h5>
-        <ul class="list-unstyled">
-          <li><a href="#" class="footer-link">AI Course Generator</a></li>
-          <li><a href="#" class="footer-link">Developer Resources</a></li>
-          <li><a href="#" class="footer-link">Community Forum</a></li>
-          <li><a href="#" class="footer-link">Help Center</a></li>
+      <div>
+        <h5 class="text-white font-semibold text-lg mb-4">Resources</h5>
+        <ul class="space-y-3">
+          <li>
+            <a href="#" class="text-gray-400 hover:text-indigo-400 transition-colors duration-300 flex items-center">
+              <fa-icon [icon]="faChevronRight" class="text-xs mr-2 text-indigo-500"></fa-icon> AI Course Generator
+            </a>
+          </li>
+          <li>
+            <a href="#" class="text-gray-400 hover:text-indigo-400 transition-colors duration-300 flex items-center">
+              <fa-icon [icon]="faChevronRight" class="text-xs mr-2 text-indigo-500"></fa-icon> Developer Resources
+            </a>
+          </li>
+          <li>
+            <a href="#" class="text-gray-400 hover:text-indigo-400 transition-colors duration-300 flex items-center">
+              <fa-icon [icon]="faChevronRight" class="text-xs mr-2 text-indigo-500"></fa-icon> Community Forum
+            </a>
+          </li>
+          <li>
+            <a href="#" class="text-gray-400 hover:text-indigo-400 transition-colors duration-300 flex items-center">
+              <fa-icon [icon]="faChevronRight" class="text-xs mr-2 text-indigo-500"></fa-icon> Help Center
+            </a>
+          </li>
         </ul>
       </div>
 
-      <!-- Support Section -->
-      <div class="col-lg-2 col-md-6 mb-4">
-        <h5 class="footer-heading">Support</h5>
-        <ul class="list-unstyled">
-          <li><a href="#" class="footer-link">FAQs</a></li>
-          <li><a href="#" class="footer-link">Contact Us</a></li>
-          <li><a href="#" class="footer-link">Terms of Service</a></li>
-          <li><a href="#" class="footer-link">Privacy Policy</a></li>
+      <!-- Contact Section -->
+      <div>
+        <h5 class="text-white font-semibold text-lg mb-4">Contact</h5>
+        <ul class="space-y-3">
+          <li class="flex items-start">
+            <fa-icon [icon]="faMapMarkerAlt" class="text-indigo-500 mt-1 mr-3"></fa-icon>
+            <span class="text-gray-400">123 Learning Blvd, Education City</span>
+          </li>
+          <li class="flex items-center">
+            <fa-icon [icon]="faEnvelope" class="text-indigo-500 mr-3"></fa-icon>
+            <span class="text-gray-400">support&#64;coursewagon.live</span>
+          </li>
+          <li class="flex items-center">
+            <fa-icon [icon]="faPhone" class="text-indigo-500 mr-3"></fa-icon>
+            <span class="text-gray-400">+1 234 567 890</span>
+          </li>
         </ul>
-      </div>
-
-      <!-- Contact Information Section -->
-      <div class="col-lg-3 col-md-12 mb-4">
-        <h5 class="footer-heading">Contact Us</h5>
-        <ul class="list-unstyled">
-          <li><i class="fas fa-map-marker-alt"></i> 123 Learning Blvd, Education City</li>
-          <li><i class="fas fa-envelope"></i> support&#64;coursewagon.com</li>
-          <li><i class="fas fa-phone"></i> +1 234 567 890</li>
-        </ul>
-        <div class="social-icons mt-3">
-          <a href="#" class="footer-icon"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="footer-icon"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="footer-icon"><i class="fab fa-linkedin-in"></i></a>
-          <a href="#" class="footer-icon"><i class="fab fa-instagram"></i></a>
-        </div>
       </div>
     </div>
 
-    <!-- Bottom Footer Row -->
-    <div class="row mt-4">
-      <div class="col-md-12 text-center">
-        <p class="mb-0">&copy; 2024 Course Wagon. All rights reserved.</p>
+    <!-- Bottom Footer -->
+    <div class="border-t border-gray-800 mt-10 pt-6">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <p class="text-sm text-gray-400">© 2024 Course Wagon. All rights reserved.</p>
+        <div class="flex space-x-6 mt-4 md:mt-0">
+          <a href="#" class="text-sm text-gray-400 hover:text-indigo-400 transition-colors duration-300">Privacy Policy</a>
+          <a href="#" class="text-sm text-gray-400 hover:text-indigo-400 transition-colors duration-300">Terms of Service</a>
+          <a href="#" class="text-sm text-gray-400 hover:text-indigo-400 transition-colors duration-300">Cookie Policy</a>
+        </div>
       </div>
     </div>
   </div>

@@ -2,6 +2,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
+import { 
+  faHome, faBook, faLayerGroup, faEye, faEyeSlash, faMagic, 
+  faInfoCircle, faFileAlt, faSpinner, faChevronRight
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-subtopics-content',
@@ -9,6 +13,18 @@ import { CourseService } from '../services/course.service';
     standalone: false
 })
 export class SubtopicsContentComponent implements OnInit {
+  // FontAwesome icons
+  faHome = faHome;
+  faBook = faBook;
+  faLayerGroup = faLayerGroup;
+  faEye = faEye;
+  faEyeSlash = faEyeSlash;
+  faMagic = faMagic;
+  faInfoCircle = faInfoCircle;
+  faFileAlt = faFileAlt;
+  faSpinner = faSpinner;
+  faChevronRight = faChevronRight;
+  
   subtopics: any[] = [];
   content: any = null;
   courseId: number;
@@ -20,6 +36,8 @@ export class SubtopicsContentComponent implements OnInit {
   courseName: string = '';
   moduleName: string = '';
   topicName: string = '';
+  isGenerating: boolean = false;
+  generatingSubtopicId: number | null = null;
 
   selectedSubtopicId: number | null = null;
   selectedSubtopicName: string | null = null;
@@ -69,22 +87,26 @@ export class SubtopicsContentComponent implements OnInit {
   }
 
   generateContent(subtopicId: number) {
+    // Show loading state
+    this.isGenerating = true;
+    this.generatingSubtopicId = subtopicId;
+    
     // Trigger content generation for a subtopic and fetch content
-    this.courseService.generateContent(this.courseId, this.subjectId, this.moduleId, this.chapterId, this.topicId, subtopicId).subscribe(() => {
-      this.viewContent(subtopicId);  // Reload content after generation
+    this.courseService.generateContent(this.courseId, this.subjectId, this.moduleId, this.chapterId, this.topicId, subtopicId).subscribe({
+      next: () => {
+        this.viewContent(subtopicId);  // Reload content after generation
+        this.isGenerating = false;
+        this.generatingSubtopicId = null;
+      },
+      error: (error) => {
+        console.error('Error generating content:', error);
+        this.isGenerating = false;
+        this.generatingSubtopicId = null;
+      }
     });
   }
 
   hideSubtopics() {
     this.showSubtopics = !this.showSubtopics;
   }
-
-
-  
-  
-
-  
-  
-
-
 }

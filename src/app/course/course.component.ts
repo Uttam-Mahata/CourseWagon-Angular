@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
 import { AuthService } from '../auth.service';
+import { 
+  faExclamationTriangle, faExclamationCircle, faBook, faMagic, 
+  faChalkboardTeacher, faBrain, faTasks, faMobileAlt, faClock, faKey
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-course',
@@ -10,6 +14,18 @@ import { AuthService } from '../auth.service';
     standalone: false
 })
 export class CourseComponent implements OnInit {
+  // FontAwesome icons
+  faExclamationTriangle = faExclamationTriangle;
+  faExclamationCircle = faExclamationCircle;
+  faBook = faBook;
+  faMagic = faMagic;
+  faChalkboardTeacher = faChalkboardTeacher;
+  faBrain = faBrain;
+  faTasks = faTasks;
+  faMobileAlt = faMobileAlt;
+  faClock = faClock;
+  faKey = faKey;
+
   courseName: string = '';
   isLoading: boolean = false;
   errorMessage: string = '';
