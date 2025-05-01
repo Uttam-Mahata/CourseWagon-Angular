@@ -10,6 +10,16 @@ import { faEnvelope, faLock, faUser, faUserPlus, faSignInAlt, faKey, faExclamati
     standalone: false
 })
 export class AuthComponent {
+  // FontAwesome icons
+  faEnvelope = faEnvelope;
+  faLock = faLock;
+  faUser = faUser;
+  faUserPlus = faUserPlus;
+  faSignInAlt = faSignInAlt;
+  faKey = faKey;
+  faExclamationTriangle = faExclamationTriangle;
+  faCheckCircle = faCheckCircle;
+  
   isLoginMode = true;
   errorMessage = '';
   successMessage = '';

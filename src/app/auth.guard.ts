@@ -1,35 +1,36 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { 
+  CanActivate, 
+  ActivatedRouteSnapshot, 
+  RouterStateSnapshot, 
+  UrlTree, 
+  Router 
+} from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, take, tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+import { map, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
+  
   constructor(private authService: AuthService, private router: Router) {}
-
+  
   canActivate(
-    next: ActivatedRouteSnapshot,
+    route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<boolean> {
-    return this.authService.isLoggedIn$.pipe(
-      take(1),
-      map((isAuthenticated: boolean) => {
-        console.log('Auth Guard check, isAuthenticated:', isAuthenticated);
-        if (!isAuthenticated) {
-          console.log('Not authenticated, redirecting to /auth');
-          this.router.navigate(['/auth']);
-          return false;
-        }
-        return true;
-      }),
-      tap(isAllowed => {
-        if (isAllowed) {
-          console.log('Navigation allowed to:', state.url);
-        }
-      })
-    );
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    
+    // Check if we have a token
+    const token = this.authService.getToken();
+    
+    if (token) {
+      return true;
+    }
+    
+    // If no token, redirect to login page
+    this.router.navigate(['/auth'], { queryParams: { returnUrl: state.url } });
+    return false;
   }
 }

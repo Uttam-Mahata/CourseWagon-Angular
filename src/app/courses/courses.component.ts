@@ -67,23 +67,41 @@ export class CoursesComponent implements OnInit {
       return;
     }
     
+    const course = this.courses.find(c => c.id === courseId);
+    const actionVerb = course && course.has_subjects ? 'updating' : 'generating';
+    
+    // Show that we're generating content for this course
+    course.isGenerating = true;
+    
     this.courseService.generateSubjects(courseId).subscribe({
       next: () => {
-        this.router.navigate([`/courses/${courseId}/subjects-modules`]);
+        if (course) {
+          // Update the local course data to reflect that it now has subjects
+          course.has_subjects = true;
+          course.isGenerating = false;
+        }
+        
+        // Navigate only if we're generating for the first time, otherwise stay on the page
+        if (actionVerb === 'generating') {
+          this.router.navigate([`/courses/${courseId}/subjects-chapters`]);
+        }
       },
       error: (error) => {
-        console.error('Error generating subjects:', error);
+        if (course) {
+          course.isGenerating = false;
+        }
+        console.error(`Error ${actionVerb} subjects:`, error);
         if (error.status === 403) {
           this.errorMessage = 'You need to set your Google API key in your profile first.';
         } else {
-          this.errorMessage = 'Failed to generate subjects. Please try again.';
+          this.errorMessage = `Failed to ${actionVerb.replace('ing', '')} subjects. Please try again.`;
         }
       }
     });
   }
   
   viewSubjects(courseId: number) {
-    this.router.navigate([`/courses/${courseId}/subjects-modules`]);
+    this.router.navigate([`/courses/${courseId}/subjects-chapters`]);
   }
   
   navigateToCourseCreation() {

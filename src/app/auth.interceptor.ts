@@ -21,11 +21,9 @@ export class AuthInterceptor implements HttpInterceptor {
     
     // Only add the Authorization header if token exists
     if (token) {
-      // Clone the request and add the Authorization header
+      // Clone the request and add the Authorization header with proper format
       const clonedRequest = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`
-        }
+        headers: request.headers.set('Authorization', `Bearer ${token}`)
       });
       
       console.log(`Adding token to ${request.url}`);
@@ -41,9 +39,6 @@ export class AuthInterceptor implements HttpInterceptor {
         })
       );
     }
-    
-    // For debugging: log requests without tokens
-    console.log(`No token for request to ${request.url}`);
     
     // Pass through the original request if no token
     return next.handle(request).pipe(

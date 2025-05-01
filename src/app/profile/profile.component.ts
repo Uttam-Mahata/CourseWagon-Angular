@@ -37,6 +37,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     // Store token for debugging
     this.token = this.authService.getToken();
+    console.log('Profile component initialized, token:', this.token?.substring(0, 10) + '...');
     
     this.authService.currentUser$.subscribe(user => {
       this.user = user;
@@ -71,7 +72,7 @@ export class ProfileComponent implements OnInit {
     this.isLoading = true;
     this.clearMessages();
 
-    console.log('Updating API key with token:', this.authService.getToken());
+    console.log('Updating API key with token:', this.authService.getToken()?.substring(0, 10) + '...');
     
     this.authService.updateApiKey(this.apiKey)
       .subscribe({
@@ -81,10 +82,15 @@ export class ProfileComponent implements OnInit {
           this.apiKey = '';
           this.isLoading = false;
           
-          // Force refresh of user data
+          // Update the stored user data with the updated user info
+          if (response && response.user) {
+            this.authService.storeAuthData(this.authService.getToken()!, response.user);
+          }
+          
+          // No need to refresh the page
           setTimeout(() => {
-            window.location.reload();
-          }, 1500);
+            this.user = response.user;
+          }, 500);
         },
         error: (err) => {
           console.error('API key update error:', err);
