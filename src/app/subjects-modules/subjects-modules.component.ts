@@ -3,9 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
 
 @Component({
-  selector: 'app-subjects-modules',
-  templateUrl: './subjects-modules.component.html',
-  styleUrls: ['./subjects-modules.component.css']
+    selector: 'app-subjects-modules',
+    templateUrl: './subjects-modules.component.html',
+    styleUrls: ['./subjects-modules.component.css'],
+    standalone: false
 })
 export class SubjectsModulesComponent implements OnInit {
   subjects: any[] = [];

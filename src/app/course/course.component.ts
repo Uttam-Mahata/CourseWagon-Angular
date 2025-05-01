@@ -4,9 +4,10 @@ import { CourseService } from '../services/course.service';
 import { AuthService } from '../auth.service';
 
 @Component({
-  selector: 'app-course',
-  templateUrl: './course.component.html',
-  styleUrls: ['./course.component.css']
+    selector: 'app-course',
+    templateUrl: './course.component.html',
+    styleUrls: ['./course.component.css'],
+    standalone: false
 })
 export class CourseComponent implements OnInit {
   courseName: string = '';

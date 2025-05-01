@@ -3,8 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
 
 @Component({
-  selector: 'app-topics',
-  templateUrl: './topics.component.html'
+    selector: 'app-topics',
+    templateUrl: './topics.component.html',
+    standalone: false
 })
 export class TopicsComponent implements OnInit {
   topics: any[] = [];

@@ -3,8 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
 
 @Component({
-  selector: 'app-modules',
-  templateUrl: './modules.component.html'
+    selector: 'app-modules',
+    templateUrl: './modules.component.html',
+    standalone: false
 })
 export class ModulesComponent implements OnInit {
   modules: any[] = [];

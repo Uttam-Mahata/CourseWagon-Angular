@@ -3,8 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { CourseService } from '../services/course.service';
 
 @Component({
-  selector: 'app-content',
-  templateUrl: './content.component.html'
+    selector: 'app-content',
+    templateUrl: './content.component.html',
+    standalone: false
 })
 export class ContentComponent implements OnInit {
   content: any;

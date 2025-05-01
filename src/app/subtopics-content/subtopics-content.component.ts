@@ -4,8 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
 
 @Component({
-  selector: 'app-subtopics-content',
-  templateUrl: './subtopics-content.component.html'
+    selector: 'app-subtopics-content',
+    templateUrl: './subtopics-content.component.html',
+    standalone: false
 })
 export class SubtopicsContentComponent implements OnInit {
   subtopics: any[] = [];

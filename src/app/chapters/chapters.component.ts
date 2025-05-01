@@ -3,8 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
 
 @Component({
-  selector: 'app-chapters',
-  templateUrl: './chapters.component.html'
+    selector: 'app-chapters',
+    templateUrl: './chapters.component.html',
+    standalone: false
 })
 export class ChaptersComponent implements OnInit {
   chapters: any[] = [];
