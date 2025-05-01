@@ -1,0 +1,110 @@
+<div class="h-screen flex flex-col md:flex-row bg-gray-100">
+  <!-- Mobile Header -->
+  <div class="md:hidden bg-gray-900 text-white px-4 py-3 flex justify-between items-center shadow-md">
+    <div>
+      <h1 class="text-lg font-bold truncate">{{ subjectName }}</h1>
+      <p class="text-xs text-gray-300 truncate">{{ courseName }}</p>
+    </div>
+    <button 
+      (click)="toggleMobileSidebar()"
+      class="bg-blue-600 hover:bg-blue-700 text-white rounded-md p-2 transition duration-200">
+      <i [class]="isMobileSidebarOpen ? 'fas fa-arrow-left' : 'fas fa-layer-group'"></i>
+    </button>
+  </div>
+
+  <!-- Sidebar Navigation - Fixed position on mobile when open -->
+  <aside 
+    [ngClass]="{
+      'fixed inset-0 z-50 transform ease-in-out transition-all duration-300': true,
+      'translate-x-0': isMobileSidebarOpen,
+      '-translate-x-full': !isMobileSidebarOpen,
+      'md:relative md:transform-none md:translate-x-0 md:w-80 md:flex-shrink-0': true
+    }"
+    class="bg-gray-900 text-white flex flex-col h-full">
+    
+    <!-- Sidebar Header -->
+    <div class="bg-gray-800 p-4 hidden md:block">
+      <h1 class="text-xl font-bold mb-1 truncate">{{ subjectName }}</h1>
+      <p class="text-sm text-gray-300 truncate">{{ courseName }}</p>
+    </div>
+    
+    <!-- Back button -->
+    <div class="p-4 border-b border-gray-700 hidden md:block">
+      <button 
+        (click)="backToSubjects()" 
+        class="flex items-center text-gray-300 hover:text-white transition duration-200">
+        <i class="fas fa-arrow-left mr-2"></i> Back to Subjects
+      </button>
+    </div>
+
+    <!-- Course Outline Heading -->
+    <div class="p-4 border-b border-gray-700">
+      <h2 class="text-lg font-medium">Course Outline</h2>
+    </div>
+    
+    <!-- Sidebar Loading State -->
+    <div *ngIf="isLoading" class="flex-1 flex items-center justify-center p-4">
+      <div class="flex flex-col items-center">
+        <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500 mb-2"></div>
+        <span class="text-gray-400">Loading chapters...</span>
+      </div>
+    </div>
+    
+    <!-- Chapter List -->
+    <nav class="flex-1 overflow-y-auto" *ngIf="!isLoading">
+      <div *ngFor="let chapter of chapters" class="border-b border-gray-800">
+        <!-- Chapter Header -->
+        <div 
+          (click)="toggleChapter(chapter.id)"
+          [ngClass]="{'bg-gray-800': expandedChapters[chapter.id]}"
+          class="flex justify-between items-center px-4 py-3 cursor-pointer hover:bg-gray-800 transition duration-150">
+          <div class="flex items-center space-x-3">
+            <i class="fas fa-bookmark text-blue-500"></i>
+            <span class="font-medium">{{ chapter.name }}</span>
+          </div>
+          <i 
+            [class]="expandedChapters[chapter.id] ? 'fas fa-chevron-up text-sm text-gray-500' : 'fas fa-chevron-down text-sm text-gray-500'">
+          </i>
+        </div>
+        
+        <!-- Topic List -->
+        <div 
+          *ngIf="expandedChapters[chapter.id]"
+          class="bg-gray-800 overflow-hidden transition-all duration-300">
+          
+          <!-- Topics Loading State -->
+          <div *ngIf="!topics[chapter.id]" class="flex justify-center items-center py-4">
+            <div class="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-blue-500 mr-2"></div>
+            <span class="text-sm text-gray-400">Loading topics...</span>
+          </div>
+          
+          <ul *ngIf="topics[chapter.id]">
+            <li *ngFor="let topic of topics[chapter.id]">
+              <a 
+                (click)="selectTopic(chapter.id, topic.id)"
+                [ngClass]="{'bg-blue-700': selectedTopicId === topic.id}"
+                class="block px-8 py-2 text-sm hover:bg-blue-600 transition duration-150 cursor-pointer">
+                <div class="flex items-center">
+                  <i class="fas fa-file-alt mr-2 text-gray-400"></i>
+                  <span>{{ topic.name }}</span>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Dark overlay for mobile when sidebar is open -->
+  <div 
+    *ngIf="isMobileSidebarOpen"
+    (click)="toggleMobileSidebar()"
+    class="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40">
+  </div>
+
+  <!-- Content Area -->
+  <div class="flex-1 overflow-auto">
+    <router-outlet></router-outlet>
+  </div>
+</div>

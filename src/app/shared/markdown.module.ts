@@ -1,26 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MarkdownModule, MARKED_OPTIONS } from 'ngx-markdown';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { SecurityContext } from '@angular/core';
+import { MarkdownModule } from 'ngx-markdown';
+import 'prismjs';
+import 'prismjs/components/prism-typescript.min.js';
+import 'prismjs/components/prism-python.min.js';
+import 'prismjs/components/prism-java.min.js';
+import 'prismjs/components/prism-javascript.min.js';
+import 'prismjs/components/prism-css.min.js';
+import 'prismjs/components/prism-markup.min.js';
 
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
-    HttpClientModule,
-    MarkdownModule.forRoot({
-      loader: HttpClient,
-      sanitize: SecurityContext.NONE, // Be careful with this setting in production
-      markedOptions: {
-        provide: MARKED_OPTIONS,
-        useValue: {
-          gfm: true,
-          breaks: true,
-          pedantic: false,
-        },
-      },
-    }),
+    MarkdownModule.forChild()
   ],
   exports: [
     MarkdownModule

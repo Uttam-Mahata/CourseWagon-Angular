@@ -1,0 +1,63 @@
+<div class="content-area p-4 md:p-8 max-w-5xl mx-auto">
+  <!-- Content Header -->
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-800 mb-2">{{ topicName }}</h1>
+    <p class="text-gray-500 text-sm">{{ chapterName }}</p>
+  </div>
+  
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="flex justify-center items-center py-16">
+    <div class="flex flex-col items-center">
+      <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-3"></div>
+      <span class="text-gray-600">Loading content...</span>
+    </div>
+  </div>
+  
+  <!-- Generate Content Button -->
+  <div *ngIf="!isLoading && !content" class="mb-6 flex justify-center">
+    <button 
+      (click)="generateContent()"
+      [disabled]="isGenerating"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-md flex items-center transition duration-200 disabled:opacity-70">
+      <div *ngIf="isGenerating" class="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-3"></div>
+      <span *ngIf="!isGenerating" class="mr-3"><i class="fas fa-magic"></i></span>
+      {{ isGenerating ? 'Generating Content...' : 'Generate Content' }}
+    </button>
+  </div>
+  
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="mb-6 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded">
+    {{ errorMessage }}
+  </div>
+  
+  <!-- Content Display -->
+  <div *ngIf="!isLoading && content" class="bg-white shadow-md rounded-lg p-6">
+    <!-- Content Actions -->
+    <div class="flex justify-between mb-6">
+      <h2 class="text-xl font-semibold text-gray-700">Content</h2>
+      <button 
+        *ngIf="content"
+        (click)="generateContent()"
+        [disabled]="isGenerating"
+        class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded flex items-center text-sm transition duration-200 disabled:opacity-70">
+        <div *ngIf="isGenerating" class="animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white mr-2"></div>
+        <span *ngIf="!isGenerating" class="mr-2"><i class="fas fa-magic"></i></span>
+        {{ isGenerating ? 'Updating...' : 'Update Content' }}
+      </button>
+    </div>
+    
+    <!-- Markdown Content -->
+    <div class="prose prose-blue max-w-none">
+      <markdown [data]="content" mermaid katex class="markdown-content"></markdown>
+    </div>
+  </div>
+  
+  <!-- No Content Message -->
+  <div *ngIf="!isLoading && !content && !isGenerating" class="bg-gray-50 border border-gray-200 rounded-lg p-8 text-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+    </svg>
+    <h3 class="text-xl font-medium text-gray-700 mb-2">No content yet</h3>
+    <p class="text-gray-500 mb-6">This topic doesn't have any content yet. Generate content to get started.</p>
+  </div>
+</div>
