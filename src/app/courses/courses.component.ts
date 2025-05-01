@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from '../services/course.service';
-import { SubjectService } from '../services/subject.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { faHome, faBook, faPlus, faExclamationTriangle, faExclamationCircle, faMagic, faEye } from '@fortawesome/free-solid-svg-icons';
@@ -28,7 +27,6 @@ export class CoursesComponent implements OnInit {
 
   constructor(
     private courseService: CourseService, 
-    private subjectService: SubjectService,
     private router: Router,
     private authService: AuthService
   ) {}
@@ -75,7 +73,7 @@ export class CoursesComponent implements OnInit {
     // Show that we're generating content for this course
     course.isGenerating = true;
     
-    this.subjectService.generateSubjects(courseId).subscribe({
+    this.courseService.generateSubjects(courseId).subscribe({
       next: () => {
         if (course) {
           // Update the local course data to reflect that it now has subjects
@@ -103,7 +101,7 @@ export class CoursesComponent implements OnInit {
   }
   
   viewSubjects(courseId: number) {
-    this.router.navigate([`/courses/${courseId}/subjects`]);
+    this.router.navigate([`/courses/${courseId}/subjects-chapters`]);
   }
   
   navigateToCourseCreation() {

@@ -4,25 +4,25 @@
     <ol class="flex items-center text-sm flex-wrap">
       <li class="flex items-center">
         <a routerLink="/home" class="text-blue-600 hover:text-blue-800 flex items-center transition duration-200">
-          <i class="fas fa-home mr-1"></i> Home
+          <fa-icon [icon]="faHome" class="mr-1"></fa-icon> Home
         </a>
       </li>
       <li class="flex items-center">
         <span class="mx-2 text-gray-500">/</span>
         <a routerLink="/courses" class="text-blue-600 hover:text-blue-800 flex items-center transition duration-200">
-          <i class="fas fa-book mr-1"></i> Courses
+          <fa-icon [icon]="faBook" class="mr-1"></fa-icon> Courses
         </a>
       </li>
       <li class="flex items-center">
         <span class="mx-2 text-gray-500">/</span>
         <a [routerLink]="['/courses', courseId, 'subjects-chapters']" class="text-blue-600 hover:text-blue-800 flex items-center transition duration-200">
-          <i class="fas fa-layer-group mr-1"></i> {{ courseName }}
+          <fa-icon [icon]="faLayerGroup" class="mr-1"></fa-icon> {{ courseName }}
         </a>
       </li>
       <li class="flex items-center">
         <span class="mx-2 text-gray-500">/</span>
         <a [routerLink]="['/courses', courseId, 'subjects-chapters']" class="text-blue-600 hover:text-blue-800 flex items-center transition duration-200">
-          <i class="fas fa-book-open mr-1"></i> {{ chapterName }}
+          <fa-icon [icon]="faBookOpen" class="mr-1"></fa-icon> {{ chapterName }}
         </a>
       </li>
       <li class="flex items-center">
@@ -39,21 +39,21 @@
       <button 
         (click)="backToTopics()" 
         class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded flex items-center text-sm transition duration-200">
-        <i class="fas fa-list mr-2"></i> All Topics
+        <fa-icon [icon]="faList" class="mr-2"></fa-icon> All Topics
       </button>
       <button 
         [disabled]="currentTopicIndex <= 0"
         [ngClass]="{'opacity-50 cursor-not-allowed': currentTopicIndex <= 0}"
         (click)="previousTopic()" 
         class="bg-blue-100 hover:bg-blue-200 text-blue-700 px-4 py-2 rounded flex items-center text-sm transition duration-200">
-        <i class="fas fa-chevron-left mr-2"></i> Previous
+        <fa-icon [icon]="faChevronLeft" class="mr-2"></fa-icon> Previous
       </button>
       <button 
         [disabled]="currentTopicIndex >= topics.length - 1"
         [ngClass]="{'opacity-50 cursor-not-allowed': currentTopicIndex >= topics.length - 1}"
         (click)="nextTopic()" 
         class="bg-blue-100 hover:bg-blue-200 text-blue-700 px-4 py-2 rounded flex items-center text-sm transition duration-200">
-        Next <i class="fas fa-chevron-right ml-2"></i>
+        Next <fa-icon [icon]="faChevronRight" class="ml-2"></fa-icon>
       </button>
     </div>
   </div>
@@ -88,19 +88,19 @@
         [ngClass]="{'opacity-70 cursor-not-allowed': isGenerating}"
         (click)="generateContent()">
         <div *ngIf="isGenerating" class="animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white mr-1.5"></div>
-        <i *ngIf="!isGenerating" class="fas fa-magic mr-1.5"></i>
+        <fa-icon *ngIf="!isGenerating" [icon]="faMagic" class="mr-1.5"></fa-icon> 
         {{ isGenerating ? 'Processing...' : (content || (currentTopic && currentTopic.has_content) ? 'Update Content' : 'Generate Content') }}
       </button>
     </div>
 
     <!-- Content Display -->
     <div *ngIf="content" class="bg-gray-50 rounded-lg p-6 prose prose-blue max-w-none">
-      <markdown [data]="content" mermaid katex class="markdown-content"></markdown>
+      <div markdown [data]="content" mermaid katex class="markdown-content"></div>
     </div>
 
     <!-- No Content Selected Message -->
     <div *ngIf="!content" class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-md flex items-center">
-      <i class="fas fa-info-circle text-blue-600 mr-3 text-lg"></i>
+      <fa-icon [icon]="faInfoCircle" class="text-blue-600 mr-3 text-lg"></fa-icon>
       <div>
         <p class="text-blue-700">No content available for this topic yet.</p>
         <p class="text-sm text-blue-600 mt-1">Click "Generate Content" to create content for this topic.</p>

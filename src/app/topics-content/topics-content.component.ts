@@ -1,10 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { CourseService } from '../services/course.service';
-import { SubjectService } from '../services/subject.service';
-import { ChapterService } from '../services/chapter.service';
-import { TopicService } from '../services/topic.service';
-import { ContentService } from '../services/content.service';
 import { 
   faHome, faBook, faLayerGroup, faEye, faEyeSlash, faMagic, 
   faInfoCircle, faFileAlt, faSpinner, faChevronRight, faBookOpen,
@@ -59,10 +55,6 @@ export class TopicsContentComponent implements OnInit, OnDestroy {
 
   constructor(
     private courseService: CourseService,
-    private subjectService: SubjectService,
-    private chapterService: ChapterService,
-    private topicService: TopicService,
-    private contentService: ContentService,
     private route: ActivatedRoute,
     private router: Router,
     private sanitizer: DomSanitizer
@@ -106,7 +98,7 @@ export class TopicsContentComponent implements OnInit, OnDestroy {
     });
     
     // Load subject details
-    this.subjectService.getSubjectDetails(this.courseId, this.subjectId).subscribe({
+    this.courseService.getSubjectDetails(this.courseId, this.subjectId).subscribe({
       next: (subject: any) => {
         this.subjectName = subject.name;
       },
@@ -114,7 +106,7 @@ export class TopicsContentComponent implements OnInit, OnDestroy {
     });
     
     // Load chapter details
-    this.chapterService.getChapterDetails(this.courseId, this.subjectId, this.chapterId).subscribe({
+    this.courseService.getChapterDetails(this.courseId, this.subjectId, this.chapterId).subscribe({
       next: (chapter: any) => {
         this.chapterName = chapter.name;
         
@@ -125,7 +117,7 @@ export class TopicsContentComponent implements OnInit, OnDestroy {
     });
 
     // Load topic details
-    this.topicService.getTopicDetails(this.courseId, this.subjectId, this.chapterId, this.topicId).subscribe({
+    this.courseService.getTopicDetails(this.courseId, this.subjectId, this.chapterId, this.topicId).subscribe({
       next: (topic: any) => {
         this.topicName = topic.name;
         this.loadContent(); // Load content once we have the topic
@@ -135,7 +127,7 @@ export class TopicsContentComponent implements OnInit, OnDestroy {
   }
 
   loadTopics() {
-    this.topicService.getTopics(this.courseId, this.subjectId, this.chapterId).subscribe({
+    this.courseService.getTopics(this.courseId, this.subjectId, this.chapterId).subscribe({
       next: (topics: any[]) => {
         this.topics = topics;
         // Find the index of the current topic
@@ -149,7 +141,7 @@ export class TopicsContentComponent implements OnInit, OnDestroy {
   }
 
   loadContent() {
-    this.contentService.getContent(this.courseId, this.subjectId, this.chapterId, this.topicId).subscribe({
+    this.courseService.getContent(this.courseId, this.subjectId, this.chapterId, this.topicId).subscribe({
       next: (content: any) => {
         this.content = this.prepareMarkdownContent(content); 
         
@@ -195,7 +187,7 @@ export class TopicsContentComponent implements OnInit, OnDestroy {
     const actionVerb = currentTopic && currentTopic.has_content ? 'updating' : 'generating';
     
     // Trigger content generation for the topic
-    this.contentService.generateContent(this.courseId, this.subjectId, this.chapterId, this.topicId).subscribe({
+    this.courseService.generateContent(this.courseId, this.subjectId, this.chapterId, this.topicId).subscribe({
       next: (response) => {
         console.log(`Content ${actionVerb} response:`, response);
         

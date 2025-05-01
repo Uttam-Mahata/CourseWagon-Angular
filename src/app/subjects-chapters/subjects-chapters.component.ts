@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
-import { SubjectService } from '../services/subject.service';
-import { ChapterService } from '../services/chapter.service';
-import { TopicService } from '../services/topic.service';
 import { 
   faHome, faBook, faLayerGroup, faEye, faMagic, 
   faBookOpen, faInfoCircle, faChevronRight 
@@ -42,9 +39,6 @@ export class SubjectsChaptersComponent implements OnInit {
 
   constructor(
     private courseService: CourseService,
-    private subjectService: SubjectService,
-    private chapterService: ChapterService,
-    private topicService: TopicService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -58,7 +52,7 @@ export class SubjectsChaptersComponent implements OnInit {
     });
 
     // Fetch subjects for the given course
-    this.subjectService.getSubjects(this.courseId).subscribe((subjects: any[]) => {
+    this.courseService.getSubjects(this.courseId).subscribe((subjects: any[]) => {
       this.subjects = subjects;
       console.log('Loaded subjects:', subjects);
     });
@@ -71,7 +65,7 @@ export class SubjectsChaptersComponent implements OnInit {
     this.selectedSubjectName = selectedSubject ? selectedSubject.name : '';
 
     // Fetch chapters for the selected subject
-    this.chapterService.getChapters(this.courseId, subjectId).subscribe((chapters: any[]) => {
+    this.courseService.getChapters(this.courseId, subjectId).subscribe((chapters: any[]) => {
       this.chapters = chapters;
       console.log('Loaded chapters:', chapters);
       
@@ -97,7 +91,7 @@ export class SubjectsChaptersComponent implements OnInit {
     const actionVerb = subject && subject.has_chapters ? 'updating' : 'generating';
     
     // Trigger chapter generation for the subject and refresh chapters
-    this.chapterService.generateChapters(this.courseId, subjectId).subscribe({
+    this.courseService.generateChapters(this.courseId, subjectId).subscribe({
       next: () => {
         // Mark this subject as having chapters in our local data
         if (subject) {
@@ -139,7 +133,7 @@ export class SubjectsChaptersComponent implements OnInit {
     }
     
     // Fetch topics for the selected chapter
-    this.topicService.getTopics(this.courseId, subjectId, chapterId).subscribe({
+    this.courseService.getTopics(this.courseId, subjectId, chapterId).subscribe({
       next: (topics: any[]) => {
         if (topics && topics.length > 0) {
           console.log('Found topics:', topics);
@@ -181,7 +175,7 @@ export class SubjectsChaptersComponent implements OnInit {
     const chapter = this.chapters.find(c => c.id === chapterId);
     const actionVerb = chapter && chapter.has_topics ? 'updating' : 'generating';
     
-    this.topicService.generateTopics(this.courseId, subjectId, chapterId).subscribe({
+    this.courseService.generateTopics(this.courseId, subjectId, chapterId).subscribe({
       next: () => {
         // Mark this chapter as having topics in our local data
         if (chapter) {
@@ -189,7 +183,7 @@ export class SubjectsChaptersComponent implements OnInit {
         }
         
         // Once topics are generated, get the topics
-        this.topicService.getTopics(this.courseId, subjectId, chapterId).subscribe({
+        this.courseService.getTopics(this.courseId, subjectId, chapterId).subscribe({
           next: (topics: any[]) => {
             this.isGenerating = false;
             this.generatingChapterId = null;
