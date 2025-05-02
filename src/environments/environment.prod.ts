@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://coursewagon-backend.onrender.com',
-  authApiUrl: 'https://coursewagon-backend.onrender.com/api/auth',
-  courseApiUrl: 'https://coursewagon-backend.onrender.com/api/courses'
+  apiUrl: 'https://coursewagon-backend-623320490056.asia-southeast1.run.app//api',
+  courseApiUrl: 'https://coursewagon-backend-623320490056.asia-southeast1.run.app/api/courses',
+  authApiUrl: 'https://coursewagon-backend-623320490056.asia-southeast1.run.app/api/auth'
 };
