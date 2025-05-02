@@ -8,7 +8,6 @@ import {
   faShoppingCart, 
   faLayerGroup, 
   faSitemap, 
-  faUser, 
   faUserPlus 
 } from '@fortawesome/free-solid-svg-icons';
 import { NavigationService } from '../services/navigation.service';
@@ -29,7 +28,6 @@ export class HomeComponent {
   faShoppingCart = faShoppingCart;
   faLayerGroup = faLayerGroup;
   faSitemap = faSitemap;
-  faUser = faUser;
   faUserPlus = faUserPlus;
   
   constructor(private navigationService: NavigationService) {}

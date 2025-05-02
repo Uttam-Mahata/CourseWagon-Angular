@@ -95,7 +95,7 @@ export class CoursesComponent implements OnInit {
         
         // Navigate only if we're generating for the first time, otherwise stay on the page
         if (actionVerb === 'generating') {
-          this.router.navigate([`/courses/${courseId}/subjects-chapters`]);
+          this.router.navigate([`/courses/${courseId}/subjects`]);
         }
       },
       error: (error) => {

@@ -33,6 +33,7 @@ import { TermsComponent } from './terms/terms.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { NavigationService } from './services/navigation.service';
+import { TestimonialsComponent } from './testimonials/testimonials.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { NavigationService } from './services/navigation.service';
     FilterByIdPipe,
     TermsComponent,
     PrivacyPolicyComponent,
-    ComingSoonComponent
+    ComingSoonComponent,
+    TestimonialsComponent
   ],
   imports: [
     BrowserModule,

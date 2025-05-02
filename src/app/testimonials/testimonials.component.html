@@ -1,0 +1,16 @@
+<section class="py-16 md:py-20 bg-gradient-to-b from-white via-indigo-50 to-white">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">What Our Users Say</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div *ngFor="let testimonial of testimonials" class="bg-gray-50 rounded-xl shadow-md p-8 transition-all duration-300 hover:shadow-xl testimonial-card">
+        <div class="flex justify-center mb-4">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-blue-500">
+            <fa-icon [icon]="faUser" class="text-2xl"></fa-icon>
+          </div>
+        </div>
+        <p class="text-gray-700 text-center italic mb-4">"{{ testimonial.quote }}"</p>
+        <h6 class="text-center font-semibold text-blue-600">- {{ testimonial.author }}</h6>
+      </div>
+    </div>
+  </div>
+</section>
