@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
 import { SubjectService } from '../services/subject.service';
-import { faHome, faBook, faLayerGroup, faEye, faMagic, faInfoCircle, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faBook, faLayerGroup, faEye, faMagic, faInfoCircle, faChevronRight, faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-subjects',
@@ -19,6 +19,9 @@ export class SubjectsComponent implements OnInit {
   faMagic = faMagic;
   faInfoCircle = faInfoCircle;
   faChevronRight = faChevronRight;
+  faEdit = faEdit;
+  faTrash = faTrash;
+  faPlus = faPlus;
   
   courseId: number;
   courseName: string = '';
@@ -28,6 +31,12 @@ export class SubjectsComponent implements OnInit {
   generatingSubjectId: number | null = null;
   errorMessage: string | null = null;
   isLoading: boolean = true;
+  
+  // CRUD operations state
+  showEditSubjectModal: boolean = false;
+  showDeleteSubjectModal: boolean = false;
+  editingSubject: any = null;
+  isDeletingSubject: boolean = false;
 
   constructor(
     private courseService: CourseService,
@@ -96,5 +105,94 @@ export class SubjectsComponent implements OnInit {
   
   goBack() {
     this.router.navigate(['/courses']);
+  }
+  
+  // CRUD Operations for Subjects
+  
+  // Create new subject
+  createNewSubject() {
+    const name = prompt('Enter new subject name:');
+    if (!name || !name.trim()) return;
+    
+    this.subjectService.createSubject(this.courseId, name).subscribe({
+      next: (newSubject) => {
+        this.subjects.push(newSubject);
+      },
+      error: (err) => {
+        console.error('Error creating subject:', err);
+        this.errorMessage = 'Failed to create subject. Please try again.';
+      }
+    });
+  }
+  
+  // Edit subject
+  openEditSubjectModal(subject: any) {
+    this.editingSubject = { ...subject };
+    this.showEditSubjectModal = true;
+  }
+
+  closeEditSubjectModal() {
+    this.showEditSubjectModal = false;
+    this.editingSubject = null;
+  }
+
+  updateSubject() {
+    if (!this.editingSubject || !this.editingSubject.name.trim()) {
+      this.errorMessage = 'Subject name is required';
+      return;
+    }
+
+    this.subjectService.updateSubject(
+      this.courseId,
+      this.editingSubject.id,
+      this.editingSubject.name
+    ).subscribe({
+      next: () => {
+        // Update local subject data
+        const index = this.subjects.findIndex(s => s.id === this.editingSubject.id);
+        if (index !== -1) {
+          this.subjects[index].name = this.editingSubject.name;
+        }
+        this.closeEditSubjectModal();
+      },
+      error: (err) => {
+        console.error('Error updating subject:', err);
+        this.errorMessage = 'Failed to update subject. Please try again.';
+      }
+    });
+  }
+  
+  // Delete subject
+  openDeleteSubjectModal(subject: any) {
+    this.editingSubject = subject;
+    this.showDeleteSubjectModal = true;
+  }
+
+  closeDeleteSubjectModal() {
+    this.showDeleteSubjectModal = false;
+    this.editingSubject = null;
+  }
+
+  deleteSubject() {
+    if (!this.editingSubject) return;
+    
+    this.isDeletingSubject = true;
+    
+    this.subjectService.deleteSubject(
+      this.courseId,
+      this.editingSubject.id
+    ).subscribe({
+      next: () => {
+        // Remove subject from local data
+        this.subjects = this.subjects.filter(s => s.id !== this.editingSubject.id);
+        this.closeDeleteSubjectModal();
+        this.isDeletingSubject = false;
+      },
+      error: (err) => {
+        console.error('Error deleting subject:', err);
+        this.errorMessage = 'Failed to delete subject. Please try again.';
+        this.isDeletingSubject = false;
+      }
+    });
   }
 }

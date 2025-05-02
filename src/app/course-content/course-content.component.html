@@ -45,7 +45,7 @@
       </div>
 
       <!-- Generate Chapters Button -->
-      <div *ngIf="!isLoadingChapters && chapters.length > 0" class="p-4 flex justify-center">
+      <div *ngIf="!isLoadingChapters && chapters.length > 0" class="p-4 flex justify-between">
         <button 
           (click)="generateChapters()"
           [disabled]="isGeneratingChapters"
@@ -53,6 +53,14 @@
           <div *ngIf="isGeneratingChapters" class="animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white mr-1.5"></div>
           <fa-icon *ngIf="!isGeneratingChapters" [icon]="faMagic" class="mr-1.5"></fa-icon>
           <span>{{ isGeneratingChapters ? 'Generating...' : 'Update Chapters' }}</span>
+        </button>
+        
+        <!-- Add new chapter button -->
+        <button 
+          (click)="createNewChapter()"
+          class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md text-sm transition duration-200 flex items-center">
+          <fa-icon [icon]="faPlus" class="mr-1.5"></fa-icon>
+          <span>Add Chapter</span>
         </button>
       </div>
 
@@ -64,10 +72,23 @@
           [ngClass]="{'bg-gray-800': expandedChapterId === chapter.id}"
           (click)="toggleChapter(chapter.id)">
           <span class="font-medium">{{ chapter.name }}</span>
-          <fa-icon 
-            [icon]="expandedChapterId === chapter.id ? faChevronDown : faChevronRight" 
-            class="text-gray-500">
-          </fa-icon>
+          <div class="flex items-center space-x-2">
+            <!-- Edit/Delete buttons for chapters -->
+            <button 
+              class="text-blue-400 hover:text-blue-300 text-xs p-1"
+              (click)="openEditChapterModal(chapter, $event)">
+              <fa-icon [icon]="faEdit"></fa-icon>
+            </button>
+            <button 
+              class="text-red-400 hover:text-red-300 text-xs p-1"
+              (click)="openDeleteChapterModal(chapter, $event)">
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+            <fa-icon 
+              [icon]="expandedChapterId === chapter.id ? faChevronDown : faChevronRight" 
+              class="text-gray-500">
+            </fa-icon>
+          </div>
         </div>
         
         <!-- Topics List (Expanded when chapter is selected) -->
@@ -84,26 +105,49 @@
             </button>
           </div>
           
-          <!-- Update Topics Button (if topics exist) -->
-          <div *ngIf="topics[chapter.id] && topics[chapter.id].length > 0" class="py-2 px-4">
+          <!-- Update Topics Button and Add Topic Button (if topics exist) -->
+          <div *ngIf="topics[chapter.id] && topics[chapter.id].length > 0" class="py-2 px-4 flex space-x-2">
             <button 
               (click)="generateTopics(chapter.id)"
               [disabled]="isGeneratingTopics && generatingChapterId === chapter.id"
-              class="w-full bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded-md text-xs transition duration-200 flex items-center justify-center">
+              class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded-md text-xs transition duration-200 flex items-center justify-center">
               <div *ngIf="isGeneratingTopics && generatingChapterId === chapter.id" class="animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white mr-1.5"></div>
               <fa-icon *ngIf="!(isGeneratingTopics && generatingChapterId === chapter.id)" [icon]="faMagic" class="mr-1"></fa-icon>
               <span>{{ (isGeneratingTopics && generatingChapterId === chapter.id) ? 'Updating...' : 'Update Topics' }}</span>
+            </button>
+            
+            <!-- Add topic button -->
+            <button 
+              (click)="createNewTopic()"
+              class="bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded-md text-xs transition duration-200 flex items-center justify-center">
+              <fa-icon [icon]="faPlus" class="mr-1"></fa-icon>
+              <span>Add Topic</span>
             </button>
           </div>
           
           <!-- Topic Items -->
           <div *ngFor="let topic of topics[chapter.id]" 
-               class="py-2 px-4 text-sm cursor-pointer hover:bg-gray-700 transition-all flex items-center"
-               [ngClass]="{'bg-gray-700': selectedTopicId === topic.id}"
-               (click)="selectTopic(topic)">
-            <div class="h-2 w-2 rounded-full mr-2"
-                 [ngClass]="{'bg-green-500': topic.has_content, 'bg-gray-400': !topic.has_content}"></div>
-            <span>{{ topic.name }}</span>
+               class="py-2 px-4 text-sm cursor-pointer hover:bg-gray-700 transition-all flex items-center justify-between"
+               [ngClass]="{'bg-gray-700': selectedTopicId === topic.id}">
+            <div class="flex items-center" (click)="selectTopic(topic)">
+              <div class="h-2 w-2 rounded-full mr-2"
+                   [ngClass]="{'bg-green-500': topic.has_content, 'bg-gray-400': !topic.has_content}"></div>
+              <span>{{ topic.name }}</span>
+            </div>
+            
+            <!-- Edit/Delete buttons for topics -->
+            <div class="flex items-center space-x-2">
+              <button 
+                class="text-blue-400 hover:text-blue-300 text-xs p-1"
+                (click)="openEditTopicModal(topic, $event)">
+                <fa-icon [icon]="faEdit"></fa-icon>
+              </button>
+              <button 
+                class="text-red-400 hover:text-red-300 text-xs p-1"
+                (click)="openDeleteTopicModal(topic, $event)">
+                <fa-icon [icon]="faTrash"></fa-icon>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -120,7 +164,7 @@
           class="flex items-center bg-blue-600 text-white px-3 py-2 rounded-md shadow-sm"
           (click)="toggleSidebar()">
           <fa-icon [icon]="faList" class="mr-2"></fa-icon>
-          <span class="truncate max-w-[150px]">{{ expandedChapterId ? (chapters | filterById:expandedChapterId)?.name : 'Course Outline' }}</span>
+          <span class="truncate max-w-[150px]">{{ expandedChapterId ? getChapterNameById(expandedChapterId) : 'Course Outline' }}</span>
         </button>
         
         <!-- Topic Navigation on Mobile -->
@@ -181,7 +225,7 @@
       <!-- Content Header -->
       <header class="mb-6">
         <h1 class="text-xl md:text-2xl font-bold text-gray-800 mb-2">{{ selectedTopic?.name || 'Select a Topic' }}</h1>
-        <p *ngIf="selectedTopic" class="text-gray-600 text-sm md:text-base">{{ expandedChapterId ? (chapters | filterById:expandedChapterId)?.name : '' }}</p>
+        <p *ngIf="selectedTopic" class="text-gray-600 text-sm md:text-base">{{ expandedChapterId ? getChapterNameById(expandedChapterId) : '' }}</p>
       </header>
 
       <!-- Error Message -->
@@ -206,8 +250,26 @@
         <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
       </div>
 
-      <!-- Generate Content Button -->
-      <div *ngIf="selectedTopicId && !isLoadingContent" class="mb-4 flex justify-end">
+      <!-- Generate/Edit/Delete Content Buttons -->
+      <div *ngIf="selectedTopicId && !isLoadingContent" class="mb-4 flex justify-end space-x-3">
+        <!-- Edit and Delete content buttons (only show if content exists) -->
+        <button 
+          *ngIf="content"
+          (click)="openEditContentModal()"
+          class="flex items-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition duration-200 shadow-sm">
+          <fa-icon [icon]="faEdit" class="mr-1.5"></fa-icon>
+          <span>Edit Content</span>
+        </button>
+        
+        <button 
+          *ngIf="content"
+          (click)="openDeleteContentConfirm()"
+          class="flex items-center bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm transition duration-200 shadow-sm">
+          <fa-icon [icon]="faTrash" class="mr-1.5"></fa-icon>
+          <span>Delete Content</span>
+        </button>
+        
+        <!-- Generate/Update content button (always show) -->
         <button 
           (click)="generateContent()"
           [disabled]="isGeneratingContent"
@@ -253,6 +315,157 @@
           <fa-icon [icon]="faChevronRight" class="ml-2"></fa-icon>
         </button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL COMPONENTS -->
+
+<!-- Edit Chapter Modal -->
+<div *ngIf="showEditChapterModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md">
+    <h2 class="text-lg font-bold mb-4">Edit Chapter</h2>
+    <div class="mb-4">
+      <label for="chapterName" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+      <input 
+        type="text" 
+        id="chapterName" 
+        [(ngModel)]="editingChapter.name" 
+        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        placeholder="Enter chapter name">
+    </div>
+    <div class="flex justify-end space-x-3">
+      <button 
+        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+        (click)="closeEditChapterModal()">
+        Cancel
+      </button>
+      <button 
+        class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+        (click)="updateChapter()">
+        Save Changes
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Chapter Confirmation Modal -->
+<div *ngIf="showDeleteChapterModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md">
+    <h2 class="text-lg font-bold mb-4">Delete Chapter</h2>
+    <p class="mb-6 text-gray-700">Are you sure you want to delete the chapter "<span class="font-semibold">{{ editingChapter?.name }}</span>"? This action cannot be undone.</p>
+    <div class="flex justify-end space-x-3">
+      <button 
+        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+        (click)="closeDeleteChapterModal()">
+        Cancel
+      </button>
+      <button 
+        class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors flex items-center"
+        [disabled]="isDeletingChapter"
+        (click)="deleteChapter()">
+        <div *ngIf="isDeletingChapter" class="animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white mr-1.5"></div>
+        {{ isDeletingChapter ? 'Deleting...' : 'Delete Chapter' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Topic Modal -->
+<div *ngIf="showEditTopicModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md">
+    <h2 class="text-lg font-bold mb-4">Edit Topic</h2>
+    <div class="mb-4">
+      <label for="topicName" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+      <input 
+        type="text" 
+        id="topicName" 
+        [(ngModel)]="editingTopic.name" 
+        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        placeholder="Enter topic name">
+    </div>
+    <div class="flex justify-end space-x-3">
+      <button 
+        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+        (click)="closeEditTopicModal()">
+        Cancel
+      </button>
+      <button 
+        class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+        (click)="updateTopic()">
+        Save Changes
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Topic Confirmation Modal -->
+<div *ngIf="showDeleteTopicModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md">
+    <h2 class="text-lg font-bold mb-4">Delete Topic</h2>
+    <p class="mb-6 text-gray-700">Are you sure you want to delete the topic "<span class="font-semibold">{{ editingTopic?.name }}</span>"? This action cannot be undone.</p>
+    <div class="flex justify-end space-x-3">
+      <button 
+        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+        (click)="closeDeleteTopicModal()">
+        Cancel
+      </button>
+      <button 
+        class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors flex items-center"
+        [disabled]="isDeletingTopic"
+        (click)="deleteTopic()">
+        <div *ngIf="isDeletingTopic" class="animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white mr-1.5"></div>
+        {{ isDeletingTopic ? 'Deleting...' : 'Delete Topic' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Content Modal -->
+<div *ngIf="showEditContentModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] flex flex-col">
+    <h2 class="text-lg font-bold mb-4">Edit Content</h2>
+    <div class="mb-4 flex-grow overflow-y-auto">
+      <label for="content" class="block text-sm font-medium text-gray-700 mb-1">Markdown Content</label>
+      <textarea 
+        id="content" 
+        [(ngModel)]="editingContent" 
+        class="w-full h-[60vh] px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"
+        placeholder="Enter markdown content"></textarea>
+    </div>
+    <div class="flex justify-end space-x-3">
+      <button 
+        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+        (click)="closeEditContentModal()">
+        Cancel
+      </button>
+      <button 
+        class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+        (click)="updateContent()">
+        Save Changes
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Content Confirmation Modal -->
+<div *ngIf="showDeleteContentConfirm" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md">
+    <h2 class="text-lg font-bold mb-4">Delete Content</h2>
+    <p class="mb-6 text-gray-700">Are you sure you want to delete the content for "<span class="font-semibold">{{ selectedTopic?.name }}</span>"? This action cannot be undone.</p>
+    <div class="flex justify-end space-x-3">
+      <button 
+        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+        (click)="closeDeleteContentConfirm()">
+        Cancel
+      </button>
+      <button 
+        class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors flex items-center"
+        [disabled]="isDeletingContent"
+        (click)="deleteContent()">
+        <div *ngIf="isDeletingContent" class="animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white mr-1.5"></div>
+        {{ isDeletingContent ? 'Deleting...' : 'Delete Content' }}
+      </button>
     </div>
   </div>
 </div>

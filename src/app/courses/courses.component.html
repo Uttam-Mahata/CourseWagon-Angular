@@ -69,7 +69,22 @@
   <div *ngIf="!isLoading && courses.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <div *ngFor="let course of courses" class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-200 border border-gray-100">
       <div class="p-6 flex flex-col h-full">
-        <h3 class="font-bold text-lg text-gray-800 mb-2">{{ course.name }}</h3>
+        <div class="flex justify-between items-start mb-2">
+          <h3 class="font-bold text-lg text-gray-800">{{ course.name }}</h3>
+          <!-- Edit and Delete buttons -->
+          <div class="flex space-x-2">
+            <button 
+              class="text-blue-600 hover:text-blue-800 p-1"
+              (click)="openEditModal(course)">
+              <fa-icon [icon]="faEdit" class="text-sm"></fa-icon>
+            </button>
+            <button 
+              class="text-red-600 hover:text-red-800 p-1"
+              (click)="openDeleteModal(course)">
+              <fa-icon [icon]="faTrash" class="text-sm"></fa-icon>
+            </button>
+          </div>
+        </div>
         <p class="text-gray-600 text-sm flex-grow mb-4">{{ course.description }}</p>
         <div class="flex justify-between pt-4 border-t border-gray-100">
           <!-- If subjects exist, show both Update and View buttons -->
@@ -104,6 +119,63 @@
           </ng-template>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Course Modal -->
+<div *ngIf="showEditModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md">
+    <h2 class="text-lg font-bold mb-4">Edit Course</h2>
+    <div class="mb-4">
+      <label for="courseName" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+      <input 
+        type="text" 
+        id="courseName" 
+        [(ngModel)]="editingCourse.name" 
+        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        placeholder="Enter course name">
+    </div>
+    <div class="mb-4">
+      <label for="courseDescription" class="block text-sm font-medium text-gray-700 mb-1">Description (optional)</label>
+      <textarea 
+        id="courseDescription" 
+        [(ngModel)]="editingCourse.description" 
+        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        placeholder="Enter course description"
+        rows="3"></textarea>
+    </div>
+    <div class="flex justify-end space-x-3">
+      <button 
+        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+        (click)="closeEditModal()">
+        Cancel
+      </button>
+      <button 
+        class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+        (click)="updateCourse()">
+        Save Changes
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Course Confirmation Modal -->
+<div *ngIf="showDeleteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md">
+    <h2 class="text-lg font-bold mb-4">Delete Course</h2>
+    <p class="mb-6 text-gray-700">Are you sure you want to delete the course "<span class="font-semibold">{{ deletingCourse?.name }}</span>"? This action cannot be undone.</p>
+    <div class="flex justify-end space-x-3">
+      <button 
+        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+        (click)="closeDeleteModal()">
+        Cancel
+      </button>
+      <button 
+        class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+        (click)="deleteCourse()">
+        Delete Course
+      </button>
     </div>
   </div>
 </div>

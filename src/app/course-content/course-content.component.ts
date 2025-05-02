@@ -8,10 +8,10 @@ import { ContentService } from '../services/content.service';
 import { 
   faHome, faBook, faLayerGroup, faEye, faMagic, 
   faBookOpen, faChevronRight, faChevronDown, faChevronUp,
-  faFileAlt, faSpinner, faInfoCircle, faChevronLeft, faList
+  faFileAlt, faSpinner, faInfoCircle, faChevronLeft, faList,
+  faEdit, faTrash, faPlus
 } from '@fortawesome/free-solid-svg-icons';
 import { Subscription, forkJoin } from 'rxjs';
-
 @Component({
   selector: 'app-course-content',
   standalone: false,
@@ -34,6 +34,9 @@ export class CourseContentComponent implements OnInit, OnDestroy {
   faInfoCircle = faInfoCircle;
   faChevronLeft = faChevronLeft;
   faList = faList;
+  faEdit = faEdit;
+  faTrash = faTrash;
+  faPlus = faPlus;
 
   // Course data
   courseId: number;
@@ -69,6 +72,20 @@ export class CourseContentComponent implements OnInit, OnDestroy {
   
   private subscriptions = new Subscription();
 
+  // UI state for edit/delete operations
+  editingChapter: any = null;
+  editingTopic: any = null;
+  editingContent: string | null = null;
+  showEditChapterModal: boolean = false;
+  showDeleteChapterModal: boolean = false;
+  showEditTopicModal: boolean = false;
+  showDeleteTopicModal: boolean = false;
+  showEditContentModal: boolean = false;
+  showDeleteContentConfirm: boolean = false;
+  isDeletingChapter: boolean = false;
+  isDeletingTopic: boolean = false;
+  isDeletingContent: boolean = false;
+
   constructor(
     private courseService: CourseService,
     private subjectService: SubjectService,
@@ -76,7 +93,8 @@ export class CourseContentComponent implements OnInit, OnDestroy {
     private topicService: TopicService,
     private contentService: ContentService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    
   ) {
     this.courseId = +this.route.snapshot.paramMap.get('course_id')!;
     this.subjectId = +this.route.snapshot.paramMap.get('subject_id')!;
@@ -228,6 +246,11 @@ export class CourseContentComponent implements OnInit, OnDestroy {
     // Hide sidebar on mobile when a topic is selected
     if (window.innerWidth < 768) {
       this.isSidebarOpen = false;
+      
+      // Scroll to top when selecting a new topic
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 100);
     }
   }
   
@@ -410,6 +433,27 @@ export class CourseContentComponent implements OnInit, OnDestroy {
   
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
+    
+    // When closing sidebar on mobile, add a small delay to allow animation to complete
+    if (!this.isSidebarOpen && window.innerWidth < 768) {
+      setTimeout(() => {
+        // Optional: scroll the content to the top for better UX
+        const contentArea = document.querySelector('.flex-1.overflow-y-auto');
+        if (contentArea) {
+          contentArea.scrollTop = 0;
+        }
+      }, 300);
+    }
+
+    // When showing sidebar on mobile, scroll it to top
+    if (this.isSidebarOpen && window.innerWidth < 768) {
+      setTimeout(() => {
+        const sidebar = document.querySelector('.bg-gray-900.text-white');
+        if (sidebar) {
+          sidebar.scrollTop = 0;
+        }
+      }, 100);
+    }
   }
   
   // Adjust sidebar visibility based on screen size
@@ -436,5 +480,377 @@ export class CourseContentComponent implements OnInit, OnDestroy {
     formatted = formatted.replace(/^(#{1,6})([^ ])/gm, '$1 $2');
     
     return formatted;
+  }
+
+  // Add these new methods to support topic navigation
+  getPreviousTopic() {
+    if (!this.selectedTopicId || !this.expandedChapterId) return null;
+    
+    const currentTopics = this.topics[this.expandedChapterId];
+    if (!currentTopics) return null;
+    
+    const currentIndex = currentTopics.findIndex(topic => topic.id === this.selectedTopicId);
+    if (currentIndex <= 0) return null;
+    
+    return currentTopics[currentIndex - 1];
+  }
+  
+  getNextTopic() {
+    if (!this.selectedTopicId || !this.expandedChapterId) return null;
+    
+    const currentTopics = this.topics[this.expandedChapterId];
+    if (!currentTopics) return null;
+    
+    const currentIndex = currentTopics.findIndex(topic => topic.id === this.selectedTopicId);
+    if (currentIndex === -1 || currentIndex >= currentTopics.length - 1) return null;
+    
+    return currentTopics[currentIndex + 1];
+  }
+  
+  navigateToPreviousTopic() {
+    const prevTopic = this.getPreviousTopic();
+    if (prevTopic) {
+      this.selectTopic(prevTopic);
+    }
+  }
+  
+  navigateToNextTopic() {
+    const nextTopic = this.getNextTopic();
+    if (nextTopic) {
+      this.selectTopic(nextTopic);
+    }
+  }
+
+  // Add this helper method to get a chapter name by ID
+  getChapterNameById(chapterId: number | null): string {
+    if (!chapterId || !this.chapters) return '';
+    const chapter = this.chapters.find(c => c.id === chapterId);
+    return chapter ? chapter.name : 'Course Outline';
+  }
+
+  // CRUD operations for Chapters
+  openEditChapterModal(chapter: any, event?: Event) {
+    if (event) {
+      event.stopPropagation(); // Prevent chapter toggle
+    }
+    this.editingChapter = { ...chapter };
+    this.showEditChapterModal = true;
+  }
+
+  closeEditChapterModal() {
+    this.showEditChapterModal = false;
+    this.editingChapter = null;
+  }
+
+  updateChapter() {
+    if (!this.editingChapter || !this.editingChapter.name.trim()) {
+      this.errorMessage = 'Chapter name is required';
+      return;
+    }
+
+    this.chapterService.updateChapter(
+      this.courseId,
+      this.subjectId,
+      this.editingChapter.id,
+      this.editingChapter.name
+    ).subscribe({
+      next: () => {
+        // Update local chapter data
+        const index = this.chapters.findIndex(c => c.id === this.editingChapter.id);
+        if (index !== -1) {
+          this.chapters[index].name = this.editingChapter.name;
+        }
+        this.closeEditChapterModal();
+      },
+      error: (err) => {
+        console.error('Error updating chapter:', err);
+        this.errorMessage = 'Failed to update chapter. Please try again.';
+      }
+    });
+  }
+
+  openDeleteChapterModal(chapter: any, event?: Event) {
+    if (event) {
+      event.stopPropagation(); // Prevent chapter toggle
+    }
+    this.editingChapter = chapter;
+    this.showDeleteChapterModal = true;
+  }
+
+  closeDeleteChapterModal() {
+    this.showDeleteChapterModal = false;
+    this.editingChapter = null;
+  }
+
+  deleteChapter() {
+    if (!this.editingChapter) return;
+    
+    this.isDeletingChapter = true;
+    
+    this.chapterService.deleteChapter(
+      this.courseId,
+      this.subjectId,
+      this.editingChapter.id
+    ).subscribe({
+      next: () => {
+        // Remove chapter from local data
+        this.chapters = this.chapters.filter(c => c.id !== this.editingChapter.id);
+        
+        // If we deleted the expanded chapter, clear selection
+        if (this.expandedChapterId === this.editingChapter.id) {
+          this.expandedChapterId = null;
+          this.selectedTopicId = null;
+          this.selectedTopic = null;
+          this.content = null;
+        }
+        
+        this.closeDeleteChapterModal();
+        this.isDeletingChapter = false;
+      },
+      error: (err) => {
+        console.error('Error deleting chapter:', err);
+        this.errorMessage = 'Failed to delete chapter. Please try again.';
+        this.isDeletingChapter = false;
+      }
+    });
+  }
+
+  // CRUD operations for Topics
+  openEditTopicModal(topic: any, event?: Event) {
+    if (event) {
+      event.stopPropagation(); // Prevent topic selection
+    }
+    this.editingTopic = { ...topic };
+    this.showEditTopicModal = true;
+  }
+
+  closeEditTopicModal() {
+    this.showEditTopicModal = false;
+    this.editingTopic = null;
+  }
+
+  updateTopic() {
+    if (!this.editingTopic || !this.editingTopic.name.trim() || !this.expandedChapterId) {
+      this.errorMessage = 'Topic name is required';
+      return;
+    }
+
+    this.topicService.updateTopic(
+      this.courseId,
+      this.subjectId,
+      this.expandedChapterId,
+      this.editingTopic.id,
+      this.editingTopic.name
+    ).subscribe({
+      next: () => {
+        // Update local topic data
+        const topicsArray = this.topics[this.expandedChapterId!];
+        if (topicsArray) {
+          const index = topicsArray.findIndex((t: any) => t.id === this.editingTopic.id);
+          if (index !== -1) {
+            topicsArray[index].name = this.editingTopic.name;
+            
+            // If this was the selected topic, update that too
+            if (this.selectedTopicId === this.editingTopic.id) {
+              this.selectedTopic.name = this.editingTopic.name;
+            }
+          }
+        }
+        this.closeEditTopicModal();
+      },
+      error: (err) => {
+        console.error('Error updating topic:', err);
+        this.errorMessage = 'Failed to update topic. Please try again.';
+      }
+    });
+  }
+
+  openDeleteTopicModal(topic: any, event?: Event) {
+    if (event) {
+      event.stopPropagation(); // Prevent topic selection
+    }
+    this.editingTopic = topic;
+    this.showDeleteTopicModal = true;
+  }
+
+  closeDeleteTopicModal() {
+    this.showDeleteTopicModal = false;
+    this.editingTopic = null;
+  }
+
+  deleteTopic() {
+    if (!this.editingTopic || !this.expandedChapterId) return;
+    
+    this.isDeletingTopic = true;
+    
+    this.topicService.deleteTopic(
+      this.courseId,
+      this.subjectId,
+      this.expandedChapterId,
+      this.editingTopic.id
+    ).subscribe({
+      next: () => {
+        // Remove topic from local data
+        if (this.topics[this.expandedChapterId!]) {
+          this.topics[this.expandedChapterId!] = this.topics[this.expandedChapterId!]
+            .filter((t: any) => t.id !== this.editingTopic.id);
+        }
+        
+        // If we deleted the selected topic, clear selection
+        if (this.selectedTopicId === this.editingTopic.id) {
+          this.selectedTopicId = null;
+          this.selectedTopic = null;
+          this.content = null;
+          
+          // Try to select another topic
+          if (this.topics[this.expandedChapterId!]?.length > 0) {
+            this.selectTopic(this.topics[this.expandedChapterId!][0]);
+          }
+        }
+        
+        this.closeDeleteTopicModal();
+        this.isDeletingTopic = false;
+      },
+      error: (err) => {
+        console.error('Error deleting topic:', err);
+        this.errorMessage = 'Failed to delete topic. Please try again.';
+        this.isDeletingTopic = false;
+      }
+    });
+  }
+
+  // CRUD operations for Content
+  openEditContentModal() {
+    if (!this.content) return;
+    this.editingContent = this.content;
+    this.showEditContentModal = true;
+  }
+
+  closeEditContentModal() {
+    this.showEditContentModal = false;
+    this.editingContent = null;
+  }
+
+  updateContent() {
+    if (!this.editingContent || !this.selectedTopicId || !this.expandedChapterId) {
+      this.errorMessage = 'Content is required';
+      return;
+    }
+
+    this.contentService.updateContent(
+      this.courseId,
+      this.subjectId,
+      this.expandedChapterId,
+      this.selectedTopicId,
+      this.editingContent
+    ).subscribe({
+      next: (response) => {
+        // Update local content data
+        this.content = response.content || this.editingContent;
+        
+        // Update topic has_content flag
+        if (this.selectedTopic) {
+          this.selectedTopic.has_content = true;
+        }
+        
+        this.closeEditContentModal();
+      },
+      error: (err) => {
+        console.error('Error updating content:', err);
+        this.errorMessage = 'Failed to update content. Please try again.';
+      }
+    });
+  }
+
+  openDeleteContentConfirm() {
+    this.showDeleteContentConfirm = true;
+  }
+
+  closeDeleteContentConfirm() {
+    this.showDeleteContentConfirm = false;
+  }
+
+  deleteContent() {
+    if (!this.selectedTopicId || !this.expandedChapterId) return;
+    
+    this.isDeletingContent = true;
+    
+    this.contentService.deleteContent(
+      this.courseId,
+      this.subjectId,
+      this.expandedChapterId,
+      this.selectedTopicId
+    ).subscribe({
+      next: () => {
+        // Clear content
+        this.content = null;
+        
+        // Update topic has_content flag
+        if (this.selectedTopic) {
+          this.selectedTopic.has_content = false;
+        }
+        
+        this.closeDeleteContentConfirm();
+        this.isDeletingContent = false;
+      },
+      error: (err) => {
+        console.error('Error deleting content:', err);
+        this.errorMessage = 'Failed to delete content. Please try again.';
+        this.isDeletingContent = false;
+      }
+    });
+  }
+
+  // Helper method to create a new chapter
+  createNewChapter() {
+    const name = prompt('Enter new chapter name:');
+    if (!name || !name.trim()) return;
+    
+    this.chapterService.createChapter(this.courseId, this.subjectId, name).subscribe({
+      next: (newChapter) => {
+        this.chapters.push(newChapter);
+        // Optionally expand the new chapter
+        this.toggleChapter(newChapter.id);
+      },
+      error: (err) => {
+        console.error('Error creating chapter:', err);
+        this.errorMessage = 'Failed to create chapter. Please try again.';
+      }
+    });
+  }
+
+  // Helper method to create a new topic in the current chapter
+  createNewTopic() {
+    if (!this.expandedChapterId) {
+      this.errorMessage = 'Please select a chapter first';
+      return;
+    }
+    
+    const name = prompt('Enter new topic name:');
+    if (!name || !name.trim()) return;
+    
+    this.topicService.createTopic(this.courseId, this.subjectId, this.expandedChapterId, name).subscribe({
+      next: (newTopic) => {
+        // Initialize topics array for this chapter if it doesn't exist
+        if (!this.topics[this.expandedChapterId!]) {
+          this.topics[this.expandedChapterId!] = [];
+        }
+        
+        this.topics[this.expandedChapterId!].push(newTopic);
+        
+        // Update chapter to show it has topics
+        const chapter = this.chapters.find(c => c.id === this.expandedChapterId);
+        if (chapter) {
+          chapter.has_topics = true;
+        }
+        
+        // Select the new topic
+        this.selectTopic(newTopic);
+      },
+      error: (err) => {
+        console.error('Error creating topic:', err);
+        this.errorMessage = 'Failed to create topic. Please try again.';
+      }
+    });
   }
 }

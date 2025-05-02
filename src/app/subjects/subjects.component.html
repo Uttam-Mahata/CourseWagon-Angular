@@ -31,6 +31,14 @@
         class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg flex items-center transition duration-200">
         <fa-icon [icon]="faChevronRight" class="mr-2 transform rotate-180"></fa-icon> Back to Courses
       </button>
+      
+      <!-- Add New Subject Button -->
+      <button
+        (click)="createNewSubject()"
+        class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center transition duration-200 shadow-md">
+        <fa-icon [icon]="faPlus" class="mr-2"></fa-icon> Add Subject
+      </button>
+      
       <button
         (click)="generateSubjects()"
         [disabled]="isGenerating"
@@ -72,6 +80,20 @@
             </div>
             <h3 class="font-bold text-lg text-gray-800">{{ subject.name }}</h3>
           </div>
+          
+          <!-- Edit/Delete buttons for subjects -->
+          <div class="flex space-x-2">
+            <button 
+              class="text-blue-600 hover:text-blue-800 p-1.5"
+              (click)="openEditSubjectModal(subject)">
+              <fa-icon [icon]="faEdit" class="text-sm"></fa-icon>
+            </button>
+            <button 
+              class="text-red-600 hover:text-red-800 p-1.5"
+              (click)="openDeleteSubjectModal(subject)">
+              <fa-icon [icon]="faTrash" class="text-sm"></fa-icon>
+            </button>
+          </div>
         </div>
         <p *ngIf="subject.description" class="text-gray-600 text-sm mt-2 mb-4">{{ subject.description }}</p>
         
@@ -81,6 +103,56 @@
           <fa-icon [icon]="faEye" class="mr-2"></fa-icon> View Content
         </button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Subject Modal -->
+<div *ngIf="showEditSubjectModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md">
+    <h2 class="text-lg font-bold mb-4">Edit Subject</h2>
+    <div class="mb-4">
+      <label for="subjectName" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+      <input 
+        type="text" 
+        id="subjectName" 
+        [(ngModel)]="editingSubject.name" 
+        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        placeholder="Enter subject name">
+    </div>
+    <div class="flex justify-end space-x-3">
+      <button 
+        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+        (click)="closeEditSubjectModal()">
+        Cancel
+      </button>
+      <button 
+        class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+        (click)="updateSubject()">
+        Save Changes
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Subject Confirmation Modal -->
+<div *ngIf="showDeleteSubjectModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md">
+    <h2 class="text-lg font-bold mb-4">Delete Subject</h2>
+    <p class="mb-6 text-gray-700">Are you sure you want to delete the subject "<span class="font-semibold">{{ editingSubject?.name }}</span>"? This action cannot be undone.</p>
+    <div class="flex justify-end space-x-3">
+      <button 
+        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+        (click)="closeDeleteSubjectModal()">
+        Cancel
+      </button>
+      <button 
+        class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors flex items-center"
+        [disabled]="isDeletingSubject"
+        (click)="deleteSubject()">
+        <div *ngIf="isDeletingSubject" class="animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white mr-1.5"></div>
+        {{ isDeletingSubject ? 'Deleting...' : 'Delete Subject' }}
+      </button>
     </div>
   </div>
 </div>

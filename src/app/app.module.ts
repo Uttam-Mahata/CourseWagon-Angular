@@ -28,6 +28,7 @@ import { TopicsContentComponent } from './topics-content/topics-content.componen
 import { SharedMarkdownModule } from './shared/markdown.module';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { CourseContentComponent } from './course-content/course-content.component';
+import { FilterByIdPipe } from './pipes/filter-by-id.pipe';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { CourseContentComponent } from './course-content/course-content.componen
     SubjectsChaptersComponent,
     TopicsContentComponent,
     SubjectsComponent,
-    CourseContentComponent
+    CourseContentComponent,
+    FilterByIdPipe
   ],
   imports: [
     BrowserModule,
