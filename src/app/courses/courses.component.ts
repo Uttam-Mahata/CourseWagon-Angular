@@ -46,13 +46,12 @@ export class CoursesComponent implements OnInit {
   ngOnInit() {
     // Check if user has API key
     this.authService.currentUser$.subscribe(user => {
-      this.userHasApiKey = user?.has_api_key || false;
+      // Make sure this is checking has_api_key properly
+      this.userHasApiKey = !!user?.has_api_key;
       
-      if (this.userHasApiKey) {
-        this.loadCourses();
-      } else {
-        this.isLoading = false;
-      }
+      // Always load courses regardless of API key status
+      // This ensures users can see their courses even without an API key
+      this.loadCourses();
     });
   }
 
