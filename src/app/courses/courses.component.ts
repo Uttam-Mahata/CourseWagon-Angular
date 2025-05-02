@@ -103,7 +103,8 @@ export class CoursesComponent implements OnInit {
   }
   
   viewSubjects(courseId: number) {
-    this.router.navigate([`/courses/${courseId}/subjects-chapters`]);
+    // Navigate to the new subjects component
+    this.router.navigate([`/courses/${courseId}/subjects`]);
   }
   
   navigateToCourseCreation() {

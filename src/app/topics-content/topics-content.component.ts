@@ -172,9 +172,9 @@ export class TopicsContentComponent implements OnInit, OnDestroy {
     
     // Fix line breaks and spacing issues
     let formatted = content
-      .replace(/```/g, '\n```\n')       // Ensure code blocks have proper spacing
-      .replace(/<pre class="mermaid">/g, '\n<pre class="mermaid">\n')  // Fix mermaid diagram spacing
-      .replace(/<\/pre>/g, '\n</pre>\n')  // Fix closing pre tag spacing
+      //.replace(/```/g, '\n```\n')       // Ensure code blocks have proper spacing
+      //.replace(/<pre class="mermaid">/g, '\n<pre class="mermaid">\n')  // Fix mermaid diagram spacing
+      //.replace(/<\/pre>/g, '\n</pre>\n')  // Fix closing pre tag spacing
       .replace(/\$\$/g, '\n$$\n')       // Fix math expressions spacing
       .replace(/\$\n\$/g, '$$ $$')       // Fix inline math expressions
       .replace(/\n{3,}/g, '\n\n');       // Remove excessive line breaks
@@ -221,7 +221,7 @@ export class TopicsContentComponent implements OnInit, OnDestroy {
     if (this.currentTopicIndex > 0) {
       const prevTopic = this.topics[this.currentTopicIndex - 1];
       this.router.navigate([
-        `/courses/${this.courseId}/subjects/${this.subjectId}/chapters/${this.chapterId}/topics/${prevTopic.id}/content`
+        `/courses/${this.courseId}/subjects/${this.subjectId}/content/${prevTopic.id}`
       ]);
     }
   }
@@ -231,13 +231,13 @@ export class TopicsContentComponent implements OnInit, OnDestroy {
     if (this.currentTopicIndex < this.topics.length - 1) {
       const nextTopic = this.topics[this.currentTopicIndex + 1];
       this.router.navigate([
-        `/courses/${this.courseId}/subjects/${this.subjectId}/chapters/${this.chapterId}/topics/${nextTopic.id}/content`
+        `/courses/${this.courseId}/subjects/${this.subjectId}/content/${nextTopic.id}`
       ]);
     }
   }
   
-  // Go back to topics list
+  // Go back to topics list or to subject content view
   backToTopics() {
-    this.router.navigate([`/courses/${this.courseId}/subjects-chapters`]);
+    this.router.navigate([`/courses/${this.courseId}/subjects/${this.subjectId}/content`]);
   }
 }

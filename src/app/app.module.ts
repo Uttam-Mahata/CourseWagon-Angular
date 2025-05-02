@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -26,6 +26,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SubjectsChaptersComponent } from './subjects-chapters/subjects-chapters.component';
 import { TopicsContentComponent } from './topics-content/topics-content.component';
 import { SharedMarkdownModule } from './shared/markdown.module';
+import { CourseContentComponent } from './course-content/course-content.component';
+import { FilterByIdPipe } from './pipes/filter-by-id.pipe';
+import { SubjectsComponent } from './subjects/subjects.component';
 
 @NgModule({
   declarations: [
@@ -41,12 +44,16 @@ import { SharedMarkdownModule } from './shared/markdown.module';
     NavbarComponent,
     HomeComponent,
     SubjectsChaptersComponent,
-    TopicsContentComponent
+    TopicsContentComponent,
+    CourseContentComponent,
+    FilterByIdPipe,
+    SubjectsComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     FontAwesomeModule,
     MarkdownModule.forRoot(),

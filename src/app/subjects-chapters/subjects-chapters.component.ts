@@ -230,9 +230,9 @@ export class SubjectsChaptersComponent implements OnInit {
       return;
     }
     
-    // Navigate to the content page for this topic
+    // Navigate to the new unified content view
     this.router.navigate([
-      `/courses/${this.courseId}/subjects/${this.selectedSubjectId}/chapters/${this.selectedChapterId}/topics/${topicId}/content`
+      `/courses/${this.courseId}/subjects/${this.selectedSubjectId}/content/${topicId}`
     ]);
   }
 }

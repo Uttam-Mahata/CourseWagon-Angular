@@ -10,6 +10,9 @@ import { SubjectsChaptersComponent } from './subjects-chapters/subjects-chapters
 import { TopicsContentComponent } from './topics-content/topics-content.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { CourseContentComponent } from './course-content/course-content.component';
+import { SubjectsComponent } from './subjects/subjects.component';
+import { RouteRedirectResolver } from './route-redirect.resolver';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -19,21 +22,47 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'create-course', component: CourseComponent, canActivate: [AuthGuard] },
   { path: 'courses', component: CoursesComponent, canActivate: [AuthGuard] },
+  
+  // New subjects component route
+  { 
+    path: 'courses/:course_id/subjects', 
+    component: SubjectsComponent, 
+    canActivate: [AuthGuard] 
+  },
+  
+  // Legacy route - keep for compatibility
   { 
     path: 'courses/:course_id/subjects-chapters', 
     component: SubjectsChaptersComponent, 
     canActivate: [AuthGuard] 
   },
+  
+  // Course content routes
+  { 
+    path: 'courses/:course_id/subjects/:subject_id/content', 
+    component: CourseContentComponent,
+    canActivate: [AuthGuard]
+  },
+  { 
+    path: 'courses/:course_id/subjects/:subject_id/content/:topic_id', 
+    component: CourseContentComponent,
+    canActivate: [AuthGuard]
+  },
+  
+  // Legacy routes - using resolver to handle redirects
   { 
     path: 'courses/:course_id/subjects/:subject_id/chapters/:chapter_id/topics', 
-    redirectTo: 'courses/:course_id/subjects-chapters',
-    pathMatch: 'full'
+    resolve: { redirect: RouteRedirectResolver },
+    component: SubjectsChaptersComponent,
+    canActivate: [AuthGuard] 
   },
   {
     path: 'courses/:course_id/subjects/:subject_id/chapters/:chapter_id/topics/:topic_id/content',
+    resolve: { redirect: RouteRedirectResolver },
     component: TopicsContentComponent,
     canActivate: [AuthGuard]
   },
+  
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home' } // Handle unknown routes
 ];
