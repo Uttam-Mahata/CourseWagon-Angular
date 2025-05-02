@@ -39,4 +39,17 @@ export class SubjectService {
     console.log(`Fetching subject details for course: ${courseId}, subject: ${subjectId}`);
     return this.http.get(`${this.apiUrl}/${courseId}/subjects/${subjectId}`);
   }
+  
+  // New CRUD operations
+  createSubject(courseId: number, name: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${courseId}/subjects`, { name });
+  }
+  
+  updateSubject(courseId: number, subjectId: number, name: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${courseId}/subjects/${subjectId}`, { name });
+  }
+  
+  deleteSubject(courseId: number, subjectId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${courseId}/subjects/${subjectId}`);
+  }
 }

@@ -65,4 +65,23 @@ export class CourseService {
     // If not in cache, get from API
     return this.http.get(`${this.apiUrl}/${courseId}`);
   }
+  
+  // New CRUD operations
+  createCourseManual(name: string, description: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/create-manual`, { name, description }).pipe(
+      tap(() => this.refreshMyCourses()) 
+    );
+  }
+  
+  updateCourse(courseId: number, name: string, description?: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${courseId}`, { name, description }).pipe(
+      tap(() => this.refreshMyCourses())
+    );
+  }
+  
+  deleteCourse(courseId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${courseId}`).pipe(
+      tap(() => this.refreshMyCourses())
+    );
+  }
 }

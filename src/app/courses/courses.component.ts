@@ -3,7 +3,7 @@ import { CourseService } from '../services/course.service';
 import { SubjectService } from '../services/subject.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { faHome, faBook, faPlus, faExclamationTriangle, faExclamationCircle, faMagic, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faBook, faPlus, faExclamationTriangle, faExclamationCircle, faMagic, faEye, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-courses',
@@ -20,11 +20,21 @@ export class CoursesComponent implements OnInit {
   faExclamationCircle = faExclamationCircle;
   faMagic = faMagic;
   faEye = faEye;
+  faEdit = faEdit;
+  faTrash = faTrash;
 
   courses: any[] = [];
   userHasApiKey: boolean = false;
   isLoading: boolean = true;
   errorMessage: string | null = null;
+  
+  // CRUD modals
+  showEditModal: boolean = false;
+  showDeleteModal: boolean = false;
+  
+  // CRUD data
+  editingCourse: any = null;
+  deletingCourse: any = null;
 
   constructor(
     private courseService: CourseService, 
@@ -118,5 +128,68 @@ export class CoursesComponent implements OnInit {
   
   navigateToProfile() {
     this.router.navigate(['/profile']);
+  }
+
+  // Course CRUD Operations
+  
+  // Update
+  openEditModal(course: any) {
+    this.editingCourse = { ...course };
+    this.showEditModal = true;
+  }
+
+  closeEditModal() {
+    this.showEditModal = false;
+    this.editingCourse = null;
+  }
+
+  updateCourse() {
+    if (!this.editingCourse || !this.editingCourse.name.trim()) {
+      this.errorMessage = 'Course name is required';
+      return;
+    }
+
+    this.courseService.updateCourse(
+      this.editingCourse.id, 
+      this.editingCourse.name, 
+      this.editingCourse.description
+    ).subscribe({
+      next: () => {
+        this.closeEditModal();
+        this.loadCourses(); // Refresh courses list
+      },
+      error: (err) => {
+        console.error('Error updating course:', err);
+        this.errorMessage = 'Failed to update course. Please try again.';
+      }
+    });
+  }
+
+  // Delete
+  openDeleteModal(course: any) {
+    this.deletingCourse = course;
+    this.showDeleteModal = true;
+  }
+
+  closeDeleteModal() {
+    this.showDeleteModal = false;
+    this.deletingCourse = null;
+  }
+
+  deleteCourse() {
+    if (!this.deletingCourse) {
+      return;
+    }
+
+    this.courseService.deleteCourse(this.deletingCourse.id).subscribe({
+      next: () => {
+        this.closeDeleteModal();
+        this.loadCourses(); // Refresh courses list
+      },
+      error: (err) => {
+        console.error('Error deleting course:', err);
+        this.errorMessage = 'Failed to delete course. Please try again.';
+      }
+    });
   }
 }

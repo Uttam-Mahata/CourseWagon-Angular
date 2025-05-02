@@ -26,4 +26,20 @@ export class TopicService {
     console.log(`Fetching topic details for course: ${courseId}, subject: ${subjectId}, chapter: ${chapterId}, topic: ${topicId}`);
     return this.http.get(`${this.apiUrl}/${courseId}/subjects/${subjectId}/chapters/${chapterId}/topics/${topicId}`);
   }
+  
+  // CRUD operations
+  createTopic(courseId: number, subjectId: number, chapterId: number, name: string): Observable<any> {
+    console.log(`Creating topic for course: ${courseId}, subject: ${subjectId}, chapter: ${chapterId}`);
+    return this.http.post(`${this.apiUrl}/${courseId}/subjects/${subjectId}/chapters/${chapterId}/topics`, { name });
+  }
+  
+  updateTopic(courseId: number, subjectId: number, chapterId: number, topicId: number, name: string): Observable<any> {
+    console.log(`Updating topic for course: ${courseId}, subject: ${subjectId}, chapter: ${chapterId}, topic: ${topicId}`);
+    return this.http.put(`${this.apiUrl}/${courseId}/subjects/${subjectId}/chapters/${chapterId}/topics/${topicId}`, { name });
+  }
+  
+  deleteTopic(courseId: number, subjectId: number, chapterId: number, topicId: number): Observable<any> {
+    console.log(`Deleting topic for course: ${courseId}, subject: ${subjectId}, chapter: ${chapterId}, topic: ${topicId}`);
+    return this.http.delete(`${this.apiUrl}/${courseId}/subjects/${subjectId}/chapters/${chapterId}/topics/${topicId}`);
+  }
 }

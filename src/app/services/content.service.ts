@@ -20,4 +20,21 @@ export class ContentService {
     console.log(`Fetching content for course: ${courseId}, subject: ${subjectId}, chapter: ${chapterId}, topic: ${topicId}`);
     return this.http.get(`${this.apiUrl}/${courseId}/subjects/${subjectId}/chapters/${chapterId}/topics/${topicId}/content`);
   }
+  
+  // New CRUD operations
+  createContentManual(courseId: number, subjectId: number, chapterId: number, topicId: number, contentText: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${courseId}/subjects/${subjectId}/chapters/${chapterId}/topics/${topicId}/content`, 
+      { content: contentText }
+    );
+  }
+  
+  updateContent(courseId: number, subjectId: number, chapterId: number, topicId: number, contentText: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${courseId}/subjects/${subjectId}/chapters/${chapterId}/topics/${topicId}/content`,
+      { content: contentText }
+    );
+  }
+  
+  deleteContent(courseId: number, subjectId: number, chapterId: number, topicId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${courseId}/subjects/${subjectId}/chapters/${chapterId}/topics/${topicId}/content`);
+  }
 }

@@ -24,4 +24,20 @@ export class ChapterService {
     console.log(`Fetching chapter details for course: ${courseId}, subject: ${subjectId}, chapter: ${chapterId}`);
     return this.http.get(`${this.apiUrl}/${courseId}/subjects/${subjectId}/chapters/${chapterId}`);
   }
+  
+  // Enhanced CRUD operations
+  createChapter(courseId: number, subjectId: number, name: string): Observable<any> {
+    console.log(`Creating chapter for course: ${courseId}, subject: ${subjectId}, name: ${name}`);
+    return this.http.post(`${this.apiUrl}/${courseId}/subjects/${subjectId}/chapters`, { name });
+  }
+  
+  updateChapter(courseId: number, subjectId: number, chapterId: number, name: string): Observable<any> {
+    console.log(`Updating chapter for course: ${courseId}, subject: ${subjectId}, chapter: ${chapterId}`);
+    return this.http.put(`${this.apiUrl}/${courseId}/subjects/${subjectId}/chapters/${chapterId}`, { name });
+  }
+  
+  deleteChapter(courseId: number, subjectId: number, chapterId: number): Observable<any> {
+    console.log(`Deleting chapter for course: ${courseId}, subject: ${subjectId}, chapter: ${chapterId}`);
+    return this.http.delete(`${this.apiUrl}/${courseId}/subjects/${subjectId}/chapters/${chapterId}`);
+  }
 }

@@ -29,6 +29,7 @@ import { SharedMarkdownModule } from './shared/markdown.module';
 import { CourseContentComponent } from './course-content/course-content.component';
 import { FilterByIdPipe } from './pipes/filter-by-id.pipe';
 import { SubjectsComponent } from './subjects/subjects.component';
+import { ClickOutsideDirective } from './directives/click-outside.directive';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { SubjectsComponent } from './subjects/subjects.component';
     TopicsContentComponent,
     CourseContentComponent,
     FilterByIdPipe,
-    SubjectsComponent
+    SubjectsComponent,
+    ClickOutsideDirective
   ],
   imports: [
     BrowserModule,
