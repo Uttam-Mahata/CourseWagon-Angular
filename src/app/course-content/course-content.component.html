@@ -54,10 +54,10 @@
           <fa-icon *ngIf="!isGeneratingChapters" [icon]="faMagic" class="mr-1.5"></fa-icon>
           <span>{{ isGeneratingChapters ? 'Generating...' : 'Update Chapters' }}</span>
         </button>
-        
+        &nbsp;
         <!-- Add new chapter button -->
         <button 
-          (click)="createNewChapter()"
+          (click)="openNewChapterModal()"
           class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md text-sm transition duration-200 flex items-center">
           <fa-icon [icon]="faPlus" class="mr-1.5"></fa-icon>
           <span>Add Chapter</span>
@@ -118,7 +118,7 @@
             
             <!-- Add topic button -->
             <button 
-              (click)="createNewTopic()"
+              (click)="openNewTopicModal()"
               class="bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded-md text-xs transition duration-200 flex items-center justify-center">
               <fa-icon [icon]="faPlus" class="mr-1"></fa-icon>
               <span>Add Topic</span>
@@ -465,6 +465,95 @@
         (click)="deleteContent()">
         <div *ngIf="isDeletingContent" class="animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white mr-1.5"></div>
         {{ isDeletingContent ? 'Deleting...' : 'Delete Content' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- New Chapter Modal -->
+<div *ngIf="showNewChapterModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md">
+    <h2 class="text-lg font-bold mb-4">Add New Chapter</h2>
+    <div class="mb-4">
+      <label for="newChapterName" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+      <input 
+        type="text" 
+        id="newChapterName" 
+        [(ngModel)]="newChapterName" 
+        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        placeholder="Enter chapter name">
+    </div>
+    <div class="flex justify-end space-x-3">
+      <button 
+        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+        (click)="closeNewChapterModal()">
+        Cancel
+      </button>
+      <button 
+        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors flex items-center"
+        [disabled]="isAddingChapter"
+        (click)="createNewChapter()">
+        <div *ngIf="isAddingChapter" class="animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white mr-1.5"></div>
+        {{ isAddingChapter ? 'Adding...' : 'Add Chapter' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- New Topic Modal -->
+<div *ngIf="showNewTopicModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md">
+    <h2 class="text-lg font-bold mb-4">Add New Topic</h2>
+    <div class="mb-4">
+      <label for="newTopicName" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+      <input 
+        type="text" 
+        id="newTopicName" 
+        [(ngModel)]="newTopicName" 
+        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        placeholder="Enter topic name">
+    </div>
+    <div class="flex justify-end space-x-3">
+      <button 
+        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+        (click)="closeNewTopicModal()">
+        Cancel
+      </button>
+      <button 
+        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors flex items-center"
+        [disabled]="isAddingTopic"
+        (click)="createNewTopic()">
+        <div *ngIf="isAddingTopic" class="animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white mr-1.5"></div>
+        {{ isAddingTopic ? 'Adding...' : 'Add Topic' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- New Content Modal -->
+<div *ngIf="showNewContentModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] flex flex-col">
+    <h2 class="text-lg font-bold mb-4">Add New Content</h2>
+    <div class="mb-4 flex-grow overflow-y-auto">
+      <label for="newContent" class="block text-sm font-medium text-gray-700 mb-1">Markdown Content</label>
+      <textarea 
+        id="newContent" 
+        [(ngModel)]="newContentText" 
+        class="w-full h-[60vh] px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"
+        placeholder="Enter markdown content"></textarea>
+    </div>
+    <div class="flex justify-end space-x-3">
+      <button 
+        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+        (click)="closeNewContentModal()">
+        Cancel
+      </button>
+      <button 
+        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors flex items-center"
+        [disabled]="isAddingContent"
+        (click)="createNewContent()">
+        <div *ngIf="isAddingContent" class="animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white mr-1.5"></div>
+        {{ isAddingContent ? 'Adding...' : 'Add Content' }}
       </button>
     </div>
   </div>

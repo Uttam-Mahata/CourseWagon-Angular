@@ -86,6 +86,17 @@ export class CourseContentComponent implements OnInit, OnDestroy {
   isDeletingTopic: boolean = false;
   isDeletingContent: boolean = false;
 
+  // New properties for modal forms
+  showNewChapterModal: boolean = false;
+  showNewTopicModal: boolean = false;
+  showNewContentModal: boolean = false;
+  newChapterName: string = '';
+  newTopicName: string = '';
+  newContentText: string = '';
+  isAddingChapter: boolean = false;
+  isAddingTopic: boolean = false;
+  isAddingContent: boolean = false;
+
   constructor(
     private courseService: CourseService,
     private subjectService: SubjectService,
@@ -801,35 +812,72 @@ export class CourseContentComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Helper method to create a new chapter
+  // Modal methods for new chapter
+  openNewChapterModal() {
+    this.newChapterName = '';
+    this.showNewChapterModal = true;
+  }
+
+  closeNewChapterModal() {
+    this.showNewChapterModal = false;
+    this.newChapterName = '';
+  }
+
   createNewChapter() {
-    const name = prompt('Enter new chapter name:');
-    if (!name || !name.trim()) return;
+    if (!this.newChapterName || !this.newChapterName.trim()) {
+      this.errorMessage = 'Chapter name is required';
+      return;
+    }
     
-    this.chapterService.createChapter(this.courseId, this.subjectId, name).subscribe({
+    this.isAddingChapter = true;
+    this.errorMessage = '';
+    
+    this.chapterService.createChapter(this.courseId, this.subjectId, this.newChapterName.trim()).subscribe({
       next: (newChapter) => {
         this.chapters.push(newChapter);
         // Optionally expand the new chapter
         this.toggleChapter(newChapter.id);
+        this.closeNewChapterModal();
+        this.isAddingChapter = false;
       },
       error: (err) => {
         console.error('Error creating chapter:', err);
         this.errorMessage = 'Failed to create chapter. Please try again.';
+        this.isAddingChapter = false;
       }
     });
   }
 
-  // Helper method to create a new topic in the current chapter
+  // Modal methods for new topic
+  openNewTopicModal() {
+    if (!this.expandedChapterId) {
+      this.errorMessage = 'Please select a chapter first';
+      return;
+    }
+    this.newTopicName = '';
+    this.showNewTopicModal = true;
+  }
+
+  closeNewTopicModal() {
+    this.showNewTopicModal = false;
+    this.newTopicName = '';
+  }
+
   createNewTopic() {
     if (!this.expandedChapterId) {
       this.errorMessage = 'Please select a chapter first';
       return;
     }
     
-    const name = prompt('Enter new topic name:');
-    if (!name || !name.trim()) return;
+    if (!this.newTopicName || !this.newTopicName.trim()) {
+      this.errorMessage = 'Topic name is required';
+      return;
+    }
     
-    this.topicService.createTopic(this.courseId, this.subjectId, this.expandedChapterId, name).subscribe({
+    this.isAddingTopic = true;
+    this.errorMessage = '';
+    
+    this.topicService.createTopic(this.courseId, this.subjectId, this.expandedChapterId, this.newTopicName.trim()).subscribe({
       next: (newTopic) => {
         // Initialize topics array for this chapter if it doesn't exist
         if (!this.topics[this.expandedChapterId!]) {
@@ -846,10 +894,69 @@ export class CourseContentComponent implements OnInit, OnDestroy {
         
         // Select the new topic
         this.selectTopic(newTopic);
+        this.closeNewTopicModal();
+        this.isAddingTopic = false;
       },
       error: (err) => {
         console.error('Error creating topic:', err);
         this.errorMessage = 'Failed to create topic. Please try again.';
+        this.isAddingTopic = false;
+      }
+    });
+  }
+
+  // Modal methods for new content (when no content exists yet)
+  openNewContentModal() {
+    if (!this.selectedTopicId || !this.expandedChapterId) {
+      this.errorMessage = 'Please select a topic first';
+      return;
+    }
+    this.newContentText = '';
+    this.showNewContentModal = true;
+  }
+
+  closeNewContentModal() {
+    this.showNewContentModal = false;
+    this.newContentText = '';
+  }
+
+  createNewContent() {
+    if (!this.selectedTopicId || !this.expandedChapterId) {
+      this.errorMessage = 'Please select a topic first';
+      return;
+    }
+    
+    if (!this.newContentText || !this.newContentText.trim()) {
+      this.errorMessage = 'Content is required';
+      return;
+    }
+    
+    this.isAddingContent = true;
+    this.errorMessage = '';
+    
+    this.contentService.createContentManual(
+      this.courseId,
+      this.subjectId,
+      this.expandedChapterId,
+      this.selectedTopicId,
+      this.newContentText.trim()
+    ).subscribe({
+      next: (response) => {
+        // Update content display
+        this.content = response.content || this.newContentText;
+        
+        // Mark topic as having content
+        if (this.selectedTopic) {
+          this.selectedTopic.has_content = true;
+        }
+        
+        this.closeNewContentModal();
+        this.isAddingContent = false;
+      },
+      error: (err) => {
+        console.error('Error creating content:', err);
+        this.errorMessage = 'Failed to create content. Please try again.';
+        this.isAddingContent = false;
       }
     });
   }

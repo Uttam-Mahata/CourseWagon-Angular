@@ -35,8 +35,10 @@ export class SubjectsComponent implements OnInit {
   // CRUD operations state
   showEditSubjectModal: boolean = false;
   showDeleteSubjectModal: boolean = false;
+  showCreateSubjectModal: boolean = false;
   editingSubject: any = null;
   isDeletingSubject: boolean = false;
+  newSubjectName: string = '';
 
   constructor(
     private courseService: CourseService,
@@ -109,20 +111,38 @@ export class SubjectsComponent implements OnInit {
   
   // CRUD Operations for Subjects
   
-  // Create new subject
-  createNewSubject() {
-    const name = prompt('Enter new subject name:');
-    if (!name || !name.trim()) return;
+  // Create new subject methods
+  openCreateSubjectModal() {
+    this.newSubjectName = '';
+    this.showCreateSubjectModal = true;
+  }
+  
+  closeCreateSubjectModal() {
+    this.showCreateSubjectModal = false;
+    this.newSubjectName = '';
+  }
+  
+  submitNewSubject() {
+    if (!this.newSubjectName || !this.newSubjectName.trim()) {
+      this.errorMessage = 'Subject name is required';
+      return;
+    }
     
-    this.subjectService.createSubject(this.courseId, name).subscribe({
+    this.subjectService.createSubject(this.courseId, this.newSubjectName).subscribe({
       next: (newSubject) => {
         this.subjects.push(newSubject);
+        this.closeCreateSubjectModal();
       },
       error: (err) => {
         console.error('Error creating subject:', err);
         this.errorMessage = 'Failed to create subject. Please try again.';
       }
     });
+  }
+  
+  // Create new subject - old method to be replaced
+  createNewSubject() {
+    this.openCreateSubjectModal();
   }
   
   // Edit subject
