@@ -24,18 +24,10 @@
                 <fa-icon [icon]="faGraduationCap" class="text-lg"></fa-icon> My Courses
               </a>
             </li>
+   
+   
             <li>
-              <a class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors font-poppins" href="#">
-                <fa-icon [icon]="faShoppingCart" class="text-lg"></fa-icon> Cart
-              </a>
-            </li>
-            <li>
-              <a class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors font-poppins" href="#">
-                <fa-icon [icon]="faBook" class="text-lg"></fa-icon> Manage Courses
-              </a>
-            </li>
-            <li>
-              <a class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors font-poppins" href="#">
+              <a class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors font-poppins" routerLink="/profile">
                 <fa-icon [icon]="faUser" class="text-lg"></fa-icon> Profile
               </a>
             </li>
@@ -54,7 +46,7 @@
               </a>
             </li>
             <li>
-              <a class="flex items-center gap-2 text-white bg-blue-600 hover:bg-blue-700 transition-colors font-poppins px-4 py-2 rounded-lg" routerLink="/auth/signup">
+              <a class="flex items-center gap-2 text-white bg-blue-600 hover:bg-blue-700 transition-colors font-poppins px-4 py-2 rounded-lg" routerLink="/auth">
                 <fa-icon [icon]="faUserPlus" class="text-lg"></fa-icon> Sign Up
               </a>
             </li>
@@ -73,18 +65,9 @@
                 <fa-icon [icon]="faGraduationCap" class="text-lg w-5 text-center"></fa-icon> My Courses
               </a>
             </li>
+
             <li>
-              <a class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors font-poppins" href="#" (click)="toggleNavbar()">
-                <fa-icon [icon]="faShoppingCart" class="text-lg w-5 text-center"></fa-icon> Cart
-              </a>
-            </li>
-            <li>
-              <a class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors font-poppins" href="#" (click)="toggleNavbar()">
-                <fa-icon [icon]="faBook" class="text-lg w-5 text-center"></fa-icon> Manage Courses
-              </a>
-            </li>
-            <li>
-              <a class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors font-poppins" href="#" (click)="toggleNavbar()">
+              <a class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors font-poppins" routerLink="/profile" (click)="toggleNavbar()">
                 <fa-icon [icon]="faUser" class="text-lg w-5 text-center"></fa-icon> Profile
               </a>
             </li>
@@ -103,7 +86,7 @@
               </a>
             </li>
             <li>
-              <a class="flex items-center gap-2 text-white bg-blue-600 hover:bg-blue-700 transition-colors font-poppins px-4 py-2 rounded-lg" routerLink="/auth/signup" (click)="toggleNavbar()">
+              <a class="flex items-center gap-2 text-white bg-blue-600 hover:bg-blue-700 transition-colors font-poppins px-4 py-2 rounded-lg" routerLink="/auth" (click)="toggleNavbar()">
                 <fa-icon [icon]="faUserPlus" class="text-lg w-5 text-center"></fa-icon> Sign Up
               </a>
             </li>

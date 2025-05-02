@@ -29,6 +29,9 @@ import { SharedMarkdownModule } from './shared/markdown.module';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { CourseContentComponent } from './course-content/course-content.component';
 import { FilterByIdPipe } from './pipes/filter-by-id.pipe';
+import { TermsComponent } from './terms/terms.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,10 @@ import { FilterByIdPipe } from './pipes/filter-by-id.pipe';
     TopicsContentComponent,
     SubjectsComponent,
     CourseContentComponent,
-    FilterByIdPipe
+    FilterByIdPipe,
+    TermsComponent,
+    PrivacyPolicyComponent,
+    ComingSoonComponent
   ],
   imports: [
     BrowserModule,
