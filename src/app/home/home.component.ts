@@ -11,6 +11,7 @@ import {
   faUser, 
   faUserPlus 
 } from '@fortawesome/free-solid-svg-icons';
+import { NavigationService } from '../services/navigation.service';
 
 @Component({
     selector: 'app-home',
@@ -30,4 +31,11 @@ export class HomeComponent {
   faSitemap = faSitemap;
   faUser = faUser;
   faUserPlus = faUserPlus;
+  
+  constructor(private navigationService: NavigationService) {}
+  
+  // Method to scroll to top when links are clicked
+  scrollToTop(): void {
+    this.navigationService.scrollToTop();
+  }
 }

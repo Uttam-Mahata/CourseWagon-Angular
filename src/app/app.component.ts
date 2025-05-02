@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
+import { NavigationService } from './services/navigation.service';
 import { faBars, faTimes, faGraduationCap, faShoppingCart, faBook, faUser, faPowerOff, faSignInAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons'; // Import icons
 
 @Component({
@@ -24,7 +25,10 @@ export class AppComponent implements OnInit {
   faSignInAlt = faSignInAlt;
   faUserPlus = faUserPlus;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private navigationService: NavigationService // Inject NavigationService
+  ) {}
 
   ngOnInit(): void {
     // Use isLoggedIn$ directly instead of isAuthenticated method
@@ -42,5 +46,10 @@ export class AppComponent implements OnInit {
 
   onLogout(): void {
     this.authService.logout();
+  }
+  
+  // Add method to manually scroll to top when needed
+  scrollToTop(): void {
+    this.navigationService.scrollToTop();
   }
 }
