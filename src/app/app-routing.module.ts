@@ -13,6 +13,9 @@ import { RegisterComponent } from './register/register.component';
 import { CourseContentComponent } from './course-content/course-content.component';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { RouteRedirectResolver } from './route-redirect.resolver';
+import { TermsComponent } from './terms/terms.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -22,6 +25,11 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'create-course', component: CourseComponent, canActivate: [AuthGuard] },
   { path: 'courses', component: CoursesComponent, canActivate: [AuthGuard] },
+  
+  // Legal pages - accessible without authentication
+  { path: 'terms', component: TermsComponent },
+  { path: 'privacy-policy', component: PrivacyPolicyComponent },
+  { path: 'coming-soon', component: ComingSoonComponent },
   
   // New subjects component route
   { 
