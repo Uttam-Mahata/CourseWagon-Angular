@@ -228,11 +228,6 @@ export class CourseContentComponent implements OnInit, OnDestroy {
     // Hide sidebar on mobile when a topic is selected
     if (window.innerWidth < 768) {
       this.isSidebarOpen = false;
-      
-      // Scroll to top when selecting a new topic
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-      }, 100);
     }
   }
   
@@ -415,27 +410,6 @@ export class CourseContentComponent implements OnInit, OnDestroy {
   
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
-    
-    // When closing sidebar on mobile, add a small delay to allow animation to complete
-    if (!this.isSidebarOpen && window.innerWidth < 768) {
-      setTimeout(() => {
-        // Optional: scroll the content to the top for better UX
-        const contentArea = document.querySelector('.flex-1.overflow-y-auto');
-        if (contentArea) {
-          contentArea.scrollTop = 0;
-        }
-      }, 300);
-    }
-
-    // When showing sidebar on mobile, scroll it to top
-    if (this.isSidebarOpen && window.innerWidth < 768) {
-      setTimeout(() => {
-        const sidebar = document.querySelector('.bg-gray-900.text-white');
-        if (sidebar) {
-          sidebar.scrollTop = 0;
-        }
-      }, 100);
-    }
   }
   
   // Adjust sidebar visibility based on screen size
@@ -462,44 +436,5 @@ export class CourseContentComponent implements OnInit, OnDestroy {
     formatted = formatted.replace(/^(#{1,6})([^ ])/gm, '$1 $2');
     
     return formatted;
-  }
-
-  // Add these new methods to support topic navigation
-  getPreviousTopic() {
-    if (!this.selectedTopicId || !this.expandedChapterId) return null;
-    
-    const currentTopics = this.topics[this.expandedChapterId];
-    if (!currentTopics) return null;
-    
-    const currentIndex = currentTopics.findIndex(topic => topic.id === this.selectedTopicId);
-    if (currentIndex <= 0) return null;
-    
-    return currentTopics[currentIndex - 1];
-  }
-  
-  getNextTopic() {
-    if (!this.selectedTopicId || !this.expandedChapterId) return null;
-    
-    const currentTopics = this.topics[this.expandedChapterId];
-    if (!currentTopics) return null;
-    
-    const currentIndex = currentTopics.findIndex(topic => topic.id === this.selectedTopicId);
-    if (currentIndex === -1 || currentIndex >= currentTopics.length - 1) return null;
-    
-    return currentTopics[currentIndex + 1];
-  }
-  
-  navigateToPreviousTopic() {
-    const prevTopic = this.getPreviousTopic();
-    if (prevTopic) {
-      this.selectTopic(prevTopic);
-    }
-  }
-  
-  navigateToNextTopic() {
-    const nextTopic = this.getNextTopic();
-    if (nextTopic) {
-      this.selectTopic(nextTopic);
-    }
   }
 }
