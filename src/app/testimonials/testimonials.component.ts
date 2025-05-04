@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faUser, faStar, faStarHalfAlt, faPen, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import { TestimonialService } from '../services/testimonial.service';
 import { AuthService } from '../auth.service';
@@ -16,9 +16,6 @@ export class TestimonialsComponent implements OnInit {
   faStar = faStar;
   farStar = farStar;
   faStarHalfAlt = faStarHalfAlt;
-  faPen = faPen;
-  faCheck = faCheck;
-  faTimes = faTimes;
 
   // Testimonial data
   testimonials: any[] = [];
@@ -28,18 +25,6 @@ export class TestimonialsComponent implements OnInit {
   // User-related state
   isAuthenticated: boolean = false;
   userTestimonial: any = null;
-  
-  // Form data
-  showForm: boolean = false;
-  newTestimonial = {
-    quote: '',
-    rating: 5
-  };
-  
-  // Form states
-  isSubmitting: boolean = false;
-  formError: string | null = null;
-  formSuccess: string | null = null;
 
   constructor(
     private testimonialService: TestimonialService,
@@ -64,7 +49,8 @@ export class TestimonialsComponent implements OnInit {
     this.isLoading = true;
     this.testimonialService.getApprovedTestimonials().subscribe({
       next: (data) => {
-        this.testimonials = data;
+        // Filter testimonials to only show those with 4 or 5 stars
+        this.testimonials = data.filter(testimonial => testimonial.rating >= 4);
         this.isLoading = false;
       },
       error: (err) => {
@@ -89,84 +75,19 @@ export class TestimonialsComponent implements OnInit {
     });
   }
 
-  toggleForm(): void {
-    this.showForm = !this.showForm;
-    this.formError = null;
-    this.formSuccess = null;
-  }
-
-  submitTestimonial(): void {
-    if (!this.newTestimonial.quote.trim()) {
-      this.formError = 'Please enter your testimonial';
-      return;
-    }
-
-    this.isSubmitting = true;
-    this.formError = null;
-    
-    // Determine if creating new or updating existing
-    if (this.userTestimonial) {
-      this.updateTestimonial();
-    } else {
-      this.createTestimonial();
+  // Handler methods for write-review component events
+  onTestimonialUpdated(testimonial: any): void {
+    this.userTestimonial = testimonial;
+    // Reload testimonials if the updated one was already approved and might be displayed
+    if (testimonial.is_approved) {
+      this.loadTestimonials();
     }
   }
 
-  createTestimonial(): void {
-    this.testimonialService.createTestimonial(
-      this.newTestimonial.quote,
-      this.newTestimonial.rating
-    ).subscribe({
-      next: (response) => {
-        this.userTestimonial = response;
-        this.formSuccess = 'Your testimonial has been submitted for approval!';
-        this.isSubmitting = false;
-        setTimeout(() => this.showForm = false, 3000);
-      },
-      error: (err) => {
-        this.formError = err.error.error || 'Failed to submit testimonial';
-        this.isSubmitting = false;
-        console.error('Error submitting testimonial', err);
-      }
-    });
-  }
-
-  updateTestimonial(): void {
-    this.testimonialService.updateTestimonial(
-      this.userTestimonial.id,
-      this.newTestimonial.quote,
-      this.newTestimonial.rating
-    ).subscribe({
-      next: (response) => {
-        this.userTestimonial = response;
-        this.formSuccess = 'Your testimonial has been updated and submitted for approval!';
-        this.isSubmitting = false;
-        setTimeout(() => this.showForm = false, 3000);
-      },
-      error: (err) => {
-        this.formError = err.error.error || 'Failed to update testimonial';
-        this.isSubmitting = false;
-        console.error('Error updating testimonial', err);
-      }
-    });
-  }
-
-  deleteTestimonial(): void {
-    if (!confirm('Are you sure you want to delete your testimonial?')) {
-      return;
-    }
-
-    this.testimonialService.deleteTestimonial(this.userTestimonial.id).subscribe({
-      next: () => {
-        this.userTestimonial = null;
-        this.formSuccess = 'Your testimonial has been deleted';
-        setTimeout(() => this.formSuccess = null, 3000);
-      },
-      error: (err) => {
-        this.formError = 'Failed to delete testimonial';
-        console.error('Error deleting testimonial', err);
-      }
-    });
+  onTestimonialDeleted(): void {
+    this.userTestimonial = null;
+    // Reload testimonials in case the deleted one was being displayed
+    this.loadTestimonials();
   }
 
   // Helper method to generate star rating elements
@@ -192,13 +113,5 @@ export class TestimonialsComponent implements OnInit {
     }
     
     return stars;
-  }
-
-  editTestimonial(): void {
-    this.newTestimonial.quote = this.userTestimonial.quote;
-    this.newTestimonial.rating = this.userTestimonial.rating;
-    this.showForm = true;
-    this.formError = null;
-    this.formSuccess = null;
   }
 }

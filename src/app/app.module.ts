@@ -14,8 +14,6 @@ import { CourseService } from './services/course.service';
 import { MarkdownModule } from 'ngx-markdown';
 import { FooterComponent } from './footer/footer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
 import { AuthComponent } from './auth/auth.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MermaidViewComponent } from './mermaid-view/mermaid-view.component';
@@ -33,14 +31,13 @@ import { TermsComponent } from './terms/terms.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { TestimonialsComponent } from './testimonials/testimonials.component';
+import { WriteReviewComponent } from './write-review/write-review.component';
 @NgModule({
   declarations: [
     AppComponent,
     CourseComponent,
     CoursesComponent,
     FooterComponent,
-    LoginComponent,
-    RegisterComponent,
     AuthComponent,
     MermaidViewComponent,
     ProfileComponent,
@@ -54,7 +51,8 @@ import { TestimonialsComponent } from './testimonials/testimonials.component';
     TermsComponent,
     PrivacyPolicyComponent,
     ComingSoonComponent,
-    TestimonialsComponent
+    TestimonialsComponent,
+    WriteReviewComponent
   ],
   imports: [
     BrowserModule,

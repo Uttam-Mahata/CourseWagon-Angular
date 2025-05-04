@@ -34,3 +34,28 @@ export class AuthGuard implements CanActivate {
     return false;
   }
 }
+
+@Injectable({
+  providedIn: 'root'
+})
+export class NonAuthGuard implements CanActivate {
+  
+  constructor(private authService: AuthService, private router: Router) {}
+  
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    
+    // Check if we have a token
+    const token = this.authService.getToken();
+    
+    if (!token) {
+      return true;
+    }
+    
+    // If token exists, redirect to courses page
+    this.router.navigate(['/courses']);
+    return false;
+  }
+}

@@ -4,24 +4,20 @@ import { CourseComponent } from './course/course.component';
 import { CoursesComponent } from './courses/courses.component';
 import { HomeComponent } from './home/home.component';
 import { AuthComponent } from './auth/auth.component';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard, NonAuthGuard } from './auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { SubjectsChaptersComponent } from './subjects-chapters/subjects-chapters.component';
 import { TopicsContentComponent } from './topics-content/topics-content.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
 import { CourseContentComponent } from './course-content/course-content.component';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { RouteRedirectResolver } from './route-redirect.resolver';
 import { TermsComponent } from './terms/terms.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
-
+import { WriteReviewComponent } from './write-review/write-review.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'auth', component: AuthComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'auth', component: AuthComponent, canActivate: [NonAuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'create-course', component: CourseComponent, canActivate: [AuthGuard] },
   { path: 'courses', component: CoursesComponent, canActivate: [AuthGuard] },
@@ -36,6 +32,12 @@ const routes: Routes = [
     path: 'courses/:course_id/subjects', 
     component: SubjectsComponent, 
     canActivate: [AuthGuard] 
+  },
+
+  {
+    path:'write-review',
+    component: WriteReviewComponent,
+    canActivate: [AuthGuard]
   },
   
   // Legacy route - keep for compatibility

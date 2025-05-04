@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { 
   faMagic, 
   faBrain, 
@@ -11,6 +11,7 @@ import {
   faUserPlus 
 } from '@fortawesome/free-solid-svg-icons';
 import { NavigationService } from '../services/navigation.service';
+import { AuthService } from '../auth.service';
 
 @Component({
     selector: 'app-home',
@@ -18,7 +19,7 @@ import { NavigationService } from '../services/navigation.service';
     styleUrl: './home.component.css',
     standalone: false
 })
-export class HomeComponent { 
+export class HomeComponent implements OnInit { 
   // FontAwesome icons
   faMagic = faMagic;
   faBrain = faBrain;
@@ -30,7 +31,18 @@ export class HomeComponent {
   faSitemap = faSitemap;
   faUserPlus = faUserPlus;
   
-  constructor(private navigationService: NavigationService) {}
+  isLoggedIn = false;
+  
+  constructor(
+    private navigationService: NavigationService,
+    private authService: AuthService
+  ) {}
+  
+  ngOnInit(): void {
+    this.authService.isLoggedIn$.subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn;
+    });
+  }
   
   // Method to scroll to top when links are clicked
   scrollToTop(): void {
