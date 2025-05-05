@@ -62,7 +62,7 @@ import { AdminTestimonialsComponent } from './admin/admin-testimonials/admin-tes
     // Add new admin sub-components
     AdminDashboardComponent,
     AdminUsersComponent,
-    AdminTestimonialsComponent
+    AdminTestimonialsComponent,
   ],
   imports: [
     BrowserModule,

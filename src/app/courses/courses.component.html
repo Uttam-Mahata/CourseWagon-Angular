@@ -86,6 +86,35 @@
     <div *ngFor="let course of courses; let i = index" 
          [ngClass]="'animate-fadeInUp animation-delay-' + i"
          class="group bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 hover:border-blue-200 course-card">
+      
+      <!-- Course Image -->
+      <div class="course-image-container">
+        <div *ngIf="!course.image_url" class="image-placeholder">
+          <fa-icon [icon]="faBook" class="text-gray-300"></fa-icon>
+        </div>
+        
+        <img *ngIf="course.image_url" 
+             [src]="course.image_url" 
+             [alt]="course.name" 
+             class="course-image"
+             [ngClass]="{'loading': course.isGeneratingImage}"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        
+        <!-- Fallback if image fails to load -->
+        <div class="image-placeholder" style="display:none;">
+          <fa-icon [icon]="faBook" class="text-gray-300"></fa-icon>
+        </div>
+        
+        <!-- Image generation button -->
+        <div 
+          class="generate-image-btn" 
+          (click)="generateCourseImage(course.id, $event)" 
+          *ngIf="userHasApiKey"
+          [ngClass]="{'opacity-100': course.isGeneratingImage}">
+          <fa-icon [icon]="course.isGeneratingImage ? faSpinner : faImage" [class.fa-spin]="course.isGeneratingImage"></fa-icon>
+        </div>
+      </div>
+      
       <!-- Card Content with Glass Effect -->
       <div class="p-6 flex flex-col h-full relative overflow-hidden">
         <!-- Card Decorations -->
@@ -112,20 +141,20 @@
         <p class="text-gray-600 text-sm flex-grow mb-6 relative z-10 line-clamp-3">{{ course.description || 'No description available.' }}</p>
         
         <!-- Action Buttons with Animation -->
-        <div class="flex justify-between pt-4 border-t border-gray-100 relative z-10">
+        <div class="flex justify-between pt-4 border-t border-gray-100 relative z-10 w-full">
           <!-- If subjects exist, show both Update and View buttons -->
           <ng-container *ngIf="course.has_subjects; else generateOnly">
             <button 
               [disabled]="!userHasApiKey || course.isGenerating" 
+              class="px-4 py-2 border rounded-md text-sm flex items-center transition-all duration-300 flex-1 mr-2 justify-center"
               [ngClass]="{'bg-white border-blue-600 text-blue-600 hover:bg-blue-50': userHasApiKey && !course.isGenerating, 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed': !userHasApiKey || course.isGenerating}"
-              class="border rounded-lg px-4 py-2 text-sm flex items-center transition-all duration-300"
               (click)="generateSubjects(course.id)">
               <div *ngIf="course.isGenerating" class="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-blue-600 mr-2"></div>
               <fa-icon *ngIf="!course.isGenerating" [icon]="faMagic" class="mr-2"></fa-icon> 
               {{ course.isGenerating ? 'Updating...' : 'Update' }}
             </button>
             <button 
-              class="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-lg px-4 py-2 text-sm flex items-center transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
+              class="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-md px-4 py-2 text-sm flex items-center justify-center transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg flex-1"
               (click)="viewSubjects(course.id)">
               <fa-icon [icon]="faEye" class="mr-2"></fa-icon> View
             </button>
@@ -136,7 +165,7 @@
             <button 
               [disabled]="!userHasApiKey || course.isGenerating"
               [ngClass]="{'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-md hover:shadow-lg': userHasApiKey && !course.isGenerating, 'bg-gray-300 text-gray-500 cursor-not-allowed': !userHasApiKey || course.isGenerating}"
-              class="rounded-lg px-6 py-2.5 text-sm flex items-center transition-all duration-300 mx-auto transform hover:scale-105"
+              class="rounded-lg px-6 py-2.5 text-sm flex items-center justify-center transition-all duration-300 mx-auto transform hover:scale-105 w-full"
               (click)="generateSubjects(course.id)">
               <div *ngIf="course.isGenerating" class="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-2"></div>
               <fa-icon *ngIf="!course.isGenerating" [icon]="faMagic" class="mr-2"></fa-icon> 

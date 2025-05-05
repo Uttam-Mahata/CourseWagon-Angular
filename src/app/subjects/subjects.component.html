@@ -50,6 +50,14 @@
         class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center justify-center transition duration-200 shadow-md">
         <fa-icon [icon]="faPlus" class="mr-2"></fa-icon> Add Subject
       </button>
+
+      <!-- Generate Subject Images Button -->
+      <button
+        *ngIf="subjects.length > 0 && userHasApiKey"
+        (click)="generateAllSubjectImages()"
+        class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg flex items-center justify-center transition duration-200 shadow-md">
+        <fa-icon [icon]="faImage" class="mr-2"></fa-icon> Generate Images
+      </button>
       
       <button
         (click)="generateSubjects()"
@@ -84,6 +92,30 @@
   <!-- Subjects Grid - Responsive -->
   <div *ngIf="!isLoading && subjects.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
     <div *ngFor="let subject of subjects" class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden hover:shadow-lg transition duration-200">
+      <!-- Subject Image -->
+      <div class="h-40 relative overflow-hidden">
+        <!-- Default image placeholder if no image_url -->
+        <div *ngIf="!subject.image_url" class="w-full h-full bg-gradient-to-r from-blue-100 to-indigo-100 flex items-center justify-center">
+          <fa-icon [icon]="faBook" class="text-blue-300 text-4xl"></fa-icon>
+        </div>
+        
+        <!-- Show actual image if available -->
+        <img *ngIf="subject.image_url" [src]="subject.image_url" [alt]="subject.name" class="w-full h-full object-cover">
+        
+        <!-- Generate image button overlay -->
+        <button 
+          *ngIf="userHasApiKey"
+          class="absolute top-2 right-2 bg-white bg-opacity-80 p-2 rounded-full hover:bg-opacity-100 transition-opacity opacity-70 hover:opacity-100"
+          [disabled]="subject.isGeneratingImage"
+          (click)="generateSubjectImage(subject.id, $event)">
+          <fa-icon 
+            [icon]="subject.isGeneratingImage ? faSpinner : faImage" 
+            [class.fa-spin]="subject.isGeneratingImage"
+            class="text-blue-600">
+          </fa-icon>
+        </button>
+      </div>
+      
       <div class="p-4 sm:p-6">
         <div class="flex justify-between items-center mb-3">
           <div class="flex items-center">

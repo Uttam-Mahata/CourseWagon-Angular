@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { tap } from 'rxjs/operators';
+import { tap, catchError } from 'rxjs/operators';
 import { CourseService } from './course.service';
 
 @Injectable({
@@ -10,6 +10,7 @@ import { CourseService } from './course.service';
 })
 export class SubjectService {
   private apiUrl = environment.courseApiUrl;
+  private imageApiUrl = environment.apiBaseUrl + '/images';
   
   constructor(
     private http: HttpClient,
@@ -40,7 +41,7 @@ export class SubjectService {
     return this.http.get(`${this.apiUrl}/${courseId}/subjects/${subjectId}`);
   }
   
-  // New CRUD operations
+  // CRUD operations
   createSubject(courseId: number, name: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/${courseId}/subjects`, { name });
   }
@@ -51,5 +52,36 @@ export class SubjectService {
   
   deleteSubject(courseId: number, subjectId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${courseId}/subjects/${subjectId}`);
+  }
+  
+  // Image generation endpoints
+  generateSubjectImage(courseId: number, subjectId: number): Observable<any> {
+    return this.http.post(
+      `${this.imageApiUrl}/courses/${courseId}/subjects/${subjectId}/generate`, 
+      {}
+    ).pipe(
+      tap(updatedSubject => {
+        console.log('Subject image updated:', updatedSubject);
+      }),
+      catchError(error => {
+        console.error('Error generating subject image:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  generateAllSubjectImages(courseId: number): Observable<any> {
+    return this.http.post(
+      `${this.imageApiUrl}/courses/${courseId}/subjects/generate-all`,
+      {}
+    ).pipe(
+      tap(response => {
+        console.log('All subject images generated:', response);
+      }),
+      catchError(error => {
+        console.error('Error generating all subject images:', error);
+        return throwError(() => error);
+      })
+    );
   }
 }
