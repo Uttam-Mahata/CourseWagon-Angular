@@ -20,7 +20,6 @@ import { MermaidViewComponent } from './mermaid-view/mermaid-view.component';
 import { AuthInterceptor } from './auth.interceptor';
 import { AuthGuard } from './auth.guard';
 import { ProfileComponent } from './profile/profile.component';
-import { NavbarComponent } from './navbar/navbar.component';
 import { SubjectsChaptersComponent } from './subjects-chapters/subjects-chapters.component';
 import { TopicsContentComponent } from './topics-content/topics-content.component';
 import { SharedMarkdownModule } from './shared/markdown.module';
@@ -32,6 +31,13 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { TestimonialsComponent } from './testimonials/testimonials.component';
 import { WriteReviewComponent } from './write-review/write-review.component';
+import { AdminComponent } from './admin/admin.component';
+
+// Import new admin sub-components
+import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
+import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
+import { AdminTestimonialsComponent } from './admin/admin-testimonials/admin-testimonials.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +47,6 @@ import { WriteReviewComponent } from './write-review/write-review.component';
     AuthComponent,
     MermaidViewComponent,
     ProfileComponent,
-    NavbarComponent,
     HomeComponent,
     SubjectsChaptersComponent,
     TopicsContentComponent,
@@ -52,7 +57,12 @@ import { WriteReviewComponent } from './write-review/write-review.component';
     PrivacyPolicyComponent,
     ComingSoonComponent,
     TestimonialsComponent,
-    WriteReviewComponent
+    WriteReviewComponent,
+    AdminComponent,
+    // Add new admin sub-components
+    AdminDashboardComponent,
+    AdminUsersComponent,
+    AdminTestimonialsComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +73,6 @@ import { WriteReviewComponent } from './write-review/write-review.component';
     MarkdownModule.forRoot(),
     SharedMarkdownModule,
     RouterModule,
-
   ],
   providers: [
     CourseService,
