@@ -60,20 +60,29 @@ export class ProfileComponent implements OnInit {
       }
     });
     
-    // Check if we have a valid token
+    // Check if we have a valid token and immediately try to fetch current user
     if (!this.token) {
       console.log('No token found, redirecting to login');
       this.errorMessage = 'You need to log in first';
       setTimeout(() => {
         this.router.navigate(['/auth']);
       }, 2000);
+    } else {
+      // Get the current user
+      const currentUser = this.authService.getCurrentUser();
+      if (currentUser && currentUser.has_api_key) {
+        this.user = currentUser;
+        this.fetchApiKey();
+      }
     }
   }
 
   fetchApiKey(): void {
+    console.log('Fetching API key...');
     this.isLoading['apiKeyGet'] = true;
     this.authService.getApiKey().subscribe({
       next: (response) => {
+        console.log('API key fetched successfully:', response);
         this.currentApiKey = response.api_key;
         this.isLoading['apiKeyGet'] = false;
       },
