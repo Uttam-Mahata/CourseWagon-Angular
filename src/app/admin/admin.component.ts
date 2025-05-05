@@ -130,6 +130,17 @@ export class AdminComponent implements OnInit {
           if (userIndex !== -1) {
             this.users[userIndex].is_active = event.isActive;
           }
+          
+          // If this affects the dashboard stats, update them as well
+          if (event.isActive) {
+            if (this.dashboardStats.active_users !== undefined) {
+              this.dashboardStats.active_users++;
+            }
+          } else {
+            if (this.dashboardStats.active_users !== undefined && this.dashboardStats.active_users > 0) {
+              this.dashboardStats.active_users--;
+            }
+          }
         },
         error: (err) => {
           console.error('Error updating user status', err);
