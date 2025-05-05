@@ -1,5 +1,6 @@
 .testimonial-card {
-  transition: all 0.3s ease;
+  transform: translateY(0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
@@ -7,5 +8,14 @@
 }
 
 .testimonial-card:hover {
-  transform: translateY(-5px) scale(1.02);
+  transform: translateY(-5px);
+}
+
+/* Subtle animation for stars */
+fa-icon {
+  transition: transform 0.2s ease;
+}
+
+button:hover fa-icon[icon="star"] {
+  transform: scale(1.2);
 }

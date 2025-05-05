@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
 import { NavigationService } from './services/navigation.service';
-import { faBars, faTimes, faGraduationCap, faShoppingCart, faBook, faUser, faPowerOff, faSignInAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons'; // Import icons
+import { faBars, faTimes, faGraduationCap, faShoppingCart, faBook, faUser, faPowerOff, faSignInAlt, faUserPlus, faUserShield } from '@fortawesome/free-solid-svg-icons'; // Import admin icon
 
 @Component({
     selector: 'app-root',
+    standalone: false,
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    standalone: false
+    
 })
 export class AppComponent implements OnInit {
   title = 'CourseWagon';
   isAuthenticated = false;
   isNavbarOpen = false;
+  isAdmin = false;
 
   // Assign icons to properties
   faBars = faBars;
@@ -24,6 +26,7 @@ export class AppComponent implements OnInit {
   faPowerOff = faPowerOff;
   faSignInAlt = faSignInAlt;
   faUserPlus = faUserPlus;
+  faUserShield = faUserShield; // Add admin icon
 
   constructor(
     private authService: AuthService,
@@ -36,6 +39,14 @@ export class AppComponent implements OnInit {
       (isAuth: boolean) => {
         console.log('App component - authentication state changed:', isAuth);
         this.isAuthenticated = isAuth;
+        
+        // Check if the user is an admin
+        if (isAuth) {
+          const user = this.authService.getCurrentUser();
+          this.isAdmin = user && user.is_admin;
+        } else {
+          this.isAdmin = false;
+        }
       }
     );
   }

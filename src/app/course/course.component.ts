@@ -39,12 +39,8 @@ export class CourseComponent implements OnInit {
 
   ngOnInit() {
     this.authService.currentUser$.subscribe(user => {
-      this.userHasApiKey = user?.has_api_key || false;
-      
-      if (!this.userHasApiKey) {
-        // Optionally redirect to profile if no API key
-        // this.router.navigate(['/profile']);
-      }
+      this.userHasApiKey = !!user?.has_api_key;
+      console.log('Course component - user has API key:', this.userHasApiKey);
     });
   }
 
@@ -55,7 +51,7 @@ export class CourseComponent implements OnInit {
     }
 
     if (!this.userHasApiKey) {
-      this.router.navigate(['/profile']);
+      this.errorMessage = 'You need to set your Google API key in your profile first.';
       return;
     }
 

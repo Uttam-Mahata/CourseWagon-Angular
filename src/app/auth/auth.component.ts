@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
@@ -9,7 +9,7 @@ import { faEnvelope, faLock, faUser, faUserPlus, faSignInAlt, faKey, faExclamati
     templateUrl: './auth.component.html',
     standalone: false
 })
-export class AuthComponent {
+export class AuthComponent implements OnInit {
   // FontAwesome icons
   faEnvelope = faEnvelope;
   faLock = faLock;
@@ -45,6 +45,16 @@ export class AuthComponent {
     faLibrary.addIcons(
       faEnvelope, faLock, faUser, faUserPlus, faSignInAlt, faKey, faExclamationTriangle, faCheckCircle
     );
+  }
+
+  ngOnInit(): void {
+    // Check if user is already logged in
+    this.authService.isLoggedIn$.subscribe(isLoggedIn => {
+      if (isLoggedIn) {
+        console.log('User already logged in. Redirecting to courses page.');
+        this.router.navigate(['/courses']);
+      }
+    });
   }
 
   toggleMode(): void {

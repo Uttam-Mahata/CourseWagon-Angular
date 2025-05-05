@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
 import { SubjectService } from '../services/subject.service';
-import { faHome, faBook, faLayerGroup, faEye, faMagic, faInfoCircle, faChevronRight, faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faBook, faLayerGroup, faEye, faMagic, faInfoCircle, faChevronRight, faEdit, faTrash, faPlus, faImage, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-subjects',
@@ -22,6 +23,8 @@ export class SubjectsComponent implements OnInit {
   faEdit = faEdit;
   faTrash = faTrash;
   faPlus = faPlus;
+  faImage = faImage;
+  faSpinner = faSpinner;
   
   courseId: number;
   courseName: string = '';
@@ -31,6 +34,7 @@ export class SubjectsComponent implements OnInit {
   generatingSubjectId: number | null = null;
   errorMessage: string | null = null;
   isLoading: boolean = true;
+  userHasApiKey: boolean = false;
   
   // CRUD operations state
   showEditSubjectModal: boolean = false;
@@ -44,12 +48,18 @@ export class SubjectsComponent implements OnInit {
     private courseService: CourseService,
     private subjectService: SubjectService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.courseId = +this.route.snapshot.paramMap.get('course_id')!;
   }
 
   ngOnInit() {
+    // Check if user has API key
+    this.authService.currentUser$.subscribe(user => {
+      this.userHasApiKey = !!user?.has_api_key;
+    });
+    
     // Load course details
     this.courseService.getCourseDetails(this.courseId).subscribe({
       next: (course) => {
@@ -95,6 +105,127 @@ export class SubjectsComponent implements OnInit {
           this.errorMessage = 'You need to set your Google API key in your profile first.';
         } else {
           this.errorMessage = 'Failed to generate subjects. Please try again.';
+        }
+      }
+    });
+  }
+  
+  generateSubjectImage(subjectId: number, event?: Event) {
+    // Stop click from bubbling to parent
+    if (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+    
+    if (!this.userHasApiKey) {
+      this.errorMessage = 'You need to set your Google API key in your profile first.';
+      return;
+    }
+    
+    // Find the subject and mark it as generating an image
+    const subject = this.subjects.find(s => s.id === subjectId);
+    if (subject) {
+      subject.isGeneratingImage = true;
+    }
+    
+    this.subjectService.generateSubjectImage(this.courseId, subjectId).subscribe({
+      next: (updatedSubject) => {
+        // Update the subject in our array with new image URL
+        const index = this.subjects.findIndex(s => s.id === subjectId);
+        if (index !== -1) {
+          // Add timestamp to prevent caching
+          const timestamp = new Date().getTime();
+          const imageUrlWithTimestamp = updatedSubject.image_url.includes('?') 
+            ? `${updatedSubject.image_url}&t=${timestamp}` 
+            : `${updatedSubject.image_url}?t=${timestamp}`;
+
+          // Create a new subject object to trigger change detection
+          this.subjects[index] = { 
+            ...this.subjects[index],
+            image_url: imageUrlWithTimestamp,
+            isGeneratingImage: false
+          };
+          
+          // Force Angular to detect changes (create a new array reference)
+          this.subjects = [...this.subjects];
+        }
+      },
+      error: (error) => {
+        console.error('Error generating subject image:', error);
+        // Update status regardless of error
+        if (subject) {
+          subject.isGeneratingImage = false;
+        }
+        if (error.status === 403) {
+          this.errorMessage = 'You need to set your Google API key in your profile first.';
+        } else {
+          this.errorMessage = 'Failed to generate image. Please try again.';
+        }
+      }
+    });
+  }
+  
+  generateAllSubjectImages() {
+    if (!this.userHasApiKey) {
+      this.errorMessage = 'You need to set your Google API key in your profile first.';
+      return;
+    }
+    
+    // Mark all subjects as generating images
+    this.subjects.forEach(subject => {
+      subject.isGeneratingImage = true;
+    });
+    
+    this.subjectService.generateAllSubjectImages(this.courseId).subscribe({
+      next: (response) => {
+        // Update all subjects with their new image URLs
+        if (response && response.results && Array.isArray(response.results)) {
+          const timestamp = new Date().getTime();
+          
+          // Create a map of updated subjects by id for quick lookup
+          const updatedSubjectsMap = new Map();
+          response.results.forEach((updatedSubject: any) => {
+            if (updatedSubject && updatedSubject.id && updatedSubject.image_url) {
+              // Add timestamp to prevent caching
+              const imageUrlWithTimestamp = updatedSubject.image_url.includes('?') 
+                ? `${updatedSubject.image_url}&t=${timestamp}` 
+                : `${updatedSubject.image_url}?t=${timestamp}`;
+              
+              updatedSubjectsMap.set(updatedSubject.id, {
+                ...updatedSubject,
+                image_url: imageUrlWithTimestamp
+              });
+            }
+          });
+          
+          // Update subjects with new data
+          this.subjects = this.subjects.map(subject => {
+            const updatedSubject = updatedSubjectsMap.get(subject.id);
+            if (updatedSubject) {
+              return { ...subject, ...updatedSubject, isGeneratingImage: false };
+            }
+            return { ...subject, isGeneratingImage: false };
+          });
+        } else {
+          // Just reset the generating flags if no results
+          this.subjects = this.subjects.map(subject => ({ 
+            ...subject, 
+            isGeneratingImage: false 
+          }));
+        }
+      },
+      error: (error) => {
+        console.error('Error generating all subject images:', error);
+        // Update status regardless of error
+        this.subjects = this.subjects.map(subject => ({ 
+          ...subject, 
+          isGeneratingImage: false 
+        }));
+        
+        if (error.status === 403) {
+          this.errorMessage = 'You need to set your Google API key in your profile first.';
+        } else {
+          this.errorMessage = 'Failed to generate images. Please try again.';
         }
       }
     });

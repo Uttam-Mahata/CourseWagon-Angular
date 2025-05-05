@@ -25,6 +25,12 @@
               </a>
             </li>
    
+            <!-- Admin Link - Only show for admin users -->
+            <li *ngIf="isAdmin">
+              <a class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors font-poppins" routerLink="/admin" (click)="scrollToTop()">
+                <fa-icon [icon]="faUserShield" class="text-lg"></fa-icon> Admin
+              </a>
+            </li>
    
             <li>
               <a class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors font-poppins" routerLink="/profile" (click)="scrollToTop()">
@@ -63,6 +69,13 @@
             <li>
               <a class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors font-poppins" routerLink="/courses" (click)="toggleNavbar(); scrollToTop()">
                 <fa-icon [icon]="faGraduationCap" class="text-lg w-5 text-center"></fa-icon> My Courses
+              </a>
+            </li>
+
+            <!-- Admin Link - Only show for admin users -->
+            <li *ngIf="isAdmin">
+              <a class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors font-poppins" routerLink="/admin" (click)="toggleNavbar(); scrollToTop()">
+                <fa-icon [icon]="faUserShield" class="text-lg w-5 text-center"></fa-icon> Admin
               </a>
             </li>
 

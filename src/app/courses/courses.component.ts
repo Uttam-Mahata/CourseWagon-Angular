@@ -3,7 +3,7 @@ import { CourseService } from '../services/course.service';
 import { SubjectService } from '../services/subject.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { faHome, faBook, faPlus, faExclamationTriangle, faExclamationCircle, faMagic, faEye, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faBook, faPlus, faExclamationTriangle, faExclamationCircle, faMagic, faEye, faEdit, faTrash, faImage, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-courses',
@@ -22,6 +22,8 @@ export class CoursesComponent implements OnInit {
   faEye = faEye;
   faEdit = faEdit;
   faTrash = faTrash;
+  faImage = faImage;
+  faSpinner = faSpinner;
 
   courses: any[] = [];
   userHasApiKey: boolean = false;
@@ -46,13 +48,12 @@ export class CoursesComponent implements OnInit {
   ngOnInit() {
     // Check if user has API key
     this.authService.currentUser$.subscribe(user => {
-      this.userHasApiKey = user?.has_api_key || false;
+      // Make sure this is checking has_api_key properly
+      this.userHasApiKey = !!user?.has_api_key;
       
-      if (this.userHasApiKey) {
-        this.loadCourses();
-      } else {
-        this.isLoading = false;
-      }
+      // Always load courses regardless of API key status
+      // This ensures users can see their courses even without an API key
+      this.loadCourses();
     });
   }
 
@@ -189,6 +190,59 @@ export class CoursesComponent implements OnInit {
       error: (err) => {
         console.error('Error deleting course:', err);
         this.errorMessage = 'Failed to delete course. Please try again.';
+      }
+    });
+  }
+
+  generateCourseImage(courseId: number, event?: Event) {
+    // Stop event propagation if provided
+    if (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+
+    if (!this.userHasApiKey) {
+      this.errorMessage = 'You need to set your Google API key in your profile first.';
+      return;
+    }
+    
+    // Find the course and mark it as generating an image
+    const course = this.courses.find(c => c.id === courseId);
+    if (course) {
+      course.isGeneratingImage = true;
+    }
+    
+    this.courseService.generateCourseImage(courseId).subscribe({
+      next: (updatedCourse) => {
+        console.log('Received updated course with image:', updatedCourse);
+        
+        // Update the course in our array with new image URL
+        const index = this.courses.findIndex(c => c.id === courseId);
+        if (index !== -1 && updatedCourse && updatedCourse.image_url) {
+          // Add timestamp to URL to prevent caching issues
+          this.courses[index].image_url = updatedCourse.image_url + '?t=' + new Date().getTime();
+          this.courses[index].isGeneratingImage = false;
+          console.log('Updated course image URL:', this.courses[index].image_url);
+        } else {
+          console.warn('Failed to update course image - missing data:', updatedCourse);
+          if (course) {
+            course.isGeneratingImage = false;
+          }
+        }
+      },
+      error: (error) => {
+        console.error('Error generating course image:', error);
+        
+        // Update status regardless of error
+        if (course) {
+          course.isGeneratingImage = false;
+        }
+        
+        if (error.status === 403) {
+          this.errorMessage = 'You need to set your Google API key in your profile first.';
+        } else {
+          this.errorMessage = 'Failed to generate image. Please try again.';
+        }
       }
     });
   }

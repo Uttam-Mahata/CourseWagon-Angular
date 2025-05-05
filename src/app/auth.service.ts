@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
-import { environment } from '../environments/environment.prod';
+import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -62,9 +62,17 @@ export class AuthService {
     this.router.navigate(['/auth']);
   }
 
+  getApiKey(): Observable<any> {
+    return this.http.get(`${this.authUrl}/get-api-key`);
+  }
+
   updateApiKey(apiKey: string): Observable<any> {
     console.log(`Updating API key, current token: ${this.getToken()?.substring(0, 10)}...`);
     return this.http.post(`${this.authUrl}/update-api-key`, { api_key: apiKey });
+  }
+
+  deleteApiKey(): Observable<any> {
+    return this.http.delete(`${this.authUrl}/delete-api-key`);
   }
 
   getCurrentUser(): any {

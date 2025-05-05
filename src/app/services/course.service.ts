@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { environment } from '../../environments/environment.prod';
-import { tap } from 'rxjs/operators';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { tap, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
   private apiUrl = environment.courseApiUrl;
+  private imageApiUrl = environment.apiBaseUrl + '/images';
   
   // Create BehaviorSubjects to cache data and notify components when it changes
   private myCoursesSubject = new BehaviorSubject<any[]>([]);
@@ -82,6 +83,68 @@ export class CourseService {
   deleteCourse(courseId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${courseId}`).pipe(
       tap(() => this.refreshMyCourses())
+    );
+  }
+
+  // Image generation endpoint
+  generateCourseImage(courseId: number): Observable<any> {
+    console.log(`Generating image for course ${courseId}`);
+    return this.http.post(`${this.imageApiUrl}/courses/${courseId}/generate`, {}).pipe(
+      tap((updatedCourse: any) => {
+        console.log('Course image generated:', updatedCourse);
+        
+        // Check if we received a valid image URL
+        if (updatedCourse && updatedCourse.image_url) {
+          console.log('Updating image URL in cache:', updatedCourse.image_url);
+          
+          // Add a timestamp query parameter to force browser to reload the image
+          const timestamp = new Date().getTime();
+          const imageUrlWithTimestamp = updatedCourse.image_url.includes('?') 
+            ? `${updatedCourse.image_url}&t=${timestamp}` 
+            : `${updatedCourse.image_url}?t=${timestamp}`;
+          
+          // Update the image URL in the cache with forced timestamp
+          const courses = this.myCoursesSubject.value.map(course => {
+            if (course.id === courseId) {
+              // Create a new object to trigger Angular change detection
+              return { 
+                ...course, 
+                image_url: imageUrlWithTimestamp,
+                isGeneratingImage: false
+              };
+            }
+            return course;
+          });
+          
+          // Update the subject with the new course array
+          this.myCoursesSubject.next(courses);
+        } else {
+          console.warn('No image URL received from server');
+          
+          // Still need to reset isGeneratingImage flag even on error
+          const courses = this.myCoursesSubject.value.map(course => {
+            if (course.id === courseId) {
+              return { ...course, isGeneratingImage: false };
+            }
+            return course;
+          });
+          this.myCoursesSubject.next(courses);
+        }
+      }),
+      catchError(error => {
+        console.error('Error generating course image:', error);
+        
+        // Reset isGeneratingImage flag on error
+        const courses = this.myCoursesSubject.value.map(course => {
+          if (course.id === courseId) {
+            return { ...course, isGeneratingImage: false };
+          }
+          return course;
+        });
+        this.myCoursesSubject.next(courses);
+        
+        return throwError(() => new Error('Failed to generate image'));
+      })
     );
   }
 }

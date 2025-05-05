@@ -14,15 +14,12 @@ import { CourseService } from './services/course.service';
 import { MarkdownModule } from 'ngx-markdown';
 import { FooterComponent } from './footer/footer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
 import { AuthComponent } from './auth/auth.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MermaidViewComponent } from './mermaid-view/mermaid-view.component';
 import { AuthInterceptor } from './auth.interceptor';
 import { AuthGuard } from './auth.guard';
 import { ProfileComponent } from './profile/profile.component';
-import { NavbarComponent } from './navbar/navbar.component';
 import { SubjectsChaptersComponent } from './subjects-chapters/subjects-chapters.component';
 import { TopicsContentComponent } from './topics-content/topics-content.component';
 import { SharedMarkdownModule } from './shared/markdown.module';
@@ -32,8 +29,14 @@ import { FilterByIdPipe } from './pipes/filter-by-id.pipe';
 import { TermsComponent } from './terms/terms.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
-import { NavigationService } from './services/navigation.service';
 import { TestimonialsComponent } from './testimonials/testimonials.component';
+import { WriteReviewComponent } from './write-review/write-review.component';
+import { AdminComponent } from './admin/admin.component';
+
+// Import new admin sub-components
+import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
+import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
+import { AdminTestimonialsComponent } from './admin/admin-testimonials/admin-testimonials.component';
 
 @NgModule({
   declarations: [
@@ -41,12 +44,9 @@ import { TestimonialsComponent } from './testimonials/testimonials.component';
     CourseComponent,
     CoursesComponent,
     FooterComponent,
-    LoginComponent,
-    RegisterComponent,
     AuthComponent,
     MermaidViewComponent,
     ProfileComponent,
-    NavbarComponent,
     HomeComponent,
     SubjectsChaptersComponent,
     TopicsContentComponent,
@@ -56,7 +56,13 @@ import { TestimonialsComponent } from './testimonials/testimonials.component';
     TermsComponent,
     PrivacyPolicyComponent,
     ComingSoonComponent,
-    TestimonialsComponent
+    TestimonialsComponent,
+    WriteReviewComponent,
+    AdminComponent,
+    // Add new admin sub-components
+    AdminDashboardComponent,
+    AdminUsersComponent,
+    AdminTestimonialsComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,7 +73,6 @@ import { TestimonialsComponent } from './testimonials/testimonials.component';
     MarkdownModule.forRoot(),
     SharedMarkdownModule,
     RouterModule,
-
   ],
   providers: [
     CourseService,
@@ -77,7 +82,7 @@ import { TestimonialsComponent } from './testimonials/testimonials.component';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }
+    },
   ],
   bootstrap: [AppComponent]
 })
