@@ -274,7 +274,7 @@
 .course-image-container {
   position: relative;
   height: 100%;
-  min-height: 180px;
+  min-height: 160px;
   overflow: hidden;
   background-color: #f0f4f8;
 }
@@ -287,8 +287,11 @@
   transition: transform 0.5s ease;
 }
 
+/* Remove fixed height from course card to accommodate content */
 .course-card {
-  height: 180px;
+  min-height: 160px;
+  height: auto;
+  display: flex;
 }
 
 .course-card:hover .course-image {
@@ -308,28 +311,23 @@
   animation: pulseBackground 2s infinite;
 }
 
-.generate-image-btn {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background-color: rgba(255, 255, 255, 0.85);
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  opacity: 0.7;
-  transition: all 0.3s ease;
-  z-index: 10;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+/* Description text styling */
+.course-description {
+  max-height: 4.5em; /* Approx 3 lines at 1.5 line height */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: 1.5;
 }
 
-.generate-image-btn:hover {
-  opacity: 1;
-  background-color: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+/* Adjusted button container for vertical alignment */
+.course-action-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
 }
 
 /* Animation for placeholder */

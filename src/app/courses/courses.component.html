@@ -88,8 +88,8 @@
          class="group bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1 hover:border-blue-200 flex course-card">
       
       <!-- Course Image (Left Side) -->
-      <div class="course-image-container w-1/4 min-w-[200px]">
-        <div *ngIf="!course.image_url" class="image-placeholder">
+      <div class="course-image-container w-1/5 min-w-[180px]">
+        <div *ngIf="!course.image_url" class="image-placeholder h-full">
           <fa-icon [icon]="faBook" class="text-gray-300"></fa-icon>
         </div>
         
@@ -101,7 +101,7 @@
              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         
         <!-- Fallback if image fails to load -->
-        <div class="image-placeholder" style="display:none;">
+        <div class="image-placeholder h-full" style="display:none;">
           <fa-icon [icon]="faBook" class="text-gray-300"></fa-icon>
         </div>
         
@@ -118,14 +118,14 @@
       <!-- Card Content (Middle) -->
       <div class="p-6 flex flex-col justify-center flex-grow">
         <!-- Course Title -->
-        <h3 class="font-bold text-xl bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent group-hover:from-blue-700 group-hover:to-indigo-800 transition-all duration-300 mb-2">{{ course.name }}</h3>
+        <h3 class="font-bold text-xl bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent group-hover:from-blue-700 group-hover:to-indigo-800 transition-all duration-300 mb-3">{{ course.name }}</h3>
         
-        <!-- Description with Gradient Text -->
-        <p class="text-gray-600 text-sm line-clamp-3">{{ course.description || 'No description available.' }}</p>
+        <!-- Description with proper styling -->
+        <p class="text-gray-600 text-sm course-description">{{ course.description || 'No description available.' }}</p>
       </div>
       
       <!-- Action Buttons (Right Side) -->
-      <div class="p-6 flex flex-col justify-center items-end gap-4 min-w-[240px]">
+      <div class="p-6 flex flex-col justify-between items-end min-w-[240px] course-action-container">
         <!-- Edit and Delete Buttons -->
         <div class="flex space-x-3 mb-4">
           <button 
