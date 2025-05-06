@@ -11,7 +11,7 @@ import {
   faUserPlus 
 } from '@fortawesome/free-solid-svg-icons';
 import { NavigationService } from '../services/navigation.service';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
     selector: 'app-home',

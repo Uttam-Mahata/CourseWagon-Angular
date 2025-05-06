@@ -1,14 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { CourseComponent } from './course/course.component';
 import { CoursesComponent } from './courses/courses.component';
 import { HomeComponent } from './home/home.component';
-
 import { AppRoutingModule } from './app-routing.module';
 import { CourseService } from './services/course.service';
 import { MarkdownModule } from 'ngx-markdown';
@@ -17,8 +16,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthComponent } from './auth/auth.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MermaidViewComponent } from './mermaid-view/mermaid-view.component';
-import { AuthInterceptor } from './auth.interceptor';
-import { AuthGuard } from './auth.guard';
+import { AuthInterceptor } from './services/auth/auth.interceptor';
+import { AuthGuard } from './services/auth/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { SubjectsChaptersComponent } from './subjects-chapters/subjects-chapters.component';
 import { TopicsContentComponent } from './topics-content/topics-content.component';
@@ -37,6 +36,8 @@ import { AdminComponent } from './admin/admin.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
 import { AdminTestimonialsComponent } from './admin/admin-testimonials/admin-testimonials.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -59,20 +60,23 @@ import { AdminTestimonialsComponent } from './admin/admin-testimonials/admin-tes
     TestimonialsComponent,
     WriteReviewComponent,
     AdminComponent,
-    // Add new admin sub-components
+    // Admin sub-components
     AdminDashboardComponent,
     AdminUsersComponent,
     AdminTestimonialsComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,  // Add ReactiveFormsModule
     AppRoutingModule,
     FontAwesomeModule,
     MarkdownModule.forRoot(),
     SharedMarkdownModule,
-    RouterModule,
+    RouterModule
   ],
   providers: [
     CourseService,

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
-import { environment } from '../environments/environment';
+import { environment } from '../../../environments/environment.dev';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -42,15 +42,18 @@ export class AuthService {
     }
   }
 
-  login(email: string, password: string): Observable<any> {
-    console.log(`Attempting to login with ${email}`);
-    return this.http.post(`${this.authUrl}/login`, { email, password })
-      .pipe(
-        tap((response: any) => {
-          console.log('Login successful, storing auth data', response);
-          this.storeAuthData(response.access_token, response.user);
-        })
-      );
+  login(email: string, password: string, rememberMe: boolean = false): Observable<any> {
+    console.log(`Attempting to login with ${email}, remember me: ${rememberMe}`);
+    return this.http.post(`${this.authUrl}/login`, { 
+      email, 
+      password,
+      remember_me: rememberMe 
+    }).pipe(
+      tap((response: any) => {
+        console.log('Login successful, storing auth data', response);
+        this.storeAuthData(response.access_token, response.user);
+      })
+    );
   }
 
   register(userData: any): Observable<any> {
@@ -88,6 +91,31 @@ export class AuthService {
     console.log(`Storing auth data - token: ${token.substring(0, 10)}...`);
     localStorage.setItem(this.tokenKey, token);
     this.storeUser(user);
+  }
+  
+  // Password reset methods
+  forgotPassword(email: string): Observable<any> {
+    // Get current frontend URL to send in request for proper redirect
+    const frontendUrl = window.location.origin;
+    return this.http.post(`${this.authUrl}/forgot-password`, { 
+      email, 
+      frontend_url: frontendUrl 
+    });
+  }
+  
+  verifyResetToken(token: string): Observable<any> {
+    return this.http.post(`${this.authUrl}/verify-reset-token`, { token });
+  }
+  
+  resetPassword(token: string, password: string): Observable<any> {
+    return this.http.post(`${this.authUrl}/reset-password`, { token, password });
+  }
+  
+  changePassword(currentPassword: string, newPassword: string): Observable<any> {
+    return this.http.post(`${this.authUrl}/change-password`, {
+      current_password: currentPassword,
+      new_password: newPassword
+    });
   }
 
   private storeUser(user: any): void {

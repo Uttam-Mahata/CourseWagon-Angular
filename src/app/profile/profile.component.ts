@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth/auth.service';
 import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { 
   faEnvelope, faKey, faCheckCircle, faTimesCircle, 
   faExclamationCircle, faTimes, faExternalLinkAlt,
-  faEye, faEyeSlash, faTrash
+  faEye, faEyeSlash, faTrash, faLock, faSave
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -26,6 +27,8 @@ export class ProfileComponent implements OnInit {
   faEye = faEye;
   faEyeSlash = faEyeSlash;
   faTrash = faTrash;
+  faLock = faLock;
+  faSave = faSave;
 
   user: any = null;
   apiKey: string = '';
@@ -36,14 +39,29 @@ export class ProfileComponent implements OnInit {
   isLoading: {[key: string]: boolean} = {
     apiKeyGet: false,
     apiKeyUpdate: false,
-    apiKeyDelete: false
+    apiKeyDelete: false,
+    passwordChange: false
   };
   token: string | null = null;
+  
+  // Password change form
+  passwordForm: FormGroup;
+  showCurrentPassword = false;
+  showNewPassword = false;
+  showConfirmPassword = false;
 
   constructor(
     private authService: AuthService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+    // Initialize password change form
+    this.passwordForm = this.fb.group({
+      currentPassword: ['', [Validators.required]],
+      newPassword: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', [Validators.required]]
+    }, { validator: this.passwordMatchValidator });
+  }
 
   ngOnInit(): void {
     // Store token for debugging
@@ -182,5 +200,52 @@ export class ProfileComponent implements OnInit {
   clearMessages(): void {
     this.successMessage = '';
     this.errorMessage = '';
+  }
+
+  // Password change functions
+  togglePasswordVisibility(field: string): void {
+    if (field === 'current') {
+      this.showCurrentPassword = !this.showCurrentPassword;
+    } else if (field === 'new') {
+      this.showNewPassword = !this.showNewPassword;
+    } else if (field === 'confirm') {
+      this.showConfirmPassword = !this.showConfirmPassword;
+    }
+  }
+
+  changePassword(): void {
+    if (this.passwordForm.invalid) {
+      return;
+    }
+
+    this.isLoading['passwordChange'] = true;
+    this.clearMessages();
+
+    const currentPassword = this.passwordForm.get('currentPassword')?.value;
+    const newPassword = this.passwordForm.get('newPassword')?.value;
+
+    this.authService.changePassword(currentPassword, newPassword)
+      .subscribe({
+        next: (response) => {
+          this.successMessage = response.message || 'Password changed successfully';
+          this.isLoading['passwordChange'] = false;
+          this.passwordForm.reset();
+        },
+        error: (err) => {
+          this.errorMessage = err.error?.error || 'Failed to change password';
+          this.isLoading['passwordChange'] = false;
+        }
+      });
+  }
+
+  passwordMatchValidator(g: FormGroup) {
+    const newPassword = g.get('newPassword')?.value;
+    const confirmPassword = g.get('confirmPassword')?.value;
+    
+    if (newPassword === confirmPassword) {
+      return null;
+    }
+    
+    return { mismatch: true };
   }
 }

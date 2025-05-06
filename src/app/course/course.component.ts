@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth/auth.service';
 import { 
   faExclamationTriangle, faExclamationCircle, faBook, faMagic, 
   faChalkboardTeacher, faBrain, faTasks, faMobileAlt, faClock, faKey

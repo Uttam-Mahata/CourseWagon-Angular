@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth/auth.service';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faEnvelope, faLock, faUser, faUserPlus, faSignInAlt, faKey, faExclamationTriangle, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -26,7 +26,8 @@ export class AuthComponent implements OnInit {
   
   loginData = {
     email: '',
-    password: ''
+    password: '',
+    rememberMe: false  // Add remember me field
   };
 
   registerData = {
@@ -78,9 +79,13 @@ export class AuthComponent implements OnInit {
       return;
     }
     
-    console.log('Attempting login with email:', this.loginData.email);
+    console.log('Attempting login with email:', this.loginData.email, 'Remember me:', this.loginData.rememberMe);
     
-    this.authService.login(this.loginData.email, this.loginData.password)
+    this.authService.login(
+      this.loginData.email, 
+      this.loginData.password, 
+      this.loginData.rememberMe  // Pass the remember me value
+    )
       .subscribe({
         next: (response) => {
           console.log('Login successful, response:', response);

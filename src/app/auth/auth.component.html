@@ -50,7 +50,25 @@
               name="password" 
               required>
           </div>
+          <!-- Add forgot password link -->
+          <!-- <div class="text-right mt-1">
+            <a routerLink="/forgot-password" class="text-sm text-blue-600 hover:underline">Forgot password?</a>
+          </div> -->
         </div>
+        
+        <!-- Remember Me Checkbox -->
+        <div class="flex items-center">
+          <input 
+            type="checkbox" 
+            id="rememberMe" 
+            name="rememberMe"
+            [(ngModel)]="loginData.rememberMe"
+            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+          <label for="rememberMe" class="ml-2 block text-sm text-gray-700">
+            Remember me
+          </label>
+        </div>
+        
         <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg shadow transition flex items-center justify-center gap-2">
           <fa-icon [icon]="'sign-in-alt'"></fa-icon>
           Login

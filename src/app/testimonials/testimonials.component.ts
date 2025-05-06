@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { faUser, faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import { TestimonialService } from '../services/testimonial.service';
-import { AuthService } from '../auth.service';
-
+import { AuthService } from '../services/auth/auth.service';
 @Component({
   selector: 'app-testimonials',
   standalone: false,
