@@ -293,6 +293,12 @@
             <div markdown [data]="processedContent" mermaid katex class="markdown-content"></div>
             
             <!-- The mathjax-block divs will be processed by MathJax for multiline equations -->
+            <!-- Add a trigger for MathJax in case it wasn't automatically rendered -->
+            <button *ngIf="content && content.includes('\\begin{cases}')" 
+                    (click)="mathRendererService.renderMathJax()" 
+                    class="text-xs text-blue-600 hover:text-blue-800 mt-2 underline">
+              Equations not rendering correctly? Click here to refresh.
+            </button>
           </div>
         </div>
       </div>

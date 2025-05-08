@@ -108,7 +108,7 @@ export class CourseContentComponent implements OnInit, OnDestroy, AfterViewCheck
     private chapterService: ChapterService,
     private topicService: TopicService,
     private contentService: ContentService,
-    private mathRendererService: MathRendererService, // Add MathRendererService
+    public mathRendererService: MathRendererService,
     private route: ActivatedRoute,
     private router: Router,
   ) {
@@ -159,6 +159,11 @@ export class CourseContentComponent implements OnInit, OnDestroy, AfterViewCheck
     if (this.needsMathJaxUpdate) {
       this.mathRendererService.renderMathJax();
       this.needsMathJaxUpdate = false;
+      
+      // Trigger another update after a delay to catch any equations that might have loaded later
+      setTimeout(() => {
+        this.mathRendererService.renderMathJax();
+      }, 500);
     }
   }
   

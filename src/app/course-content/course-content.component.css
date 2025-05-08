@@ -314,3 +314,42 @@ mjx-container[jax="CHTML"][display="true"] {
   margin: 1rem 0;
   border-left: 3px solid #10b981; /* Green border for KaTeX */
 }
+
+/* Enhance table styling for equations */
+.markdown-content table td .katex,
+.markdown-content table td mjx-container {
+  display: inline-flex !important;
+  white-space: nowrap;
+}
+
+/* Better padding for table cells with equations */
+.markdown-content table td {
+  padding: 0.75rem;
+  vertical-align: middle;
+}
+
+/* Fix display mode equations in tables */
+.markdown-content table .katex-display,
+.markdown-content table mjx-container[jax="CHTML"][display="true"] {
+  margin: 0.25rem 0 !important;
+}
+
+/* Improve multiline equations display */
+.mathjax-block .MathJax {
+  padding: 0.5rem 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* Fix specific issues with trapezoidal and triangular function equations */
+.markdown-content .cases-equation {
+  overflow-x: auto;
+  padding: 1rem 0;
+}
+
+/* Ensure equations in lists are properly displayed */
+.markdown-content li .katex,
+.markdown-content li mjx-container {
+  vertical-align: middle;
+}
