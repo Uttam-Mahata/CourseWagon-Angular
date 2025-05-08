@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewChecked } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
 import { SubjectService } from '../services/subject.service';
 import { ChapterService } from '../services/chapter.service';
 import { TopicService } from '../services/topic.service';
 import { ContentService } from '../services/content.service';
+import { MathRendererService } from '../services/math-renderer.service';
 import { 
   faHome, faBook, faLayerGroup, faEye, faMagic, 
   faBookOpen, faChevronRight, faChevronDown, faChevronUp,
@@ -18,7 +19,7 @@ import { Subscription, forkJoin } from 'rxjs';
   templateUrl: './course-content.component.html',
   styleUrls: ['./course-content.component.css'],
 })
-export class CourseContentComponent implements OnInit, OnDestroy {
+export class CourseContentComponent implements OnInit, OnDestroy, AfterViewChecked {
   // FontAwesome icons
   faHome = faHome;
   faBook = faBook;
@@ -56,6 +57,7 @@ export class CourseContentComponent implements OnInit, OnDestroy {
   
   // Content
   content: string | null = null;
+  processedContent: string | null = null; // New property for processed content
   
   // UI state
   isGeneratingChapters: boolean = false;
@@ -97,15 +99,18 @@ export class CourseContentComponent implements OnInit, OnDestroy {
   isAddingTopic: boolean = false;
   isAddingContent: boolean = false;
 
+  // Flag to track if MathJax needs rendering
+  private needsMathJaxUpdate = false;
+
   constructor(
     private courseService: CourseService,
     private subjectService: SubjectService,
     private chapterService: ChapterService,
     private topicService: TopicService,
     private contentService: ContentService,
+    private mathRendererService: MathRendererService, // Add MathRendererService
     private route: ActivatedRoute,
     private router: Router,
-    
   ) {
     this.courseId = +this.route.snapshot.paramMap.get('course_id')!;
     this.subjectId = +this.route.snapshot.paramMap.get('subject_id')!;
@@ -147,6 +152,14 @@ export class CourseContentComponent implements OnInit, OnDestroy {
     
     // Remove resize listener when component is destroyed
     window.removeEventListener('resize', this.adjustSidebarForScreenSize.bind(this));
+  }
+  
+  ngAfterViewChecked() {
+    // Render MathJax if needed
+    if (this.needsMathJaxUpdate) {
+      this.mathRendererService.renderMathJax();
+      this.needsMathJaxUpdate = false;
+    }
   }
   
   loadInitialData() {
@@ -319,11 +332,19 @@ export class CourseContentComponent implements OnInit, OnDestroy {
   loadContent(topicId: number) {
     this.isLoadingContent = true;
     this.content = null;
+    this.processedContent = null;
     
     this.subscriptions.add(
       this.contentService.getContent(this.courseId, this.subjectId, this.expandedChapterId!, topicId).subscribe({
         next: (content) => {
           this.content = content;
+          
+          // Process content for LaTeX equations
+          if (content) {
+            this.processedContent = this.mathRendererService.processContent(content);
+            this.needsMathJaxUpdate = true; // Mark for MathJax rendering
+          }
+          
           this.isLoadingContent = false;
           
           // If we received content, mark this topic as having content
@@ -424,8 +445,28 @@ export class CourseContentComponent implements OnInit, OnDestroy {
           }
           
           // Load the generated content
-          this.loadContent(this.selectedTopicId!);
-          this.isGeneratingContent = false;
+          this.contentService.getContent(
+            this.courseId, 
+            this.subjectId, 
+            this.expandedChapterId!, 
+            this.selectedTopicId!
+          ).subscribe({
+            next: (content) => {
+              this.content = content;
+              
+              // Process content for LaTeX equations
+              if (content) {
+                this.processedContent = this.mathRendererService.processContent(content);
+                this.needsMathJaxUpdate = true; // Mark for MathJax rendering
+              }
+              
+              this.isGeneratingContent = false;
+            },
+            error: (err) => {
+              console.error('Error loading generated content:', err);
+              this.isGeneratingContent = false;
+            }
+          });
         },
         error: (err) => {
           console.error('Error generating content:', err);
@@ -759,6 +800,12 @@ export class CourseContentComponent implements OnInit, OnDestroy {
         // Update local content data
         this.content = response.content || this.editingContent;
         
+        // Process content for LaTeX equations
+        if (this.content) {
+          this.processedContent = this.mathRendererService.processContent(this.content);
+          this.needsMathJaxUpdate = true; // Mark for MathJax rendering
+        }
+        
         // Update topic has_content flag
         if (this.selectedTopic) {
           this.selectedTopic.has_content = true;
@@ -944,6 +991,12 @@ export class CourseContentComponent implements OnInit, OnDestroy {
       next: (response) => {
         // Update content display
         this.content = response.content || this.newContentText;
+        
+        // Process content for LaTeX equations
+        if (this.content) {
+          this.processedContent = this.mathRendererService.processContent(this.content);
+          this.needsMathJaxUpdate = true; // Mark for MathJax rendering
+        }
         
         // Mark topic as having content
         if (this.selectedTopic) {

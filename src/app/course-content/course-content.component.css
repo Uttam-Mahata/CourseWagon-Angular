@@ -259,3 +259,58 @@ html {
 .flex-1 {
   min-width: 0; /* Prevent flex items from overflowing */
 }
+
+/* Styles for MathJax blocks and equations */
+.mathjax-block {
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background-color: #f9fafb;
+  border-radius: 0.375rem;
+  border-left: 3px solid #3b82f6;
+}
+
+/* Fix for long equations */
+.MathJax {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* For MathJax display math */
+mjx-container[jax="CHTML"][display="true"] {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0 !important;
+}
+
+/* Ensure markdown container doesn't overflow on mobile */
+.markdown-content {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+/* Styling for the equation environment */
+.markdown-content .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5rem 0;
+}
+
+/* Extended styling for math elements to ensure they don't cause horizontal scrolling on mobile */
+.markdown-content .katex,
+.markdown-content mjx-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
+/* Add some styling to differentiate KaTeX and MathJax equations */
+.markdown-content .katex-display {
+  background-color: #f8fafc;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-left: 3px solid #10b981; /* Green border for KaTeX */
+}

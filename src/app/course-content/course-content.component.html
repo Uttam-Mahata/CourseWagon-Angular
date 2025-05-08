@@ -282,8 +282,18 @@
 
       <!-- Content Display with improved mobile handling -->
       <div *ngIf="selectedTopicId && !isLoadingContent && content" class="bg-white rounded-xl shadow-md p-3 md:p-6 mb-6 w-full overflow-hidden">
-        <div class="prose max-w-none w-full">
-          <div markdown [data]="content" mermaid katex class="markdown-content"></div>
+        <!-- We're using a mixed approach: KaTeX for single-line equations and MathJax for multiline equations -->
+        <div class="prose max-w-none w-full markdown-content">
+          <!-- Use KaTeX for regular markdown and inline/simple equations -->
+          <div *ngIf="!processedContent" markdown [data]="content" mermaid katex class="markdown-content"></div>
+          
+          <!-- Use the processed content for mixed KaTeX/MathJax approach -->
+          <div *ngIf="processedContent">
+            <!-- First render with KaTeX for standard markdown and inline equations -->
+            <div markdown [data]="processedContent" mermaid katex class="markdown-content"></div>
+            
+            <!-- The mathjax-block divs will be processed by MathJax for multiline equations -->
+          </div>
         </div>
       </div>
 

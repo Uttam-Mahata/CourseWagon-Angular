@@ -10,6 +10,7 @@ import { CoursesComponent } from './courses/courses.component';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CourseService } from './services/course.service';
+import { MathRendererService } from './services/math-renderer.service';
 import { MarkdownModule } from 'ngx-markdown';
 import { FooterComponent } from './footer/footer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -80,6 +81,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
   ],
   providers: [
     CourseService,
+    MathRendererService,
     provideAnimationsAsync(),
     AuthGuard,
     {
