@@ -47,12 +47,12 @@
           <!-- Show login/signup when not authenticated -->
           <ng-container *ngIf="!isAuthenticated">
             <li>
-              <a class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors font-poppins px-4 py-2 rounded-lg hover:bg-gray-200" routerLink="/auth" (click)="scrollToTop()">
+              <a class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors font-poppins px-4 py-2 rounded-lg hover:bg-gray-200" [routerLink]="['/auth']" [queryParams]="{mode: 'login'}" (click)="scrollToTop()">
                 <fa-icon [icon]="faSignInAlt" class="text-lg"></fa-icon> Login
               </a>
             </li>
             <li>
-              <a class="flex items-center gap-2 text-white bg-blue-600 hover:bg-blue-700 transition-colors font-poppins px-4 py-2 rounded-lg" routerLink="/auth" (click)="scrollToTop()">
+              <a class="flex items-center gap-2 text-white bg-blue-600 hover:bg-blue-700 transition-colors font-poppins px-4 py-2 rounded-lg" [routerLink]="['/auth']" [queryParams]="{mode: 'signup'}" (click)="scrollToTop()">
                 <fa-icon [icon]="faUserPlus" class="text-lg"></fa-icon> Sign Up
               </a>
             </li>
@@ -94,12 +94,12 @@
           <!-- Mobile menu login/signup -->
           <ng-container *ngIf="!isAuthenticated">
             <li>
-              <a class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors font-poppins" routerLink="/auth" (click)="toggleNavbar(); scrollToTop()">
+              <a class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors font-poppins" [routerLink]="['/auth']" [queryParams]="{mode: 'login'}" (click)="toggleNavbar(); scrollToTop()">
                 <fa-icon [icon]="faSignInAlt" class="text-lg w-5 text-center"></fa-icon> Login
               </a>
             </li>
             <li>
-              <a class="flex items-center gap-2 text-white bg-blue-600 hover:bg-blue-700 transition-colors font-poppins px-4 py-2 rounded-lg" routerLink="/auth" (click)="toggleNavbar(); scrollToTop()">
+              <a class="flex items-center gap-2 text-white bg-blue-600 hover:bg-blue-700 transition-colors font-poppins px-4 py-2 rounded-lg" [routerLink]="['/auth']" [queryParams]="{mode: 'signup'}" (click)="toggleNavbar(); scrollToTop()">
                 <fa-icon [icon]="faUserPlus" class="text-lg w-5 text-center"></fa-icon> Sign Up
               </a>
             </li>

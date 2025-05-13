@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CourseService } from '../services/course.service';
 import { SubjectService } from '../services/subject.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 import { faHome, faBook, faPlus, faExclamationTriangle, faExclamationCircle, faMagic, faEye, faEdit, faTrash, faImage, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-courses',
@@ -11,7 +12,7 @@ import { faHome, faBook, faPlus, faExclamationTriangle, faExclamationCircle, faM
     styleUrls: ['./courses.component.css'],
     standalone: false
 })
-export class CoursesComponent implements OnInit {
+export class CoursesComponent implements OnInit, OnDestroy {
   // FontAwesome icons
   faHome = faHome;
   faBook = faBook;
@@ -38,6 +39,9 @@ export class CoursesComponent implements OnInit {
   editingCourse: any = null;
   deletingCourse: any = null;
 
+  // Track subscriptions to prevent memory leaks
+  private subscriptions: Subscription[] = [];
+
   constructor(
     private courseService: CourseService, 
     private subjectService: SubjectService,
@@ -46,32 +50,47 @@ export class CoursesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Check if user has API key
-    this.authService.currentUser$.subscribe(user => {
-      // Make sure this is checking has_api_key properly
-      this.userHasApiKey = !!user?.has_api_key;
-      
-      // Always load courses regardless of API key status
-      // This ensures users can see their courses even without an API key
-      this.loadCourses();
-    });
+    // Subscribe to auth changes to detect new logins
+    this.subscriptions.push(
+      this.authService.currentUser$.subscribe(user => {
+        this.userHasApiKey = !!user?.has_api_key;
+        
+        if (user) {
+          // Force refresh courses when user changes
+          this.loadCourses(true);
+        } else {
+          // Clear courses when logged out
+          this.courses = [];
+        }
+      })
+    );
+    
+    // Initial load
+    this.loadCourses();
+  }
+  
+  ngOnDestroy() {
+    // Clean up subscriptions
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-  loadCourses() {
+  loadCourses(forceRefresh = false) {
     this.isLoading = true;
     this.errorMessage = null;
     
-    this.courseService.getMyCourses().subscribe({
-      next: (courses: any[]) => {
-        this.courses = courses;
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.error('Error fetching courses:', error);
-        this.errorMessage = 'Failed to load courses. Please try again later.';
-        this.isLoading = false;
-      }
-    });
+    this.subscriptions.push(
+      this.courseService.getMyCourses(forceRefresh).subscribe({
+        next: (courses: any[]) => {
+          this.courses = courses;
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.error('Error fetching courses:', error);
+          this.errorMessage = 'Failed to load courses. Please try again later.';
+          this.isLoading = false;
+        }
+      })
+    );
   }
 
   generateSubjects(courseId: number) {

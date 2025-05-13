@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faEnvelope, faLock, faUser, faUserPlus, faSignInAlt, faKey, faExclamationTriangle, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
@@ -41,6 +41,7 @@ export class AuthComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
+    private route: ActivatedRoute, // Add ActivatedRoute to access query params
     private faLibrary: FaIconLibrary
   ) {
     faLibrary.addIcons(
@@ -50,11 +51,24 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     // Check if user is already logged in
-    this.authService.isLoggedIn$.subscribe(isLoggedIn => {
-      if (isLoggedIn) {
-        console.log('User already logged in. Redirecting to courses page.');
-        this.router.navigate(['/courses']);
+    this.authService.isLoggedIn$.subscribe(
+      (isLoggedIn: boolean) => {
+        if (isLoggedIn) {
+          console.log('User already logged in. Redirecting to courses page.');
+          this.router.navigate(['/courses']);
+        }
       }
+    );
+
+    // Check for mode in query parameters
+    this.route.queryParams.subscribe(params => {
+      const mode = params['mode'];
+      if (mode === 'signup') {
+        this.isLoginMode = false;
+      } else if (mode === 'login') {
+        this.isLoginMode = true;
+      }
+      // If no mode is specified, default to login mode (already set)
     });
   }
 

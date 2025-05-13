@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, throwError } from 'rxjs';
+import { Observable, BehaviorSubject, throwError, of } from 'rxjs';
 import { environment } from '../../environments/environment.dev';
 import { tap, catchError } from 'rxjs/operators';
+import { AuthService } from './auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,20 +16,47 @@ export class CourseService {
   private myCoursesSubject = new BehaviorSubject<any[]>([]);
   public myCourses$ = this.myCoursesSubject.asObservable();
   
-  constructor(private http: HttpClient) {
+  // Track current user ID to detect user changes
+  private currentUserId: number | null = null;
+  
+  constructor(private http: HttpClient, private authService: AuthService) {
     console.log('CourseService initialized with apiUrl:', this.apiUrl);
-    // Initially load courses if user is logged in
-    this.refreshMyCourses();
+    
+    // Subscribe to auth state changes to handle user switching
+    this.authService.currentUser$.subscribe(user => {
+      const newUserId = user?.id || null;
+      
+      // If user changed (or logged out/in), reset courses cache
+      if (this.currentUserId !== newUserId) {
+        console.log('User changed, resetting courses cache');
+        this.currentUserId = newUserId;
+        this.myCoursesSubject.next([]);
+        
+        // Only load courses if there is a logged-in user
+        if (newUserId) {
+          this.refreshMyCourses();
+        }
+      }
+    });
   }
   
   // Refresh the courses cache
   refreshMyCourses() {
+    // Only fetch courses if there's a logged-in user
+    if (!this.authService.getToken()) {
+      console.log('No auth token, skipping course refresh');
+      this.myCoursesSubject.next([]);
+      return;
+    }
+    
     this.http.get<any[]>(`${this.apiUrl}/my-courses`).subscribe({
       next: (courses) => {
         this.myCoursesSubject.next(courses);
       },
       error: (error) => {
         console.error('Error fetching courses:', error);
+        // Reset the subject to empty array on error
+        this.myCoursesSubject.next([]);
       }
     });
   }
@@ -46,6 +74,11 @@ export class CourseService {
   
   // Get only user's courses - either from cache or fresh from backend
   getMyCourses(forceRefresh = false): Observable<any> {
+    // If not logged in, return empty array
+    if (!this.authService.getToken()) {
+      return of([]);
+    }
+    
     if (forceRefresh || this.myCoursesSubject.value.length === 0) {
       this.refreshMyCourses();
     }

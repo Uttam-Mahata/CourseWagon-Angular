@@ -61,6 +61,11 @@ export class AuthService {
   }
 
   logout(): void {
+    // First notify subscribers that user is changing
+    this.currentUserSource.next(null);
+    this.isLoggedInSource.next(false);
+    
+    // Then clear storage
     this.clearAuthData();
     this.router.navigate(['/auth']);
   }
