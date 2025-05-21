@@ -26,27 +26,39 @@ export class MathRendererService {
     // Enhanced regex for multiline environments
     // This list includes common LaTeX environments that imply multiline display
     // or are specifically targeted for MathJax rendering.
-    const multilineEnvs = [
+    const multilineEnvsArray = [
       'align', 'align\\*', 'alignat', 'alignat\\*', 'aligned',
       'gather', 'gather\\*', 'gathered',
       'multline', 'multline\\*',
       'cases', 'dcases', 
       'eqnarray', 'eqnarray\\*',
-      'equation', 'equation\\*' // Added equation and dcases
-    ].join('|');
+      'equation', 'equation\\*',
+      // Added common matrix environments
+      'matrix', 'pmatrix', 'bmatrix', 'Bmatrix', 'vmatrix', 'Vmatrix', 'smallmatrix'
+    ];
     // Case insensitive regex to match \begin{environment}
-    const multilineRegex = new RegExp(`\\\\begin\{(${multilineEnvs})\}`, 'i');
+    const multilineRegex = new RegExp(`\\\\begin\{(${multilineEnvsArray.join('|')})\}`, 'i');
 
-    // Process display math blocks ($$ ... $$)
-    processed = processed.replace(/\$\$([\s\S]*?)\$\$/g, (match, equation) => {
-      // If equation contains multiple lines OR uses a known multiline LaTeX environment
+    // Updated regex to capture $$...$$ or \[...\]
+    // The callback parameters are:
+    // match: The entire matched string (e.g., "$$content$$" or "\[content\]")
+    // _g1: The first capturing group (the whole match again, due to outer parens in regex, ignored)
+    // contentDollar: Content within $$...$$ (if matched, otherwise undefined)
+    // contentBracket: Content within \[...\] (if matched, otherwise undefined)
+    processed = processed.replace(/(\$\$([\s\S]*?)\$\$|\\[([\s\S]*?)\\])/g, (match, _g1, contentDollar, contentBracket) => {
+      const equation = contentDollar || contentBracket; // Get content from appropriate group
+      
+      // Determine original delimiters
+      const originalDelimiters = match.startsWith('$$') 
+        ? { open: '$$', close: '$$' } 
+        : { open: '\\[', close: '\\]' };
+
       if (equation.includes('\n') || multilineRegex.test(equation)) {
-        // Wrap with a div and classes for MathJax processing
-        // .trim() removes leading/trailing whitespace from the equation itself
-        return `<div class="mathjax-block tex2jax_process">\n$$${equation.trim()}$$</div>`;
+        // Preserve original delimiters inside the wrapper
+        // Ensure newlines are added correctly for readability of the generated HTML
+        return `<div class="mathjax-block tex2jax_process">\n${originalDelimiters.open}${equation.trim()}${originalDelimiters.close}\n</div>`;
       }
-      // If not multiline by the above criteria, return the original match.
-      return match; 
+      return match; // Return original match if not multiline (for KaTeX etc.)
     });
 
     // Fix table content to ensure LaTeX delimiters are preserved and spaced correctly for Markdown
@@ -55,11 +67,13 @@ export class MathRendererService {
 
     // Add proper spacing around block equations for better rendering if not already present
     // Ensures block equations are on their own lines.
-    // Corrected regex patterns for newlines.
+    // Handles both $$...$$ and \[...\] delimiters.
     processed = processed
-      .replace(/([^\n])\$\$/g, '$1\n$$') // Add newline before $$ if not preceded by one
-      .replace(/\$\$([^\n])/g, '$$\n$1') // Add newline after $$ if not followed by one
-      .replace(/\n{3,}/g, '\n\n');    // Reduce multiple newlines to a maximum of two
+      .replace(/([^\n])\$\$/g, '$1\n$$')      // Add newline before $$
+      .replace(/\$\$([^\n])/g, '$$\n$1')      // Add newline after $$
+      .replace(/([^\n])\\\[/g, '$1\n\\[')    // Add newline before \[
+      .replace(/\\\]([^\n])/g, '\\]\n$1')    // Add newline after \]
+      .replace(/\n{3,}/g, '\n\n');       // Reduce multiple newlines to a maximum of two
 
     // This regex seems to be a general catch-all for inline math.
     // It re-wraps anything that looks like $equation$ with $equation$.
