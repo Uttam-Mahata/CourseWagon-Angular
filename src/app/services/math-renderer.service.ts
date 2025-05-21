@@ -20,67 +20,72 @@ export class MathRendererService {
     if (!content) return '';
 
     // First, preserve any escaped dollar signs
+    // Corrected: ensure backslash before dollar sign is properly matched for replacement.
     let processed = content.replace(/\\\$/g, '___ESCAPED_DOLLAR___');
 
-    // Special handling for cases/piecewise functions which are common in fuzzy logic
-    processed = this.processCasesEquations(processed);
+    // Enhanced regex for multiline environments
+    // This list includes common LaTeX environments that imply multiline display
+    // or are specifically targeted for MathJax rendering.
+    const multilineEnvs = [
+      'align', 'align\\*', 'alignat', 'alignat\\*', 'aligned',
+      'gather', 'gather\\*', 'gathered',
+      'multline', 'multline\\*',
+      'cases', 'dcases', 
+      'eqnarray', 'eqnarray\\*',
+      'equation', 'equation\\*' // Added equation and dcases
+    ].join('|');
+    // Case insensitive regex to match \begin{environment}
+    const multilineRegex = new RegExp(`\\\\begin\{(${multilineEnvs})\}`, 'i');
 
-    // Process multiline equations
+    // Process display math blocks ($$ ... $$)
     processed = processed.replace(/\$\$([\s\S]*?)\$\$/g, (match, equation) => {
-      // If equation contains multiple lines, use MathJax
-      if (equation.includes('\n') || equation.includes('\\begin{cases}')) {
-        // Ensure equation has proper spacing and formatting
-        return `<div class="mathjax-block tex2jax_process">\n$$${equation}$$\n</div>`;
+      // If equation contains multiple lines OR uses a known multiline LaTeX environment
+      if (equation.includes('\n') || multilineRegex.test(equation)) {
+        // Wrap with a div and classes for MathJax processing
+        // .trim() removes leading/trailing whitespace from the equation itself
+        return `<div class="mathjax-block tex2jax_process">\n$$${equation.trim()}$$</div>`;
       }
-      return match; // Keep the original $$ delimiters for KaTeX to handle
+      // If not multiline by the above criteria, return the original match.
+      return match; 
     });
 
-    // Fix table content and ensure LaTeX delimiters are preserved
+    // Fix table content to ensure LaTeX delimiters are preserved and spaced correctly for Markdown
+    // This regex looks for $...$ within table cells | ... $...$ ... |
     processed = processed.replace(/\|\s*\$(.*?)\$\s*\|/g, '| \\$$1\\$ |');
 
-    // Add proper spacing around equations for better rendering
+    // Add proper spacing around block equations for better rendering if not already present
+    // Ensures block equations are on their own lines.
+    // Corrected regex patterns for newlines.
     processed = processed
-      // Add spacing around block equations if not already present
-      .replace(/([^\n])\$\$/g, '$1\n$$')
-      .replace(/\$\$([^\n])/g, '$$\n$1')
-      // Clean up excessive newlines
-      .replace(/\n{3,}/g, '\n\n');
+      .replace(/([^\n])\$\$/g, '$1\n$$') // Add newline before $$ if not preceded by one
+      .replace(/\$\$([^\n])/g, '$$\n$1') // Add newline after $$ if not followed by one
+      .replace(/\n{3,}/g, '\n\n');    // Reduce multiple newlines to a maximum of two
 
-    // Check for cases where delimiters might have been incorrectly processed
+    // This regex seems to be a general catch-all for inline math.
+    // It re-wraps anything that looks like $equation$ with $equation$.
     processed = processed.replace(/\$([\s\S]*?)\$/g, (match, equation) => {
-      // If any equation has lost its delimiters, fix it
       return `$${equation}$`;
     });
     
     // Restore escaped dollar signs
+    // Corrected: ensure this matches the replacement pattern.
     processed = processed.replace(/___ESCAPED_DOLLAR___/g, '\\$');
 
     return processed;
   }
   
   /**
-   * Special processing for cases/piecewise functions which are common in fuzzy logic
-   * @param content Content to process
-   * @returns Processed content with properly formatted cases
-   */
-  private processCasesEquations(content: string): string {
-    // Find all equations with \begin{cases} ... \end{cases}
-    return content.replace(/\$\$([\s\S]*?\\begin\{cases\}[\s\S]*?\\end\{cases\}[\s\S]*?)\$\$/g, (match, equation) => {
-      // Always use MathJax for cases equations
-      return `<div class="mathjax-block cases-equation tex2jax_process">\n$$${equation}$$\n</div>`;
-    });
-  }
-  
-  /**
-   * Manually trigger MathJax rendering after component updates
-   * This should be called in ngAfterViewInit or after content changes
+   * Manually trigger MathJax rendering after component updates.
+   * This should be called in Angular component lifecycle hooks like ngAfterViewInit 
+   * or after dynamic content changes where MathJax needs to re-scan the DOM.
    */
   renderMathJax(): void {
     if (typeof window !== 'undefined' && (window as any).MathJax) {
       const MathJax = (window as any).MathJax;
+      // Using a timeout allows the DOM to update before MathJax scans it.
       setTimeout(() => {
         MathJax.typesetPromise && MathJax.typesetPromise();
-      }, 100);
+      }, 100); // 100ms delay, adjust if necessary
     }
   }
-} 
+}

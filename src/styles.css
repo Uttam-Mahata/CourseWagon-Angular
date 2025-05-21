@@ -125,3 +125,10 @@
   font-weight: 500;
   margin: 1rem 0;
 }
+
+/* Ensure MathJax blocks are displayed correctly and spaced consistently */
+div.mathjax-block {
+  display: block; /* Reinforce block display */
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
