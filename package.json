@@ -25,6 +25,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.1",
     "@tailwindcss/postcss": "^4.1.5",
     "clipboard": "^2.0.11",
+    "firebase": "^11.9.1",
     "katex": "^0.16.22",
     "marked": "^15.0.11",
     "mathjax": "^3.2.2",
