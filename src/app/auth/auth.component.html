@@ -160,6 +160,28 @@
         </button>
       </form>
 
+      <!-- Divider -->
+      <div class="my-6 flex items-center">
+        <div class="flex-1 border-t border-gray-300"></div>
+        <span class="px-4 text-sm text-gray-500 bg-white">or</span>
+        <div class="flex-1 border-t border-gray-300"></div>
+      </div>
+
+      <!-- Google Sign-In Button -->
+      <button 
+        type="button" 
+        class="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold py-2 rounded-lg shadow transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        (click)="onGoogleSignIn()"
+        [disabled]="isGoogleLoading">
+        <fa-icon 
+          [icon]="'google'" 
+          class="text-red-500"
+          [class.animate-spin]="isGoogleLoading">
+        </fa-icon>
+        <span *ngIf="!isGoogleLoading">{{ isLoginMode ? 'Sign in with Google' : 'Sign up with Google' }}</span>
+        <span *ngIf="isGoogleLoading">Connecting...</span>
+      </button>
+
       <div class="mt-6 text-center">
         <button 
           type="button" 

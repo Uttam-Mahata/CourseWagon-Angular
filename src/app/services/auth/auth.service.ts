@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment.dev';
 import { Router } from '@angular/router';
+import { FirebaseAuthService } from '../firebase-auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,11 @@ export class AuthService {
   currentUser$ = this.currentUserSource.asObservable();
   isLoggedIn$ = this.isLoggedInSource.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient, 
+    private router: Router,
+    private firebaseAuthService: FirebaseAuthService
+  ) {
     this.checkAuthState();
   }
 
@@ -121,6 +126,50 @@ export class AuthService {
       current_password: currentPassword,
       new_password: newPassword
     });
+  }
+
+  // Google Authentication Methods
+  async signInWithGoogle(): Promise<any> {
+    try {
+      const firebaseResult = await this.firebaseAuthService.signInWithGoogle();
+      
+      // Extract user information from Firebase
+      const { user, accessToken } = firebaseResult;
+      
+      // Send the Firebase ID token to your backend for verification and registration/login
+      const backendResponse = await this.http.post(`${this.authUrl}/google-auth`, {
+        firebase_token: accessToken,
+        user_data: {
+          uid: user.uid,
+          email: user.email,
+          display_name: user.displayName,
+          photo_url: user.photoURL,
+          email_verified: user.emailVerified
+        }
+      }).toPromise();
+      
+      // Store the backend token and user data
+      if (backendResponse && (backendResponse as any).access_token) {
+        this.storeAuthData((backendResponse as any).access_token, (backendResponse as any).user);
+        return backendResponse;
+      }
+      
+      throw new Error('Invalid response from backend');
+    } catch (error) {
+      console.error('Google sign-in error:', error);
+      throw error;
+    }
+  }
+
+  async signOutGoogle(): Promise<void> {
+    try {
+      await this.firebaseAuthService.signOut();
+      this.logout();
+    } catch (error) {
+      console.error('Google sign-out error:', error);
+      // Still logout locally even if Firebase logout fails
+      this.logout();
+    }
   }
 
   private storeUser(user: any): void {

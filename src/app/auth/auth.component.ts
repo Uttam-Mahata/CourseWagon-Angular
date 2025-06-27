@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faEnvelope, faLock, faUser, faUserPlus, faSignInAlt, faKey, faExclamationTriangle, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
     selector: 'app-auth',
@@ -19,10 +20,12 @@ export class AuthComponent implements OnInit {
   faKey = faKey;
   faExclamationTriangle = faExclamationTriangle;
   faCheckCircle = faCheckCircle;
+  faGoogle = faGoogle;
   
   isLoginMode = true;
   errorMessage = '';
   successMessage = '';
+  isGoogleLoading = false;
   
   loginData = {
     email: '',
@@ -45,7 +48,7 @@ export class AuthComponent implements OnInit {
     private faLibrary: FaIconLibrary
   ) {
     faLibrary.addIcons(
-      faEnvelope, faLock, faUser, faUserPlus, faSignInAlt, faKey, faExclamationTriangle, faCheckCircle
+      faEnvelope, faLock, faUser, faUserPlus, faSignInAlt, faKey, faExclamationTriangle, faCheckCircle, faGoogle
     );
   }
 
@@ -133,6 +136,27 @@ export class AuthComponent implements OnInit {
           this.errorMessage = error.error.error || 'An unexpected error occurred';
         }
       });
+  }
+
+  // Google Sign-In method
+  async onGoogleSignIn(): Promise<void> {
+    this.clearMessages();
+    this.isGoogleLoading = true;
+    
+    try {
+      console.log('Attempting Google sign-in...');
+      const response = await this.authService.signInWithGoogle();
+      console.log('Google sign-in successful:', response);
+      
+      setTimeout(() => {
+        this.router.navigate(['/courses']);
+      }, 100);
+    } catch (error: any) {
+      console.error('Google sign-in error:', error);
+      this.errorMessage = error.message || 'Google sign-in failed. Please try again.';
+    } finally {
+      this.isGoogleLoading = false;
+    }
   }
 
   clearMessages(): void {
