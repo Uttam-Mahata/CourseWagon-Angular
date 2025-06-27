@@ -75,19 +75,6 @@ export class AuthService {
     this.router.navigate(['/auth']);
   }
 
-  getApiKey(): Observable<any> {
-    return this.http.get(`${this.authUrl}/get-api-key`);
-  }
-
-  updateApiKey(apiKey: string): Observable<any> {
-    console.log(`Updating API key, current token: ${this.getToken()?.substring(0, 10)}...`);
-    return this.http.post(`${this.authUrl}/update-api-key`, { api_key: apiKey });
-  }
-
-  deleteApiKey(): Observable<any> {
-    return this.http.delete(`${this.authUrl}/delete-api-key`);
-  }
-
   getCurrentUser(): any {
     const userStr = localStorage.getItem(this.userKey);
     return userStr ? JSON.parse(userStr) : null;

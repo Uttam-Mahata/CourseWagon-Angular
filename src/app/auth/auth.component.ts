@@ -37,8 +37,7 @@ export class AuthComponent implements OnInit {
     email: '',
     password: '',
     first_name: '',
-    last_name: '',
-    api_key: ''
+    last_name: ''
   };
 
   constructor(
@@ -121,15 +120,14 @@ export class AuthComponent implements OnInit {
     this.authService.register(this.registerData)
       .subscribe({
         next: () => {
-          this.successMessage = 'Registration successful! Please login.';
+          this.successMessage = 'Registration successful! Please check your email for a welcome message and then login.';
           this.isLoginMode = true;
           this.loginData.email = this.registerData.email;
           this.registerData = {
             email: '',
             password: '',
             first_name: '',
-            last_name: '',
-            api_key: ''
+            last_name: ''
           };
         },
         error: (error) => {

@@ -50,10 +50,12 @@
               name="password" 
               required>
           </div>
-          <!-- Add forgot password link -->
-          <!-- <div class="text-right mt-1">
-            <a routerLink="/forgot-password" class="text-sm text-blue-600 hover:underline">Forgot password?</a>
-          </div> -->
+          <!-- Forgot password link -->
+          <div class="text-right mt-1">
+            <a routerLink="/forgot-password" class="text-sm text-blue-600 hover:underline transition-colors">
+              Forgot password?
+            </a>
+          </div>
         </div>
         
         <!-- Remember Me Checkbox -->
@@ -136,23 +138,6 @@
               name="password" 
               required>
           </div>
-        </div>
-        <div>
-          <label for="apiKey" class="block text-sm font-medium text-gray-700 mb-1">Google AI API Key <span class="text-xs text-gray-400">(Optional)</span></label>
-          <div class="relative">
-            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-              <fa-icon [icon]="'key'"></fa-icon>
-            </span>
-            <input 
-              type="password" 
-              class="w-full rounded-lg border border-gray-300 px-10 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-              id="apiKey" 
-              [(ngModel)]="registerData.api_key" 
-              name="apiKey">
-          </div>
-          <small class="block mt-1 text-xs text-gray-400">
-            You'll need this to generate course content. You can add it later in your profile.
-          </small>
         </div>
         <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg shadow transition flex items-center justify-center gap-2">
           <fa-icon [icon]="'user-plus'"></fa-icon>
