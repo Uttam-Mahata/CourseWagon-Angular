@@ -3,8 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
 import { SubjectService } from '../services/subject.service';
 import { faHome, faBook, faLayerGroup, faEye, faMagic, faInfoCircle, faChevronRight, faEdit, faTrash, faPlus, faImage, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { AuthService } from '../auth.service';
-
+import { AuthService } from '../services/auth/auth.service';
 @Component({
   selector: 'app-subjects',
   templateUrl: './subjects.component.html',

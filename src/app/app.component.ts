@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from './auth.service';
+import { AuthService } from './services/auth/auth.service';
 import { NavigationService } from './services/navigation.service';
 import { faBars, faTimes, faGraduationCap, faShoppingCart, faBook, faUser, faPowerOff, faSignInAlt, faUserPlus, faUserShield } from '@fortawesome/free-solid-svg-icons'; // Import admin icon
 

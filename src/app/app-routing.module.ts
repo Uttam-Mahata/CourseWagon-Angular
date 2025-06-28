@@ -4,7 +4,7 @@ import { CourseComponent } from './course/course.component';
 import { CoursesComponent } from './courses/courses.component';
 import { HomeComponent } from './home/home.component';
 import { AuthComponent } from './auth/auth.component';
-import { AuthGuard, NonAuthGuard, AdminGuard } from './auth.guard';
+import { AuthGuard, NonAuthGuard, AdminGuard } from './services/auth/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { SubjectsChaptersComponent } from './subjects-chapters/subjects-chapters.component';
 import { TopicsContentComponent } from './topics-content/topics-content.component';
@@ -16,10 +16,14 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { WriteReviewComponent } from './write-review/write-review.component';
 import { AdminComponent } from './admin/admin.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'auth', component: AuthComponent, canActivate: [NonAuthGuard] },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'create-course', component: CourseComponent, canActivate: [AuthGuard] },
   { path: 'courses', component: CoursesComponent, canActivate: [AuthGuard] },

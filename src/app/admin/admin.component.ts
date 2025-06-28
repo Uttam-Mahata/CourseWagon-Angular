@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdminService } from '../services/admin.service';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth/auth.service';
 import { faChartLine, faUsers, faStar } from '@fortawesome/free-solid-svg-icons';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 
