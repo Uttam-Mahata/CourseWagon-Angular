@@ -67,6 +67,15 @@ export class CourseService {
     );
   }
   
+  addCourseFromAudio(audioBlob: Blob): Observable<any> {
+    const formData = new FormData();
+    formData.append('audio', audioBlob, 'course_audio.wav');
+    
+    return this.http.post(`${this.apiUrl}/add_course_audio`, formData).pipe(
+      tap(() => this.refreshMyCourses()) // Refresh the courses after adding one
+    );
+  }
+  
   // Get all courses (public and user's own)
   getCourses(): Observable<any> {
     return this.http.get(this.apiUrl);
