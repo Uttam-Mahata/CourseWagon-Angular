@@ -29,7 +29,6 @@ export class CourseComponent implements OnInit {
   courseName: string = '';
   isLoading: boolean = false;
   errorMessage: string = '';
-  userHasApiKey: boolean = false;
 
   constructor(
     private courseService: CourseService, 
@@ -38,20 +37,12 @@ export class CourseComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.authService.currentUser$.subscribe(user => {
-      this.userHasApiKey = !!user?.has_api_key;
-      console.log('Course component - user has API key:', this.userHasApiKey);
-    });
+    // No longer need to check for API key since it's managed globally
   }
 
   generateCourse() {
     if (!this.courseName.trim()) {
       this.errorMessage = 'Course name is required';
-      return;
-    }
-
-    if (!this.userHasApiKey) {
-      this.errorMessage = 'You need to set your Google API key in your profile first.';
       return;
     }
 
@@ -66,12 +57,7 @@ export class CourseComponent implements OnInit {
       error: (error) => {
         this.isLoading = false;
         console.error('Error creating course:', error);
-        
-        if (error.status === 403) {
-          this.errorMessage = 'You need to set your Google API key in your profile first.';
-        } else {
-          this.errorMessage = error.error?.error || 'Failed to create course. Please try again.';
-        }
+        this.errorMessage = error.error?.error || 'Failed to create course. Please try again.';
       }
     });
   }

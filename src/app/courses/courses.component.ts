@@ -27,7 +27,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
   faSpinner = faSpinner;
 
   courses: any[] = [];
-  userHasApiKey: boolean = false;
   isLoading: boolean = true;
   errorMessage: string | null = null;
   
@@ -53,8 +52,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
     // Subscribe to auth changes to detect new logins
     this.subscriptions.push(
       this.authService.currentUser$.subscribe(user => {
-        this.userHasApiKey = !!user?.has_api_key;
-        
         if (user) {
           // Force refresh courses when user changes
           this.loadCourses(true);
@@ -94,11 +91,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
 
   generateSubjects(courseId: number) {
-    if (!this.userHasApiKey) {
-      this.router.navigate(['/profile']);
-      return;
-    }
-    
     const course = this.courses.find(c => c.id === courseId);
     const actionVerb = course && course.has_subjects ? 'updating' : 'generating';
     
@@ -138,11 +130,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
   
   navigateToCourseCreation() {
-    if (!this.userHasApiKey) {
-      this.router.navigate(['/profile']);
-      return;
-    }
-    
     this.router.navigate(['/create-course']);
   }
   
@@ -218,11 +205,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
     if (event) {
       event.stopPropagation();
       event.preventDefault();
-    }
-
-    if (!this.userHasApiKey) {
-      this.errorMessage = 'You need to set your Google API key in your profile first.';
-      return;
     }
     
     // Find the course and mark it as generating an image

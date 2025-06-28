@@ -28,20 +28,6 @@
     </button>
   </div>
 
-  <!-- API Key Missing Alert with Animation -->
-  <div *ngIf="!userHasApiKey" class="bg-amber-50 border-l-4 border-amber-500 p-5 mb-8 rounded-lg shadow-md flex items-center animate-slideIn">
-    <fa-icon [icon]="faExclamationTriangle" class="text-amber-500 mr-3 text-xl"></fa-icon>
-    <div class="flex-1">
-      <p class="font-medium text-amber-800">Google API Key Required:</p>
-      <p class="text-sm text-gray-600">You need to add your Google API key to generate course content.</p>
-    </div>
-    <button 
-      class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white px-4 py-2 rounded-md text-sm ml-4 transition-all duration-300 hover:shadow-md" 
-      (click)="navigateToProfile()">
-      Set API Key
-    </button>
-  </div>
-
   <!-- Error Message Alert with Animation -->
   <div *ngIf="errorMessage" class="bg-red-50 border-l-4 border-red-500 p-5 mb-8 rounded-lg shadow-md flex items-center animate-shakeX">
     <fa-icon [icon]="faExclamationCircle" class="text-red-500 mr-3 text-xl"></fa-icon>
@@ -144,9 +130,9 @@
         <ng-container *ngIf="course.has_subjects; else generateOnly">
           <div class="flex flex-col sm:flex-row md:flex-col gap-3 w-full">
             <button 
-              [disabled]="!userHasApiKey || course.isGenerating" 
+              [disabled]="course.isGenerating" 
               class="px-4 py-3 border rounded-md text-sm flex items-center justify-center transition-all duration-300 w-full"
-              [ngClass]="{'bg-white border-blue-600 text-blue-600 hover:bg-blue-50': userHasApiKey && !course.isGenerating, 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed': !userHasApiKey || course.isGenerating}"
+              [ngClass]="{'bg-white border-blue-600 text-blue-600 hover:bg-blue-50': !course.isGenerating, 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed': course.isGenerating}"
               (click)="generateSubjects(course.id)">
               <div *ngIf="course.isGenerating" class="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-blue-600 mr-2"></div>
               <fa-icon *ngIf="!course.isGenerating" [icon]="faMagic" class="mr-2"></fa-icon> 
@@ -163,8 +149,8 @@
         <!-- If no subjects exist yet, show only Generate button -->
         <ng-template #generateOnly>
           <button 
-            [disabled]="!userHasApiKey || course.isGenerating"
-            [ngClass]="{'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-md hover:shadow-lg': userHasApiKey && !course.isGenerating, 'bg-gray-300 text-gray-500 cursor-not-allowed': !userHasApiKey || course.isGenerating}"
+            [disabled]="course.isGenerating"
+            [ngClass]="{'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-md hover:shadow-lg': !course.isGenerating, 'bg-gray-300 text-gray-500 cursor-not-allowed': course.isGenerating}"
             class="rounded-lg px-6 py-3.5 text-sm flex items-center justify-center transition-all duration-300 transform hover:scale-105 w-full"
             (click)="generateSubjects(course.id)">
             <div *ngIf="course.isGenerating" class="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-2"></div>
