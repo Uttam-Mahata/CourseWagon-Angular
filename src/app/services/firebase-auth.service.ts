@@ -10,7 +10,7 @@ import {
 } from 'firebase/auth';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { initializeApp } from 'firebase/app';
-import { environment } from '../../environments/environment.dev';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

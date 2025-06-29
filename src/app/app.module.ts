@@ -20,8 +20,7 @@ import { MermaidViewComponent } from './mermaid-view/mermaid-view.component';
 import { AuthInterceptor } from './services/auth/auth.interceptor';
 import { AuthGuard } from './services/auth/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
-import { SubjectsChaptersComponent } from './subjects-chapters/subjects-chapters.component';
-import { TopicsContentComponent } from './topics-content/topics-content.component';
+
 import { SharedMarkdownModule } from './shared/markdown.module';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { CourseContentComponent } from './course-content/course-content.component';
@@ -50,8 +49,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     MermaidViewComponent,
     ProfileComponent,
     HomeComponent,
-    SubjectsChaptersComponent,
-    TopicsContentComponent,
+
     SubjectsComponent,
     CourseContentComponent,
     FilterByIdPipe,
