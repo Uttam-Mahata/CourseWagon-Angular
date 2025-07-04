@@ -14,7 +14,6 @@ CourseWagon is a web application designed to streamline course management and su
   - [Service Methods](#service-methods)
   - [Example Usage](#example-usage)
 - [Real-Life Applications](#real-life-applications)
-- [Screenshots](#screenshots)
 - [Tech Stack](#tech-stack)
   - [Frontend](#frontend)
   - [Backend (Separate Repository)](#backend-separate-repository)
@@ -199,13 +198,7 @@ export class CourseListComponent implements OnInit {
 - **Online Learning Platforms:** Expands course offerings based on market demands.
 - **Content Creators:** Facilitates the quick addition of relevant subjects and topics.
 
-## Screenshots
 
-*(Placeholder for screenshots of the application - e.g., dashboard, course creation, content view)*
-
-*   *Screenshot 1: Description*
-*   *Screenshot 2: Description*
-*   *Screenshot 3: Description*
 
 ## Tech Stack
 
@@ -227,7 +220,7 @@ export class CourseListComponent implements OnInit {
 *   **Flask:** Python web framework for the backend API.
 *   **Python:** Primary language for backend development.
 *   **(Assumed) Database:** (e.g., PostgreSQL, MySQL, SQLite) for data persistence.
-*   **(Assumed) Generative AI Service:** (e.g., OpenAI GPT API, Google Gemini API) for content generation.
+*   **(Assumed) Generative AI Service:** (e.g. Google Gemini API) for content generation.
 
 ## File Structure
 
