@@ -1,9 +1,9 @@
 export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:5000/api',
-  apiBaseUrl: 'http://localhost:5000/api',
-  courseApiUrl: 'http://localhost:5000/api/courses',
-  authApiUrl: 'http://localhost:5000/api/auth',
+  production: true,
+  apiUrl: 'https://coursewagon-backend.victoriousforest-3a334815.southeastasia.azurecontainerapps.io/api',
+  apiBaseUrl: 'https://coursewagon-backend.victoriousforest-3a334815.southeastasia.azurecontainerapps.io/api',
+  courseApiUrl: 'https://coursewagon-backend.victoriousforest-3a334815.southeastasia.azurecontainerapps.io/api/courses',
+  authApiUrl: 'https://coursewagon-backend.victoriousforest-3a334815.southeastasia.azurecontainerapps.io/api/auth',
   firebase: {
     apiKey: "AIzaSyD5u3QaEWZXboUOeU1w-ETRf0EMyGESAYs",
     authDomain: "coursewagon.firebaseapp.com",
